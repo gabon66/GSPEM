@@ -32,14 +32,6 @@ class DefaultController extends Controller
 
 
         if($user->getRoles()[0]!='ROLE_ADMIN'){
-            if ($user->getDisabled()){
-                $encoders = array(new XmlEncoder(), new JsonEncoder());
-                $normalizers = array(new ObjectNormalizer());
-
-                $serializer = new Serializer($normalizers, $encoders);
-
-                return new Response($serializer->serialize(array("access denied"),"json"),200,array('Content-Type'=>'application/json'));
-            }
         }
         if ($user->getRoles()[0]!='ROLE_ADMIN'){
 
@@ -49,9 +41,6 @@ class DefaultController extends Controller
             $profile=$repo->findOneBy(array("id"=>$user->getView()));
             return $this->render('GSPEMGSPEMBundle:Default:index.html.twig',array("user"=>"user","access"=>json_decode($profile->getAccess())));
         }else {
-
-
-
             return $this->render('GSPEMGSPEMBundle:Default:index.html.twig',array("user"=>"admin"));
         }
     }

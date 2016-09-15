@@ -108,10 +108,12 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function isAccountNonLocked()
     {
-        //if (!is_null($this->getInfo())) {
-        //    return is_null($this->getInfo()->getToken());
-        //}
-        return true;
+        if ($this->getDisabled()==0) {
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
     /**
