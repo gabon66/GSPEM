@@ -167,13 +167,16 @@ class StockController extends Controller
     public function setStockAction(\Symfony\Component\HttpFoundation\Request $request){
         $em = $this->getDoctrine()->getEntityManager();
 
-
+        $materialalertados=[];
         foreach (json_decode($request->getContent(),true)["items"] as $item){
+
             $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\StockMaestro');
             $stock = $repo->findOneBy(array("material"=>$item['id']));
             $stock->setCant($item['stock']);
             $em->flush();
+
         }
+
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
@@ -305,7 +308,8 @@ class StockController extends Controller
         $em->persist($stockTecMov);
         $em->flush();
 
-
+        $i=0;
+        $materialesToAlert=[];
         foreach ($data["items"] as $item){
             $stockItems= new StockItemsMov();
             $stockItems->setMaterial($item['id']);
@@ -313,7 +317,55 @@ class StockController extends Controller
             $stockItems->setCant($item['stock']);
             $em->persist($stockItems);
             $em->flush();
+
+            $repoMat =$em->getRepository('GSPEM\GSPEMBundle\Entity\Material');
+            $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\StockMaestro');
+
+
+            $stockMaestro = $repo->findOneBy(array("material"=>$item['id']));
+            $material=$repoMat->findOneBy(array("id"=>$item['id']));
+
+
+            if($material->getUmbralmin()>= $stockMaestro->getCant() ){
+
+
+                $materialToAlert=array("id"=>$material->getIdCustom(),'name'=>$material->getName(),"descript"=>$material->getDescript(),"stock"=>$stockMaestro->getCant());
+                $materialesToAlert[$i]=$materialToAlert;
+                $i++;
+            }
         }
+
+
+        if (count($materialesToAlert)==1){
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Alerta de Stock - '.$material->getName())
+                ->setFrom($this->container->getParameter('mailer_user'))
+                ->setTo($this->container->getParameter('mail_alert'))
+                ->setBody(
+                    $this->renderView(
+                    // app/Resources/views/Emails/registration.html.twig
+                        'GSPEMGSPEMBundle:Default:mail_onealert.html.twig',
+                        array('id'=>$material->getIdCustom(),'name'=>$material->getName(),"descript"=>$material->getDescript(),"stock"=>$stockMaestro->getCant())
+                    ),
+                    'text/html'
+                );
+            $this->get('mailer')->send($message);
+        } elseif (count($materialesToAlert)>1)  {
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Alerta de Stock')
+                    ->setFrom($this->container->getParameter('mailer_user'))
+                    ->setTo($this->container->getParameter('mail_alert'))
+                    ->setBody(
+                        $this->renderView(
+                        // app/Resources/views/Emails/registration.html.twig
+                            'GSPEMGSPEMBundle:Default:mail_alerts.html.twig',
+                            array('materiales'=>$materialesToAlert)),
+                        'text/html'
+                    );
+                $this->get('mailer')->send($message);
+        }
+
+
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
