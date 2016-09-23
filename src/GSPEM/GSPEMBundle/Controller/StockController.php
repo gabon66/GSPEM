@@ -340,7 +340,7 @@ class StockController extends Controller
             $message = \Swift_Message::newInstance()
                 ->setSubject('Alerta de Stock - '.$material->getName())
                 ->setFrom($this->container->getParameter('mailer_user'))
-                ->setTo("gabriel.adrian.felipe@gmail.com")
+                ->setTo($this->container->getParameter('mail_alert'))
                 ->setBody(
                     $this->renderView(
                     // app/Resources/views/Emails/registration.html.twig
@@ -354,7 +354,7 @@ class StockController extends Controller
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Alerta de Stock')
                     ->setFrom($this->container->getParameter('mailer_user'))
-                    ->setTo("gabriel.adrian.felipe@gmail.com")
+                    ->setTo($this->container->getParameter('mail_alert'))
                     ->setBody(
                         $this->renderView(
                         // app/Resources/views/Emails/registration.html.twig

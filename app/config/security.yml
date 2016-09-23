@@ -21,7 +21,7 @@ security:
             memory:
                 users:
                     user:  { password: user, roles: [ 'ROLE_USER' ] }
-                    admingspem: { password: admingspem, roles: [ 'ROLE_ADMIN' ] }
+                    superadmin: { password: superadmin, roles: [ 'ROLE_ADMIN' ] }
         users:
             entity: { class: GSPEM\GSPEMBundle\Entity\User, property: username }
 
