@@ -179,13 +179,16 @@ GSPEMApp.controller('ModelNewPerfil', function($filter,$scope,$http, $uibModalIn
 
     $scope.id=0;
 
-    $scope.user={all:false,abm:false, perfiles:false,contratistas:false};
-    $scope.sitios={all:false,abm:false};
-    $scope.materiales={all:false,abm_tipo:false,abm:false};
-    $scope.oper={all:false,stock:false,stock_to_tec:false,stock_tec_to_tec:false};
-    $scope.opertec={all:false,stock:false,stoc_pend:false,stoc_tec:false,stoc_sit:false};
-    $scope.reportes={all:false,stock_maestro:false,stock_tec:false,stock_sit:false,stock_cont:false,stock_mov:false,stock_alertas:false};
+    $scope.user={all:true,abm:true, perfiles:true,contratistas:true};
+    $scope.sitios={all:true,abm:true};
+    $scope.materiales={all:true,abm_tipo:true,abm:true};
+    $scope.oper={all:true,stock:true,stock_to_tec:true,stock_tec_to_tec:true};
+    $scope.opertec={all:true,stock:true,stoc_pend:true,stoc_tec:true,stoc_sit:true};
+    $scope.reportes={all:true,stock_maestro:true,stock_tec:true,stock_sit:true,stock_cont:true,stock_mov:true,stock_alertas:true};
 
+    
+    
+    
     $scope.perfil={user:$scope.user,sitios:$scope.sitios,
         materiales:$scope.materiales,oper:$scope.oper,opertec:$scope.opertec,reportes:$scope.reportes};
 
