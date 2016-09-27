@@ -136,6 +136,21 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
     $scope.item = item;
 
 
+    var getContratistas = function() {
+        $http.get(Routing.generate('get_contratistas')
+        ).success(function (contratistas) {
+            $scope.contratistas=contratistas;
+            if(item!=null){
+                $scope.contratistaselected=$filter('filter')($scope.contratistas,{"id":item.contratistaid})[0];
+            }else {
+                $scope.contratistaselected=$scope.contratistas[0];
+            }
+        });
+    };
+    getContratistas();
+
+
+
     $scope.referencia={ref1:"",ref2:""};
 
     $scope.types=$rootScope.typesMaterial.data;
@@ -166,6 +181,7 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
 
         $scope.ubicacion=item.ubicacion;
         $scope.origen=item.origen;
+
         if(item.referencia){
             $scope.referencia=angular.fromJson(item.referencia);
         }
@@ -205,7 +221,13 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
         {
             $scope.umbralmin=0;
         }
-        
+
+
+
+        if($scope.typematerial != undefined){
+            $scope.typeidmat=$scope.typematerial.id;
+        }
+
         if ($scope.name.length == 0 || $scope.descript.length == 0 || $scope.id_custom.length == 0 ) {
             toastr.warning('Complete todos los campos requeridos (*)', 'Atención');
         } else {
@@ -220,10 +242,10 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
                     umbralmin:parseInt($scope.umbralmin),
                     umbralmax:$scope.umbralmax,
                     referencia:angular.toJson($scope.referencia, 2),
-                    origen:$scope.origen,
+                    origen:$scope.contratistaselected.id,
                     ubicacion:$scope.ubicacion,
                     id_custom: $scope.id_custom,
-                    type: $scope.typematerial.id,
+                    type: $scope.typeidmat,
                 },
                 transformRequest: function (obj) {
                     var str = [];
