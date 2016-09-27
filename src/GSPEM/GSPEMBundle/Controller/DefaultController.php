@@ -54,9 +54,10 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $stmt = $em->getConnection()->createQueryBuilder()
-            ->select("m.id as id ,m.umbralmax as umbralmax , m.umbralmin as umbralmin,   m.referencia as referencia ,m.ubicacion as ubicacion , m.origen as origen ,mt.id as type_id, m.id_custom as idCustom , m.descript as descript ,mt.name  as type , m.name as name")
+            ->select("con.id as contratistaid ,con.name as contratista ,m.id as id ,m.umbralmax as umbralmax , m.umbralmin as umbralmin,   m.referencia as referencia ,m.ubicacion as ubicacion , m.origen as origen ,mt.id as type_id, m.id_custom as idCustom , m.descript as descript ,mt.name  as type , m.name as name")
             ->from("materiales", "m")
             ->leftJoin("m", "materiales_type", "mt", "m.type = mt.id")
+            ->leftJoin("m", "contratistas", "con", "m.origen = con.id")
             ->orderBy('m.name', 'ASC')
             ->execute();
         $encoders = array(new XmlEncoder(), new JsonEncoder());

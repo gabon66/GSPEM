@@ -173,6 +173,14 @@
                         placeholder="Descripción(*)">
             </div>
 
+
+            <div class="form-group has-success has-feedback">
+                <input
+                        ng-model="ubicacion"
+                        class="form-control"
+                        placeholder="Ubicación(*)">
+            </div>
+
             <div class="form-group has-success has-feedback">
                 <label>Referencia Asignada :</label>
 
@@ -199,21 +207,24 @@
             </div>
 
 
-            <div class="form-group has-success has-feedback">
-                <input
-                        ng-model="origen"
-                        class="form-control"
-                        placeholder="Origen(*)">
-            </div>
 
-            <div class="form-group has-success has-feedback">
-                <input
-                        ng-model="ubicacion"
-                        class="form-control"
-                        placeholder="Ubicación(*)">
-            </div>
 
-            <div class="form-group has-success has-feedback">
+            <div class="row">
+            <div class="col-lg-6">
+
+                        <div class="form-group has-success has-feedback">
+                <label>Origen :</label>
+
+                <select  class="form-control" name="origenmaterial" id="mySelect"
+                 ng-options="contratista.name for contratista in contratistas track by contratista.id"
+
+                 ng-model="contratistaselected"></select>
+
+            </div>
+</div>
+
+            <div class="col-lg-6">
+                            <div class="form-group has-success has-feedback">
                 <label>Tipo :</label>
 
                 <select  class="form-control" name="typematerial" id="mySelect"
@@ -222,6 +233,12 @@
                  ng-model="typematerial"></select>
 
             </div>
+</div>
+            </div>
+
+
+
+
             <hr>
              <label>Control de Stock</label>
 
