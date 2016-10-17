@@ -72,6 +72,10 @@ GSPEM\GSPEMBundle\Entity\User:
             length: 100
         contratista:
             type: integer
+        level:
+            type: integer
+        bosses:
+            type: text
     lifecycleCallbacks:
         preUpdate: [ updatedTimestamps ]
 

@@ -393,9 +393,51 @@ class StockController extends Controller
 
 
 
+    private function getUsersToShowMovs(){
+        $user=$this->get('security.token_storage')->getToken()->getUser();
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $childs=[];
+        $stmt = $em->getConnection()->createQueryBuilder()
+            ->select("u.id as id,u.level as  level , u.bosses as bosses")
+            ->from("users", "u")
+            ->orderBy("u.username")
+            ->execute();
+        foreach ($stmt->fetchAll() as $users){
+
+            //var_dump($users['bosses']);
+            if (!empty($users['bosses']))
+            {
+                $bosses=json_decode($users['bosses']);
+                //var_dump($bosses);
+                //die();
+                $is_son=false;
+                foreach ($bosses as $boss){
+
+                    if($boss==$user->getId()){
+                        // es mi hijo
+                        $is_son=true;
+                    }
+                }
+                if($is_son){
+                    $childs[]=(int)$users['id'];
+                }
+            }
+
+        }
+        return $childs;
+    }
+
+
     public function getAllMovimientosAction(){
         $em = $this->getDoctrine()->getEntityManager();
+        //var_dump($this->getUsersToShowMovs());
+        //die();
         // tecsitid puede ser el tecnico id  o un sitio id por eso ese nombre
+
+        //$queryBuilder->andWhere('r.winner IN (:ids)')
+         //   ->setParameter('ids', $ids);
+
         $stmt = $em->getConnection()->createQueryBuilder()
             ->select("mov.id as id ,CONCAT (u.first_name ,' ',  u.last_name) 
             as tecnico,mov.tecnico as tecsitid, CONCAT (us.first_name ,' ', us.last_name) as origen ,
@@ -405,8 +447,12 @@ class StockController extends Controller
             ->from("movimiento_stock_tecnico", "mov")
             ->leftJoin("mov", "users", "u", "u.id = mov.tecnico")
             ->leftJoin("mov", "users", "us", "us.id = mov.origen")
+            ->andWhere('u.id IN (:ids)')
+            ->orWhere('us.id IN (:ids)')
             ->orderBy('mov.inicio', 'ASC')
+            ->setParameter('ids', $this->getUsersToShowMovs(),\Doctrine\DBAL\Connection::PARAM_STR_ARRAY)
             ->execute();
+
 
         foreach ($stmt->fetchAll() as $mov){
 

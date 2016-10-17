@@ -29,7 +29,7 @@ class DefaultController extends Controller
     {
         $user=$this->get('security.token_storage')->getToken()->getUser();
         //var_dump($user->getRoles()[0]);
-
+        //var_dump($this->getUsersToShowMovs());
 
         if($user->getRoles()[0]!='ROLE_ADMIN'){
         }
@@ -39,11 +39,15 @@ class DefaultController extends Controller
 
             $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Perfiles');
             $profile=$repo->findOneBy(array("id"=>$user->getView()));
-            return $this->render('GSPEMGSPEMBundle:Default:index.html.twig',array("user"=>"user","access"=>json_decode($profile->getAccess())));
+            return $this->render('GSPEMGSPEMBundle:Default:index.html.twig',array("user"=>"user","access"=>json_decode($profile->getAccess()),"level"=>$user->getLevel()));
         }else {
             return $this->render('GSPEMGSPEMBundle:Default:index.html.twig',array("user"=>"admin"));
         }
     }
+
+
+
+
 
     public function loadTwigAction($template)
     {
@@ -410,7 +414,10 @@ class DefaultController extends Controller
         $user->setLastName($request->get("apellido"));
         $user->setUsername ($request->get("username"));
         $user->setContratista($request->get("contratista"));
-
+        $user->setBosses($request->get("bosses"));
+        if(!empty($request->get("level"))){
+            $user->setLevel($request->get("level"));
+        }
 
 
         if($request->get('password')!=""){
@@ -474,7 +481,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $stmt = $em->getConnection()->createQueryBuilder()
-            ->select("u.id as id,c.id as contratistaid , c.name as contratista ,p.name as profilename  ,p.id as profileid ,u.mail as mail ,u.disabled as disabled ,u.username as username ,u.first_name as name ,u.phone as phone, u.last_name as lastName ")
+            ->select("u.id as id,u.level as  level , u.bosses as bosses ,c.id as contratistaid , c.name as contratista ,p.name as profilename  ,p.id as profileid ,u.mail as mail ,u.disabled as disabled ,u.username as username ,u.first_name as name ,u.phone as phone, u.last_name as lastName ")
             ->from("users", "u")
             ->leftJoin("u", "perfiles", "p", "u.view_type = p.id")
             ->leftJoin("u", "contratistas", "c", "u.contratista = c.id")

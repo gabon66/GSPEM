@@ -819,4 +819,66 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->contratista;
     }
+    /**
+     * @var integer
+     */
+    private $leve;
+
+    /**
+     * @var string
+     */
+    private $bosses;
+
+    /**
+     * Set bosses
+     *
+     * @param string $bosses
+     *
+     * @return User
+     */
+    public function setBosses($bosses)
+    {
+        $this->bosses = $bosses;
+
+        return $this;
+    }
+
+    /**
+     * Get bosses
+     *
+     * @return string
+     */
+    public function getBosses()
+    {
+        return $this->bosses;
+    }
+    /**
+     * @var integer
+     */
+    private $level;
+
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     *
+     * @return User
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
 }

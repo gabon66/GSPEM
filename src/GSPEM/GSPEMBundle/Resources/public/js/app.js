@@ -21,7 +21,7 @@ GSPEMApp.service('MovPend', function($http,toastr) {
     };
 
     setInterval(function(){
-        getMovPend();
+        //getMovPend();
     },5000);
     getMovPend();
 

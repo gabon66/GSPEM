@@ -169,7 +169,7 @@
                                         <li><a href="#stock_report">Stock Maestro</a></li>
                                     {% endif %}
                                     {% if access.reportes.stock_tec is defined and access.reportes.stock_tec== true %}
-                                        <li><a href="#stock_report_tec">Stock por Técnico</a></li>
+                                        <li><a href="#stock_report_tec">Stock por Usuario</a></li>
                                     {% endif %}
                                     {% if access.reportes.stock_sit is defined and access.reportes.stock_sit== true %}
                                         <li><a href="#stock_report_sit">Stock por Sitio</a></li>
@@ -177,7 +177,7 @@
                                     {% if access.reportes.stock_cont is defined and access.reportes.stock_cont== true %}
                                         <li><a href="#stock_contratista">Stock por Contratista</a></li>
                                     {% endif %}
-                                    {% if access.reportes.stock_mov is defined and access.reportes.stock_mov== true %}
+                                    {% if access.reportes.stock_mov is defined and access.reportes.stock_mov== true and level < 3 %}
                                         <li><a href="#stock_movimientos">Movimientos de Stock</a></li>
                                     {% endif %}
                                     {% if access.reportes.stock_alertas is defined and access.reportes.stock_alertas== true %}

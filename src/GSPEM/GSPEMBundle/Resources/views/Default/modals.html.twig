@@ -192,12 +192,19 @@
                       <a href class="btn btn-default" style="background-color: blue"  ng-click="setRef(1,'blue')" ui-exclusion-group='myButtons'></a>
                       <a href class="btn btn-default" style="background-color: green" ng-click="setRef(1,'green')" ui-exclusion-group='myButtons'></a>
                       <a href class="btn btn-default" style="background-color: black" ng-click="setRef(1,'black')" ui-exclusion-group='myButtons'></a>
+                      <a href class="btn btn-default" style="background-color: yellow" ng-click="setRef(1,'yellow')" ui-exclusion-group='myButtons'></a>
+                      <a href class="btn btn-default" style="background-color: purple" ng-click="setRef(1,'purple')" ui-exclusion-group='myButtons'></a>
+
                   </div>
 
                     <div class="btn-group">
                       <a href class="btn btn-default" style="background-color: blue"  ng-click="setRef(2,'blue')" ui-exclusion-group='myButtons'></a>
                       <a href class="btn btn-default" style="background-color: green" ng-click="setRef(2,'green')" ui-exclusion-group='myButtons'></a>
                       <a href class="btn btn-default" style="background-color: black" ng-click="setRef(2,'black')" ui-exclusion-group='myButtons'></a>
+                      <a href class="btn btn-default" style="background-color: yellow" ng-click="setRef(2,'yellow')" ui-exclusion-group='myButtons'></a>
+                      <a href class="btn btn-default" style="background-color: purple" ng-click="setRef(2,'purple')" ui-exclusion-group='myButtons'></a>
+
+
                   </div>
 
                   <div class="btn-group">
@@ -472,15 +479,19 @@
 
 <hr>
 
-    <div class="form-group has-success has-feedback">
-     <label>Usuario(*)</label>
-     <input
-             ng-model="user"
-             class="form-control"
-             placeholder="Usuario">
-    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group has-success has-feedback">
 
-    <div class="form-group has-success has-feedback">
+             <label>Usuario(*)</label>
+             <input
+                     ng-model="user"
+                     class="form-control"
+                     placeholder="Usuario">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group has-success has-feedback">
      <label>Clave(*)</label>
      <div class="form-inline">
        <a ng-click="editPass()" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -492,17 +503,56 @@
              placeholder="Clave" ng-disabled="passedite">
       </div>
     </div>
+        </div>
+    </div>
+
+
+
+
 <hr>
+            <div class="row">
+                <div class="col-lg-4">
+                            <div class="form-group has-success has-feedback">
 
-            <div class="form-group has-success has-feedback">
-                <label>Perfil :</label>
+                                <label>Perfil :</label>
 
-                <select  class="form-control" name="typematerial" id="mySelect"
-                 ng-options="perfil.name for perfil in perfiles track by perfil.id"
+                                <select  class="form-control" name="typematerial" id="mySelect"
+                                 ng-options="perfil.name for perfil in perfiles track by perfil.id"
 
-                 ng-model="profileselected"></select>
+                                 ng-model="profileselected"></select>
 
+                            </div>
+</div>
+                <div class="col-lg-4">
+
+                        <div class="form-group has-success has-feedback">
+
+                            <label>Rol :</label>
+
+                            <select  class="form-control" ng-change="reloadBosses()" name="typematerial" id="mySelect"
+                             ng-options="level.name for level in levels track by level.id"
+
+                             ng-model="levelselected"></select>
+
+                        </div>
+
+</div>
+                <div class="col-lg-4">
+
+
+                       <div class="form-group has-success has-feedback">
+
+                       <label>Depende de :</label>
+
+                        <select   ng-change=bosseschane()  class="form-control"  name="ngvalueselect" ng-model="bosseselected" multiple>
+                            <option ng-repeat="bosse in bosses" ng-value="bosse.id">{{bosse.name + " " +  bosse.lastName}}</option>
+                        </select>
+
+                        </div>
+</div>
             </div>
+
+
 
             <div class="form-group has-success has-feedback">
                 <label><input ng-model="contratistaenabled" type="checkbox" value=""> Contratista :</label>
