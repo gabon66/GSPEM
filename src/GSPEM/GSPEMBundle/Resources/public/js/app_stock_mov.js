@@ -6,10 +6,43 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
     $scope.animationsEnabled = false;
     $scope.stockPendiente=[];
 
+
     var getUsers= function () {
+        $scope.tecnicos=[];
         $http.get(Routing.generate('get_users')
         ).success(function (data) {
-            $scope.tecnicos=data;
+
+            for (var e = 0; e < data.length; e++) {
+                if(data[e].id!=$scope.mi_id && data[e].disabled==0){
+                    if(data[e].level==$scope.mi_level){
+                        $scope.tecnicos.push(data[e]);
+                    }else if (data[e].level > $scope.mi_level &&  data[e].bosses ) {
+                        // valido a mis hijos
+                        $scope.bosses_user=angular.fromJson(data[e].bosses);
+
+                        if($scope.bosses_user){
+                            for (var s = 0; s < $scope.bosses_user; s++) {
+                                if($scope.bosses_user[s] == $scope.mi_id){
+                                    // es uno los hijos
+                                    console.log("por hijos");
+                                    $scope.tecnicos.push(data[e]);
+                                    break;
+                                }
+                            }
+                        }
+                    }else {
+                        // solo a mis jefes
+                        if($scope.mi_bosses){
+                            for (var b = 0; b < $scope.mi_bosses.length; b++) {
+                                if($scope.mi_bosses[b] == data[e].id){
+                                    $scope.tecnicos.push(data[e]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
 
             for (var a = 0; a < $scope.tecnicos.length; a++) {
                 if ($scope.tecnicos[a].contratista!=null){
@@ -22,7 +55,28 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
             $scope.tecnicotarea=$scope.tecnicos[0];
         });
     }
-    getUsers();
+
+    var getPerfil = function() {
+        $http.get(Routing.generate('get_profile')
+        ).success(function (user) {
+            //console.log(user);
+            $scope.mi_level=user.user.level;
+            $scope.mi_id=user.user.id;
+            $scope.mi_bosses="";
+            if(user.user.bosses.length>0){
+                $scope.mi_bosses=angular.fromJson(user.user.bosses);
+            }
+
+            getUsers();
+        });
+    };
+    getPerfil();
+
+
+
+
+
+
 
 
     $scope.propertyName = 'id';
@@ -162,6 +216,8 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
     var getUsers= function () {
         $http.get(Routing.generate('get_users')
         ).success(function (data) {
+
+
             $scope.tecnicos=data;
             for (var a = 0; a < $scope.tecnicos.length; a++) {
                 if ($scope.tecnicos[a].contratista!=null){
@@ -171,14 +227,60 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                 }
             }
             $scope.tecnicoorigen=$scope.tecnicos[0];
-            $scope.tecnicodestino=$scope.tecnicos[0];
+
+
+            loadTecnicnosDestino();
+            //
             getStockFromUser();
         });
     }
+
+
     getUsers();
 
+    var loadTecnicnosDestino=function(){
+
+        $scope.tecnicosdest=[];
+
+        //console.log($scope.tecnicoorigen);
+        if($scope.tecnicoorigen.bosses.length>0){
+            var bosses_tec_ori=angular.fromJson($scope.tecnicoorigen.bosses);
+        }
 
 
+        for (var e = 0; e < $scope.tecnicos.length; e++) {
+
+            if($scope.tecnicos[e].id != $scope.tecnicoorigen.id && $scope.tecnicos[e].disabled==0){
+                if($scope.tecnicos[e].level==$scope.tecnicoorigen.level){
+                    $scope.tecnicosdest.push($scope.tecnicos[e]);
+                }else if ($scope.tecnicos[e].level > $scope.tecnicoorigen.level &&  $scope.tecnicos[e].bosses ) {
+                    // valido a mis hijos
+                    $scope.bosses_user=angular.fromJson($scope.tecnicos[e].bosses);
+                    if($scope.bosses_user){
+                        for (var s = 0; s < $scope.bosses_user; s++) {
+                            if($scope.bosses_user[s] == $scope.tecnicoorigen.id){
+                                // es uno los hijos
+                                $scope.tecnicosdest.push($scope.tecnicos[e]);
+                                break;
+                            }
+                        }
+                    }
+                }else {
+                    // solo a mis jefes
+                    if(bosses_tec_ori){
+                        for (var b = 0; b < bosses_tec_ori; b++) {
+                            if(bosses_tec_ori[b] == $scope.tecnicos[e].id){
+                                console.log("por jefes");
+                                $scope.tecnicosdest.push($scope.tecnicos[e]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $scope.tecnicodestino=$scope.tecnicosdest[0];
+    }
 
 
 
@@ -191,6 +293,8 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
 
 
     $scope.getStockOrigen= function () {
+        // recarga users
+        loadTecnicnosDestino();
         $scope.stockPendiente=[];
         getStockFromUser();
     }
@@ -246,13 +350,11 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
 
     $scope.setStock=function (item) {
         //console.log(item.cant);
-
         if(item.cant=="" || item.cant==undefined){
             item.cant=1;
         }
 
         if(item.cant>0){
-
             if(parseInt(item.cant)>parseInt(item.stock)){
                 toastr.warning('Indique numero menor o igual al stock maestro', 'Atención');
             }else {
@@ -262,7 +364,6 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                 }
                 item.stock=parseInt(item.stock) - parseInt(item.cant) ;
                 item.new_stock=item.stock;
-
                 if ($scope.stockPendiente.length>0){
                     var existe=false;
                     for (var a = 0; a < $scope.stockPendiente.length; a++) {
@@ -277,11 +378,8 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                 }else {
                     $scope.stockPendiente.push({id:item.id,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                 }
-
             }
-
         }
-
     };
 
 
@@ -408,7 +506,12 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
             console.log(user);
             $scope.mi_level=user.user.level;
             $scope.mi_id=user.user.id;
-            $scope.mi_bosses=angular.fromJson(user.user.bosses);
+            $scope.mi_bosses="";
+
+            if (user.user.bosses.length>0){
+                $scope.mi_bosses=angular.fromJson(user.user.bosses);
+                console.log($scope.mi_bosses)
+            }
             getUsers();
         });
     };
