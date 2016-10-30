@@ -37,17 +37,16 @@
 
                         {% if user== "admin"  %}
                         <!-- menu admin-->
-                            <li><a><i class="fa fa-users"></i> Usuarios <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
+                        <li><a><i class="fa fa-users"></i> Usuarios <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
 
-                                    <li><a href="#perfiles_abm">ABM Perfiles</a></li>
-                                    <li><a href="#contratistas_abm">ABM Contratistas</a></li>
-                                    <li><a href="#usuarios_abm">ABM Usuarios</a></li>
+                                <li><a href="#perfiles_abm">ABM Perfiles</a></li>
+                                <li><a href="#contratistas_abm">ABM Contratistas</a></li>
+                                <li><a href="#usuarios_abm">ABM Usuarios</a></li>
 
-                                </ul>
-                            </li>
-
-                        <li><a><i class="fa fa-map-marker"></i> Sitios <span class="fa fa-chevron-down"></span></a>
+                            </ul>
+                        </li>
+                        <!--<li><a><i class="fa fa-map-marker"></i> Sitios <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="#sitios_abm">ABM Sitios</a></li>
                             </ul>
@@ -56,7 +55,7 @@
                             <ul class="nav child_menu">
                                 <li><a href="#materiales_typo_abm">ABM Tipo Materiales</a></li>
                                 <li><a href="#materiales_abm">ABM Materiales</a></li>
-                                <!--<li><a href="#materiales_reportes">Reportes</a></li>-->
+
 
                             </ul>
                         </li>
@@ -89,7 +88,7 @@
                                 <li><a href="#stock_report_tec">Stock por Técnico</a></li>
                                 <li><a href="#stock_report_sit">Stock por Sitio</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                         {% else %}
 
                             {% if access.user.all is defined and  access.user.all== true %}
