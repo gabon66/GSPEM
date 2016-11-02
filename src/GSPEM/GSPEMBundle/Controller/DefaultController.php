@@ -511,6 +511,8 @@ class DefaultController extends Controller
         return new Response($serializer->serialize(array("user"=>$user,"profile"=>$perfil),"json"),200,array('Content-Type'=>'application/json'));
     }
 
+
+
     public function getSitiosTypeAction(){
         $em = $this->getDoctrine()->getEntityManager();
 

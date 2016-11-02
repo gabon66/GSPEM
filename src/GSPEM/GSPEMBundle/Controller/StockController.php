@@ -27,7 +27,7 @@ class StockController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $stmt = $em->getConnection()->createQueryBuilder()
-            ->select("m.id as id ,m.umbralmax as umbralmax , m.umbralmin as umbralmin,m.referencia as referencia ,m.id_custom as idCustom , m.descript as descript ,s.cant  as stock , m.name as name")
+            ->select("m.id as id ,m.ubicacion as ubicacion, m.umbralmax as umbralmax , m.umbralmin as umbralmin,m.referencia as referencia ,m.id_custom as idCustom , m.descript as descript ,s.cant  as stock , m.name as name")
             ->from("materiales", "m")
             ->innerJoin("m", "stock_maestro", "s", "m.id = s.material")
             ->orderBy('m.name', 'ASC')
@@ -398,6 +398,7 @@ class StockController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
         $childs=[];
+        $childs[]=$user->getId(); // me paso yo mismo primero asi veo mis reportes
         $stmt = $em->getConnection()->createQueryBuilder()
             ->select("u.id as id,u.level as  level , u.bosses as bosses")
             ->from("users", "u")
@@ -455,7 +456,6 @@ class StockController extends Controller
 
 
         foreach ($stmt->fetchAll() as $mov){
-
             $item=[];
 
             $stmtItems = $em->getConnection()->createQueryBuilder()
