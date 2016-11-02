@@ -9,6 +9,8 @@ GSPEMApp.service('MovPend', function($http,toastr) {
     var getMovPend = function() {
         $http.get(Routing.generate('get_mov_pend')
         ).success(function (data) {
+            console.log("pide movs pend");
+            console.log(data);
 
             if(data.length>0){
                 if(data.length >leng){
