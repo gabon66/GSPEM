@@ -16,8 +16,8 @@ GSPEMApp.service('MovPend', function($http,toastr) {
                 if(data.length >leng){
                     toastr.warning('Tiene movimientos de stock pendientes', 'Atención');
                 }
-                leng=data.length;
             }
+            leng=data.length;
 
         });
     };
