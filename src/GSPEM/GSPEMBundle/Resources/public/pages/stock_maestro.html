@@ -3,7 +3,13 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Stock Maestro <small></small></h2>
+                <h2>Stock Maestro <i ng-show="cargando==true" class="fa fa-refresh fa-spin fa-1x fa-fw"></i>
+                    <span class="sr-only">Cargando...</span></h2>
+
+
+
+
+
                 <div class="clearfix">
                     <div class="form-group">
                         <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
@@ -15,7 +21,7 @@
                 </div>
 
             </div>
-            <div class="x_content" style="height:  60% ;overflow: auto">
+            <div class="x_content" style="height:  60% ;overflow: auto" ng-show="!cargando">
 
                 <table class="table table-bordered">
                     <thead>
@@ -24,6 +30,8 @@
                         <th><a ng-click="sortBy('id')">ID <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <td>Referencia</td>
                         <th><a ng-click="sortBy('name')"> Nombre <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('ubicacion')"> Ubicacíon <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+
                         <th><a ng-click="sortBy('stock')"> Stock Actual <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <th>Stock Entrante / Saliente</th>
                         <th>Operaciones</th>
@@ -39,7 +47,7 @@
                         </td>
                         <td>{{ item.name }}</td>
 
-
+                        <td>{{ item.ubicacion }}</td>
                         <td style="text-align: right" ng-class="{danger: parseInt(item.stock) < parseInt(item.umbralmin)}">
                             <i ng-show="parseInt(item.umbralmin) > parseInt(item.stock)"  class="fa fa-exclamation" aria-hidden="true"></i>
                             {{ item.stock }}

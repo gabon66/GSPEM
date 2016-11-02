@@ -5,13 +5,15 @@
 GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,MovPend) {
     $scope.animationsEnabled = false;
 
-
+    $scope.cargando=true;
     $scope.propertyName = 'id';
     $scope.reverse = true;
     $scope.sortBy = function(propertyName) {
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
         $scope.propertyName = propertyName;
     };
+
+
 
     var getStock = function() {
         $http.get(Routing.generate('get_stock')
@@ -22,6 +24,7 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
+            $scope.cargando=false;
 
         });
     };

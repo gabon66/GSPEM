@@ -5,8 +5,8 @@
 GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPend) {
     $scope.animationsEnabled = false;
     $scope.stockPendiente=[];
-
-
+    $scope.tecnicotarea="";
+    $scope.cargando=true;
     var getUsers= function () {
         $scope.tecnicos=[];
         $http.get(Routing.generate('get_users')
@@ -45,16 +45,23 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
 
 
             for (var a = 0; a < $scope.tecnicos.length; a++) {
+                $scope.tecnicos[a].id=$scope.tecnicos[a].id;
                 if ($scope.tecnicos[a].contratista!=null){
                     $scope.tecnicos[a].name=$scope.tecnicos[a].name+" "+$scope.tecnicos[a].lastName +" - "+$scope.tecnicos[a].contratista;
                 }else {
                     $scope.tecnicos[a].name=$scope.tecnicos[a].name+" "+$scope.tecnicos[a].lastName;
                 }
             }
-
             $scope.tecnicotarea=$scope.tecnicos[0];
         });
     }
+
+
+    $scope.setValue=function () {
+        console.log($scope.tecnicotarea);
+    }
+
+
 
     var getPerfil = function() {
         $http.get(Routing.generate('get_profile')
@@ -95,6 +102,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
+            $scope.cargando=false;
             //console.log($scope.stock);
         });
     };
@@ -185,6 +193,8 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
 
 
     var confirmar_mov_stoc_tec=function () {
+
+
         $http({
             url: Routing.generate('set_stock_mov_tec'),
             method: "POST",

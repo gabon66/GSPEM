@@ -20,7 +20,6 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th><a ng-click="sortBy('id')">ID <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <td>Referencia</td>
                         <th><a ng-click="sortBy('name')"> Nombre <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <th><a ng-click="sortBy('stock')"> Stock Actual <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
@@ -30,7 +29,6 @@
                     <tbody>
                     <tr ng-repeat="item in stock | filter:filtromaterial | orderBy:propertyName:reverse">
                         <th>{{ $index +1 }}</th>
-                        <td>{{ item.idCustom }}</td>
                         <td>
                             <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref1}"></button>
                             <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref2}"></button>

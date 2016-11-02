@@ -16,7 +16,7 @@ GSPEMApp.service('MovPend', function($http,toastr) {
                 }
                 leng=data.length;
             }
-            //console.log(data);
+
         });
     };
 
@@ -29,9 +29,7 @@ GSPEMApp.service('MovPend', function($http,toastr) {
 
 GSPEMApp.config(function($routeProvider,toastrConfig) {
 
-    
-    
-    
+
     $routeProvider
         .when('/', {
             templateUrl : '../bundles/gspemgspem/pages/home.html',
@@ -162,6 +160,8 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
     $scope.parseInt = parseInt;
     $scope.showperfiledit=false;
     $scope.cargando=true;
+
+    $scope.isadmin=false;
     var getStock = function() {
         $http.get(Routing.generate('get_stock')
         ).success(function (stock) {
@@ -177,18 +177,42 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
         });
     };
 
+
+    var getMyStock = function() {
+        $http.get(Routing.generate('get_stock_user')
+        ).success(function (stock) {
+            $scope.stock=stock;
+            $scope.cargando=false;
+            //console.log($scope.stock);
+            for (var a = 0; a < $scope.stock.length; a++) {
+                $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
+            }
+        });
+    };
+
+
     var getPerfil = function() {
         $http.get(Routing.generate('get_profile')
         ).success(function (user) {
+            console.log(user);
+            if(user.user.level==1){
+                $scope.isadmin=true;
+            }
             $scope.access=angular.fromJson(user.profile.access);
             if($scope.access.oper.all){
                 // valido que tenga acceso al stock maestro para ver las alertas
-                getStock();
+                if($scope.isadmin){
+                    getStock();
+                }else {
+                    getMyStock();
+                }
                 $scope.showperfiledit=true;
 
             }else {
                 $scope.cargando=false;
             }
+
+
         });
     };
     getPerfil();

@@ -19,7 +19,8 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Stock Maestro <small></small></h2>
+                <h2>Stock Maestro <i ng-show="cargando==true" class="fa fa-refresh fa-spin fa-1x fa-fw"></i>
+                    <span class="sr-only">Cargando...</span></h2>
                 <div class="clearfix">
                     <div class="form-group">
                         <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
@@ -30,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="x_content" style="height:  300px ;overflow: auto">
+            <div class="x_content" style="height:  300px ;overflow: auto" ng-show="!cargando">
                 <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -85,16 +86,19 @@
         </div>
     </div>
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12" ng-show="!cargando">
         <div class="x_panel">
             <div class="x_title">
                 <div class="row">
                     <div class="col-lg-3"><h2>Stock Tecnico Pendiente<small></small></h2></div>
                     <div class="col-lg-4">
                         <div class="form-group has-success has-feedback">
-                            <select  class="form-control" name="typematerial" id="mySelect"
-                                     ng-options="tecnico.name  for tecnico in tecnicos track by tecnico.id"
-                                     ng-model="tecnicotarea"></select>
+
+
+                            <select  class="form-control" name="mySelect" id="mySelect" ng-change="setValue()"
+                                    ng-options="tecnico.name for tecnico in tecnicos track by tecnico.id"
+                                    ng-model="tecnicotarea"></select>
+
                         </div>
 
                     </div>
