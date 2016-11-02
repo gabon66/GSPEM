@@ -18,7 +18,7 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
             }
         });
     };
-    getStockPend();
+
 
     var getStock = function() {
         $http.get(Routing.generate('get_stock_user')
@@ -27,6 +27,13 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
             //console.log($scope.stock);
         });
     };
+
+
+    setInterval(function(){
+        getStockPend();
+        getStock();
+    },5000);
+    getStockPend();
     getStock();
 
     $scope.setStockRechazo=function (mov_id,item) {

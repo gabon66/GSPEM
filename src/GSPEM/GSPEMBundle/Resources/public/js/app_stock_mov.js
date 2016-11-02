@@ -106,6 +106,11 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
             //console.log($scope.stock);
         });
     };
+
+    setInterval(function(){
+        getStock();
+    },5000);
+
     getStock();
 
 
