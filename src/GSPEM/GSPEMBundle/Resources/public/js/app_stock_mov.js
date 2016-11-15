@@ -108,7 +108,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
     };
 
     setInterval(function(){
-        getStock();
+        //getStock();
     },5000);
 
     getStock();
