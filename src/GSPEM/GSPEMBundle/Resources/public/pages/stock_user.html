@@ -1,6 +1,6 @@
 <div class="row">
 
-    <div class="col-md-9 col-sm-9 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
                 <h2>Mi Stock <small></small></h2>
@@ -22,6 +22,8 @@
                         <th>#</th>
                         <td>Referencia</td>
                         <th><a ng-click="sortBy('name')"> Nombre <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('descript')"> Descripción <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+
                         <th><a ng-click="sortBy('stock')"> Stock Actual <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
 
                     </tr>
@@ -34,6 +36,8 @@
                             <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref2}"></button>
                         </td>
                         <td>{{ item.name }}</td>
+                        <td>{{ item.descript }}</td>
+
                         <td style="text-align: right">{{ item.stock }}</td>
 
                     </tr>

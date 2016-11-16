@@ -27,6 +27,8 @@
                         <th>ID</th>
                         <th>Ref.</th>
                         <th>Nombre</th>
+                        <th>Descripción</th>
+
                         <th>Stock Actual</th>
                         <th>Saliente</th>
                         <th>Operaciones</th>
@@ -41,6 +43,8 @@
                             <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref2}"></button>
                         </td>
                         <td>{{ item.name | limitTo:8 }}</td>
+                        <td>{{ item.descript | limitTo:10 }}</td>
+
                         <td style="text-align: right">{{ item.stock }}</td>
                         <td style="text-align: right">
                             <input class="input-group-sm" ng-model="item.cant" type="number" style="width: 60px;height: 22px;text-align: right" placeholder="1" />

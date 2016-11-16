@@ -29,9 +29,6 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
         });
     };
 
-    setInterval(function(){
-        getStock();
-    },10000);
     getStock();
 
 

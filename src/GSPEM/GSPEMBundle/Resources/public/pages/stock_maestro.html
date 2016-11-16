@@ -28,8 +28,10 @@
                     <tr>
                         <th>#</th>
                         <th><a ng-click="sortBy('id')">ID <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
-                        <td>Referencia</td>
+                        <td>Ref.</td>
                         <th><a ng-click="sortBy('name')"> Nombre <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('descript')"> Descripción <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+
                         <th><a ng-click="sortBy('ubicacion')"> Ubicacíon <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
 
                         <th><a ng-click="sortBy('stock')"> Stock Actual <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
@@ -46,7 +48,7 @@
                             <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref2}"></button>
                         </td>
                         <td>{{ item.name }}</td>
-
+                        <td>{{ item.descript }}</td>
                         <td>{{ item.ubicacion }}</td>
                         <td style="text-align: right" ng-class="{danger: parseInt(item.stock) < parseInt(item.umbralmin)}">
                             <i ng-show="parseInt(item.umbralmin) > parseInt(item.stock)"  class="fa fa-exclamation" aria-hidden="true"></i>
