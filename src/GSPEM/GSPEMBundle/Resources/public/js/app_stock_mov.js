@@ -132,7 +132,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
 
 
     $scope.setStock=function (item) {
-      //console.log(item.cant);
+      console.log(item);
 
         if(item.cant=="" || item.cant==undefined){
             item.cant=1;
@@ -159,10 +159,10 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id, referencia:item.referencia, idCustom:item.idCustom ,name:item.name , stock:item.cant})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,referencia:item.referencia ,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                 }
 
             }
@@ -388,10 +388,10 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                 }
             }
         }
@@ -592,10 +592,10 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                 }
 
             }

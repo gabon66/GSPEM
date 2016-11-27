@@ -184,8 +184,29 @@
             <div class="form-group has-success has-feedback">
                 <label>Referencia Asignada :</label>
 
-                <button class="btn btn-sm" style="background-color: {{ referencia.ref1 }}"></button>
-                <button class="btn btn-sm" style="background-color: {{ referencia.ref2 }}"></button>
+                    <!--    <button class="btn btn-sm" style="background-color: {{ referencia.ref1 }}"></button>
+                    -->
+                    <!--//IE11 FIX-->
+                    <button ng-if="referencia.ref1=='blue'" class="btn btn-sm" style="background-color: blue"></button>
+                    <button ng-if="referencia.ref1=='green'" class="btn btn-sm" style="background-color: green"></button>
+                    <button ng-if="referencia.ref1=='black'" class="btn btn-sm" style="background-color: black"></button>
+                    <button ng-if="referencia.ref1=='yellow'" class="btn btn-sm" style="background-color: yellow"></button>
+                    <button ng-if="referencia.ref1=='purple'" class="btn btn-sm" style="background-color: purple"></button>
+                    <button ng-if="referencia.ref1=='grey'" class="btn btn-sm" style="background-color: grey"></button>
+
+                    <button ng-if="referencia.ref2=='blue'" class="btn btn-sm" style="background-color: blue"></button>
+                    <button ng-if="referencia.ref2=='green'" class="btn btn-sm" style="background-color: green"></button>
+                    <button ng-if="referencia.ref2=='black'" class="btn btn-sm" style="background-color: black"></button>
+                    <button ng-if="referencia.ref2=='yellow'" class="btn btn-sm" style="background-color: yellow"></button>
+                    <button ng-if="referencia.ref2=='purple'" class="btn btn-sm" style="background-color: purple"></button>
+                    <button ng-if="referencia.ref2=='grey'" class="btn btn-sm" style="background-color: grey"></button>
+
+
+
+                    <!--<button class="btn btn-sm" style="background-color: {{ referencia.ref2 }}"></button>-->
+
+
+
                 <br/>
                     <label>Paleta de colores  :</label>
                   <div class="btn-group">
@@ -544,9 +565,14 @@
 
                        <label>Depende de :</label>
 
-                        <select   ng-change=bosseschane()  class="form-control"  name="ngvalueselect" ng-model="bosseselected" multiple>
-                            <option ng-repeat="bosse in bosses" ng-value="bosse.id">{{bosse.name + " " +  bosse.lastName}}</option>
-                        </select>
+                        <label ng-repeat="boss in bosses">
+                          <input type="checkbox" checklist-model="bosseselected" checklist-value="boss.id"> {{boss.name + " " +  boss.lastName }}
+                        </label>
+
+
+                        <!--<select   ng-change=bosseschane()  class="form-control"  name="ngvalueselect" ng-model="bosseselected"  data-ng-change="fixIE()" multiple>
+                            <option ng-repeat="bosse in bosses" ng-value="bosse.id"><span>{{bosse.name + " " +  bosse.lastName}}</span></option>
+                        </select>-->
 
                         </div>
 </div>

@@ -169,8 +169,15 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
     $scope.type=1;
     $scope.pass="";
     $scope.passedite=true;
+    $scope.bosseselected=[];
 
-
+    $scope.fixIE = function(){
+        //code to check if IE so the other browsers don't get this ugly hack.
+        var selectLists = document.querySelectorAll(".selectList");
+        for(var x = 0;x  < selectLists.length; x++){
+            selectLists[x].parentNode.insertBefore(selectLists[x], selectLists[x]);
+        }
+    };
 
     $scope.editPass=function () {
         if($scope.passedite){
@@ -208,7 +215,16 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
     if(item.id!=null){
         $scope.profileselected=$filter('filter')($scope.perfiles,{"id":item.profileid})[0];
         if(item.bosses){
-            $scope.bosseselected= angular.fromJson(item.bosses);
+
+            console.log("tienen bosess");
+            console.log(angular.fromJson(item.bosses));
+            for(var x = 0;x  < angular.fromJson(item.bosses).length; x++){
+                //console.log(angular.fromJson(item.bosses)[x]);
+                $scope.bosseselected.push(angular.fromJson(item.bosses)[x]);
+            }
+
+            //$scope.bosseselected= angular.fromJson(item.bosses);
+            //console.log($scope.bosseselected);
         }
 
         if(item.level){
@@ -257,6 +273,9 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
     }
 
     $scope.saveUser= function () {
+
+        //console.log($scope.bosseselected);
+        //return null;
 
         if ($scope.nombre.length == 0 || $scope.user.length == 0  || $scope.mail.length == 0 ) {
             toastr.warning('Complete todos los campos requeridos (*)', 'Atención');
