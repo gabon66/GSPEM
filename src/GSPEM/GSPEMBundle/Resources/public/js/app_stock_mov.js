@@ -18,10 +18,15 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                         $scope.tecnicos.push(data[e]);
                     }else if (data[e].level > $scope.mi_level &&  data[e].bosses ) {
                         // valido a mis hijos
+                        console.log(data[e].bosses);
                         $scope.bosses_user=angular.fromJson(data[e].bosses);
 
                         if($scope.bosses_user){
-                            for (var s = 0; s < $scope.bosses_user; s++) {
+                            for (var s = 0; s < $scope.bosses_user.length; s++) {
+                                console.log("aca entra");
+                                console.log($scope.bosses_user[s]);
+                                console.log($scope.mi_id);
+
                                 if($scope.bosses_user[s] == $scope.mi_id){
                                     // es uno los hijos
                                     console.log("por hijos");
@@ -35,6 +40,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                         if($scope.mi_bosses){
                             for (var b = 0; b < $scope.mi_bosses.length; b++) {
                                 if($scope.mi_bosses[b] == data[e].id){
+                                    console.log("mis jefes");
                                     $scope.tecnicos.push(data[e]);
                                 }
                             }
@@ -159,10 +165,10 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id, referencia:item.referencia, idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id, descript:item.descript,referencia:item.referencia, idCustom:item.idCustom ,name:item.name , stock:item.cant})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,referencia:item.referencia ,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,descript:item.descript,referencia:item.referencia ,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                 }
 
             }
@@ -272,7 +278,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                     // valido a mis hijos
                     $scope.bosses_user=angular.fromJson($scope.tecnicos[e].bosses);
                     if($scope.bosses_user){
-                        for (var s = 0; s < $scope.bosses_user; s++) {
+                        for (var s = 0; s < $scope.bosses_user.length; s++) {
                             if($scope.bosses_user[s] == $scope.tecnicoorigen.id){
                                 // es uno los hijos
                                 $scope.tecnicosdest.push($scope.tecnicos[e]);
@@ -388,10 +394,10 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id,descript:item.descript,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,descript:item.descript,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                 }
             }
         }
@@ -441,7 +447,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                 items:$scope.stockPendiente
             }
         }).then(function (response) {
-                console.log(response);
+
                 $scope.stockPendiente=[];
                 getStockFromUser();
                 toastr.success('Guardado con éxito', 'Stock');
@@ -466,17 +472,17 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
 
                     if(data[e].level==$scope.mi_level){
                         // mando los de mi mismo nivel
-                        console.log("por mismo nivel");
+
                         $scope.tecnicos.push(data[e]);
                     }else if (data[e].level > $scope.mi_level &&  data[e].bosses ) {
                         // valido a mis hijos
                         console.log("valido por hijos");
                         $scope.bosses_user=angular.fromJson(data[e].bosses);
                         if($scope.bosses_user){
-                            for (var s = 0; s < $scope.bosses_user; s++) {
+                            for (var s = 0; s < $scope.bosses_user.length; s++) {
                                 if($scope.bosses_user[s] == $scope.mi_id){
                                     // es uno los hijos
-                                    console.log("por hijos");
+
                                     $scope.tecnicos.push(data[e]);
                                     break;
                                 }
@@ -490,7 +496,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
                             for (var b = 0; b < $scope.mi_bosses.length; b++) {
 
                                 if($scope.mi_bosses[b] == data[e].id){
-                                    console.log("por jefes");
+
                                     $scope.tecnicos.push(data[e]);
                                 }
                             }
@@ -518,14 +524,14 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
     var getPerfil = function() {
         $http.get(Routing.generate('get_profile')
         ).success(function (user) {
-            console.log(user);
+
             $scope.mi_level=user.user.level;
             $scope.mi_id=user.user.id;
             $scope.mi_bosses="";
 
             if (user.user.bosses.length>0){
                 $scope.mi_bosses=angular.fromJson(user.user.bosses);
-                console.log($scope.mi_bosses)
+
             }
             getUsers();
         });
@@ -592,10 +598,10 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id,descript:item.descript, referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,descript:item.descript,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                 }
 
             }
@@ -621,7 +627,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
                 items:$scope.stock
             }
         }).then(function (response) {
-                console.log(response);
+
                 //getStock();
                 //toastr.success('Guardado con éxito', 'Stock');
             },
@@ -644,7 +650,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
                 items:$scope.stockPendiente
             }
         }).then(function (response) {
-                console.log(response);
+
                 $scope.stockPendiente=[];
                 getStock();
                 toastr.success('Guardado con éxito', 'Stock');

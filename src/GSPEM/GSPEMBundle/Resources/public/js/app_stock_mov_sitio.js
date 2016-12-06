@@ -76,10 +76,10 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id,descript:item.descript, referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,descript:item.descript, referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
                 }
             }
         }
