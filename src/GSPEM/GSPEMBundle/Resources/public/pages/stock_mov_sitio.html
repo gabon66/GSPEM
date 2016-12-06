@@ -111,7 +111,9 @@
                     <tr>
                         <th>#</th>
                         <th>ID</th>
+                        <th>Ref</th>
                         <th>Nombre</th>
+                        <th>Descripción</th>
                         <th>Stock</th>
 
                     </tr>
@@ -120,7 +122,12 @@
                     <tr ng-repeat="item in stockPendiente | filter:{name:filtrostockpend}">
                         <th>{{ $index +1 }}</th>
                         <td>{{ item.idCustom }}</td>
+                        <td>
+                            <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref1}"></button>
+                            <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref2}"></button>
+                        </td>
                         <td>{{ item.name | limitTo:8 }}</td>
+                        <td>{{ item.descript | limitTo:12 }}</td>
                         <td style="text-align: right">
                             <a  class="btn btn-sm btn-success " style="visibility: hidden" ng-click="setStock(item)" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                             </a>{{ item.stock }}
