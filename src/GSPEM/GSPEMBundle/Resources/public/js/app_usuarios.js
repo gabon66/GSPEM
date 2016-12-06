@@ -297,7 +297,7 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
             return false;
         }
 
-        console.log($scope.contratistaselected);
+        //console.log($scope.contratistaselected);
 
         if($scope.contratistaenabled){
 
@@ -307,11 +307,11 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
         }
         $scope.bossesUser="";
         if ($scope.bosseselected!=undefined && $scope.bosseselected!="undefined" ){
-            if ($scope.bosses.length>0){
+            if ($scope.bosseselected.length>0){
                 $scope.bossesUser=angular.toJson($scope.bosseselected);
             }
         }
-        console.log("bossesa guardar"+$scope.levelselected.id);
+        //console.log("bossesa guardar"+$scope.levelselected.id);
 
         $http({
             url: Routing.generate('save_users'),
