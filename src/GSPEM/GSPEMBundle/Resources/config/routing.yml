@@ -33,6 +33,12 @@ save_contratistas:
         expose: true
     defaults: { _controller: GSPEMGSPEMBundle:Default:saveContratisa }
 
+delete_contratista:
+    path:     /delete_contratista
+    options:
+        expose: true
+    defaults: { _controller: GSPEMGSPEMBundle:Default:deleteContratista}
+
 
 
 

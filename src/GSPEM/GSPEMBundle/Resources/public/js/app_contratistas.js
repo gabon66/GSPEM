@@ -30,6 +30,28 @@ GSPEMApp.controller('abmContratistas', function($scope,$http,$uibModal,toastr,Mo
     getData();
 
 
+    $scope.delete = function (id) {
+        $http({
+            url: Routing.generate('delete_contratista'),
+            method: "POST",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: {
+                id:id,
+            },
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj)
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            }
+        }).then(function (response) {
+                getData();
+            },
+            function (response) { // optional
+                // failed
+            });
+    };
+
     $scope.new = function (item,template , controller) {
 
         var modalInstance = $uibModal.open({

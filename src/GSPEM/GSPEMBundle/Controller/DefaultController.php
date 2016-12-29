@@ -348,6 +348,24 @@ class DefaultController extends Controller
         return new Response($serializer->serialize(array("process"=>true),"json"),200,array('Content-Type'=>'application/json'));
     }
 
+    public function deleteContratistaAction(\Symfony\Component\HttpFoundation\Request $request){
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Contratista');
+        $repoData = $repo->findOneBy(array("id"=>$request->get("id")));
+        $em->remove($repoData);
+        $em->flush();
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize(array("process"=>true),"json"),200,array('Content-Type'=>'application/json'));
+    }
+
+
+
+
+
     public function saveMaterialesTypeAction(\Symfony\Component\HttpFoundation\Request $request){
         $em = $this->getDoctrine()->getEntityManager();
 

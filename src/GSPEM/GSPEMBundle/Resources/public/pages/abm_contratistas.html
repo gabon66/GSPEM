@@ -31,7 +31,8 @@
                         <td class="col-md-2">{{ contratista.supervisor2.name }} {{ contratista.supervisor2.apellido }}  </td>
                         <td class="col-md-2">{{ contratista.supervisor3.name }} {{ contratista.supervisor3.apellido }}  </td>
                         <td class="col-md-3">
-                               <a  class="btn btn-sm btn-success" ng-click="new(contratista)" ><i class="fa fa-edit"></i> </a>
+                            <a  class="btn btn-sm btn-success" ng-click="new(contratista)" ><i class="fa fa-edit"></i> </a>
+                            <a  class="btn btn-sm btn-warning" ng-click="delete(contratista.id)" ><i class="fa fa-remove"></i> </a>
                         </td>
                     </tr>
                     </tbody>
