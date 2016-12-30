@@ -45,7 +45,13 @@ GSPEMApp.controller('abmContratistas', function($scope,$http,$uibModal,toastr,Mo
                 return str.join("&");
             }
         }).then(function (response) {
-                getData();
+                console.log(response.data);
+                if (!response.data.process){
+                    toastr.warning('Contratista Asignado', 'Atención');
+                }else {
+                    getData();
+                }
+
             },
             function (response) { // optional
                 // failed

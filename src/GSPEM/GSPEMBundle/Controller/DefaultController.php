@@ -351,18 +351,25 @@ class DefaultController extends Controller
     public function deleteContratistaAction(\Symfony\Component\HttpFoundation\Request $request){
         $em = $this->getDoctrine()->getEntityManager();
 
-        $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Contratista');
-        $repoData = $repo->findOneBy(array("id"=>$request->get("id")));
-        $em->remove($repoData);
-        $em->flush();
+        $repoUser =$em->getRepository('GSPEM\GSPEMBundle\Entity\User');
+        $repoDataUser = $repoUser->findOneBy(array("contratista"=>$request->get("id")));
+
+        $response=false;
+        if (!$repoDataUser){
+            $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Contratista');
+            $repoData = $repo->findOneBy(array("id"=>$request->get("id")));
+            $em->remove($repoData);
+            $em->flush();
+            $response=true;
+        }
+
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
 
+
         $serializer = new Serializer($normalizers, $encoders);
-        return new Response($serializer->serialize(array("process"=>true),"json"),200,array('Content-Type'=>'application/json'));
+        return new Response($serializer->serialize(array("process"=>$response),"json"),200,array('Content-Type'=>'application/json'));
     }
-
-
 
 
 
