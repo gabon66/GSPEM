@@ -1,6 +1,13 @@
 <div class="row">
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
+
+    <div ng-show="cargando==true" class="col-md-12 col-sm-12 col-xs-12">
+        <h3>Espere por favor.. cargando reporte<i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
+        </h3>
+    </div>
+
+
+    <div ng-show="cargando==false" class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
                 <h2>Stock por Sitio<small></small></h2>

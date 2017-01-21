@@ -278,8 +278,8 @@ GSPEMApp.controller('abmReportsContratista', function($scope,$http,$uibModal,toa
 GSPEMApp.controller('abmReportsMov', function($filter,$scope,$http,$uibModal,toastr,MovPend) {
     $scope.animationsEnabled = false;
     $scope.contratistaselected;
+    $scope.cargando=true;
 
-    
     
     $scope.exportar=function () {
 
@@ -438,7 +438,7 @@ GSPEMApp.controller('abmReportsAlertas', function($filter,$scope,$http,$uibModal
 });
 
 GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toastr,MovPend) {
-
+    $scope.cargando=true;
 
     $scope.propertyName = 'name';
     $scope.reverse = true;
@@ -451,9 +451,12 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
         ).success(function (sitios) {
+
             $scope.sitios=sitios;
             $scope.sitioselected=$scope.sitios[0];
+            //console.log("cargo sitios");
             getStockFromSite();
+
         });
     };
 
@@ -489,8 +492,10 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
             $scope.stock=stock;
             $scope.stockfilter=$scope.stock;
             $scope.cargando=false;
+            console.log("trajo la data");
         });
     };
+
     getStockFromSite();
 
     $scope.exportar=function () {
