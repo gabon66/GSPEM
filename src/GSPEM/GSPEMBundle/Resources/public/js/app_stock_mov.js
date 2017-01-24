@@ -53,9 +53,9 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
             for (var a = 0; a < $scope.tecnicos.length; a++) {
                 $scope.tecnicos[a].id=$scope.tecnicos[a].id;
                 if ($scope.tecnicos[a].contratista!=null){
-                    $scope.tecnicos[a].name=$scope.tecnicos[a].name+" "+$scope.tecnicos[a].lastName +" - "+$scope.tecnicos[a].contratista;
+                    $scope.tecnicos[a].name=$scope.tecnicos[a].lastName+" "+$scope.tecnicos[a].name +" - "+$scope.tecnicos[a].contratista;
                 }else {
-                    $scope.tecnicos[a].name=$scope.tecnicos[a].name+" "+$scope.tecnicos[a].lastName;
+                    $scope.tecnicos[a].name=$scope.tecnicos[a].lastName+" "+$scope.tecnicos[a].name;
                 }
             }
             $scope.tecnicotarea=$scope.tecnicos[0];
@@ -242,9 +242,9 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
             $scope.tecnicos=data;
             for (var a = 0; a < $scope.tecnicos.length; a++) {
                 if ($scope.tecnicos[a].contratista!=null){
-                    $scope.tecnicos[a].name=$scope.tecnicos[a].name+" "+$scope.tecnicos[a].lastName +" - "+$scope.tecnicos[a].contratista;
+                    $scope.tecnicos[a].name=$scope.tecnicos[a].lastName+" "+$scope.tecnicos[a].name +" - "+$scope.tecnicos[a].contratista;
                 }else {
-                    $scope.tecnicos[a].name=$scope.tecnicos[a].name+" "+$scope.tecnicos[a].lastName;
+                    $scope.tecnicos[a].name=$scope.tecnicos[a].lastName+" "+$scope.tecnicos[a].name;
                 }
             }
             $scope.tecnicoorigen=$scope.tecnicos[0];
@@ -507,9 +507,9 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
 
             for (var a = 0; a < $scope.tecnicos.length; a++) {
                 if ($scope.tecnicos[a].contratista!=null){
-                    $scope.tecnicos[a].name=$scope.tecnicos[a].name+" "+$scope.tecnicos[a].lastName +" - "+$scope.tecnicos[a].contratista;
+                    $scope.tecnicos[a].name=$scope.tecnicos[a].lastName+" "+$scope.tecnicos[a].name +" - "+$scope.tecnicos[a].contratista;
                 }else {
-                    $scope.tecnicos[a].name=$scope.tecnicos[a].name+" "+$scope.tecnicos[a].lastName;
+                    $scope.tecnicos[a].name=$scope.tecnicos[a].lastName+" "+$scope.tecnicos[a].name;
                 }
             }
             $scope.tecnicodestino=$scope.tecnicos[0];
