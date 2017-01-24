@@ -40,6 +40,7 @@ GSPEMApp.controller('abmReports', function($scope,$http,$uibModal,toastr,MovPend
 
 
     $scope.updateReportSitios=function () {
+
         getStockFromSite();
     };
 
@@ -454,8 +455,9 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
 
             $scope.sitios=sitios;
             $scope.sitioselected=$scope.sitios[0];
+            $scope.cargando=false;
             //console.log("cargo sitios");
-            getStockFromSite();
+            //getStockFromSite();
 
         });
     };
@@ -463,8 +465,9 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
 
 
     $scope.updateReportSitios=function () {
+        //console.log("test");
 
-        if($scope.sitioselected[0]=="0"){
+        /*if($scope.sitioselected[0]=="0"){
             getStockFromSite();
         }else {
             $scope.newstock=[];
@@ -476,17 +479,17 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
                 }
 
             }
-        }
+        }*/
 
         $scope.stock=$scope.newstock;
-        //getStockFromSite();
+        getStockFromSite();
     };
 
     getSitios();
 
 
 
-    var getStockFromSite = function() {
+    /*var getStockFromSite = function() {
         $http.get(Routing.generate('get_stock_sitios')
         ).success(function (stock) {
             $scope.stock=stock;
@@ -494,9 +497,39 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
             $scope.cargando=false;
             console.log("trajo la data");
         });
-    };
+    };*/
 
-    getStockFromSite();
+
+    var getStockFromSite=function () {
+        console.log($scope.sitioselected);
+        $http({
+            url: Routing.generate('get_stock_sitio_custom'),
+            method: "POST",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            data: {
+                id:  $scope.sitioselected
+            },
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj)
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            }
+        }).then(function (response) {
+                //console.log(response);
+                //$scope.stock_sit=response.data;
+                $scope.stock=response.data;
+                $scope.stockfilter=$scope.stock;
+                $scope.cargando=false;
+                //console.log("trajo la data");
+
+            },
+            function (response) { // optional
+                // failed
+            });
+    }
+
+    //getStockFromSite();
 
     $scope.exportar=function () {
 

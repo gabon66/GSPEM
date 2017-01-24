@@ -18,7 +18,12 @@
                                  ng-model="sitioselected" ng-change="updateReportSitios()"></select>
                         -->
 
-                        <select  ng-change="updateReportSitios()" class="form-control"  name="ngvalueselect" ng-model="sitioselected" multiple>
+<!--                        <select  ng-change="updateReportSitios()" class="form-control"  name="ngvalueselect" ng-model="sitioselected" multiple>
+                            <option ng-repeat="sitio in sitios" ng-value="sitio.id">{{sitio.name}}</option>
+                        </select>
+-->
+
+                        <select  ng-change="updateReportSitios()" class="form-control"  name="ngvalueselect" ng-model="sitioselected">
                             <option ng-repeat="sitio in sitios" ng-value="sitio.id">{{sitio.name}}</option>
                         </select>
 

@@ -69,50 +69,7 @@
                 <a class="btn btn-success pull-right" ng-click="exportar()">Exportar</a>
             </div>
 
-            <div  class="x_content" style="height:  60% ;overflow: auto;visibility: hidden " id="exportable" >
 
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Inicio</th>
-                        <th>Fin</th>
-                        <th>Estado</th>
-                        <th>Tipo</th>
-                        <th>Items</th>
-                        <th>Nota</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <tr ng-repeat="mov in movs | filter:filtromaterial  | orderBy:propertyName:reverse">
-                        <th>{{ $index +1 }}</th>
-                        <td>{{ mov.origen }}</td>
-                        <td>{{ mov.tecnico }}</td>
-                        <td>{{ mov.inicio }}</td>
-                        <td>{{ mov.fin }}</td>
-                        <td ng-if="mov.state==0">Pendiente</td>
-                        <td ng-if="mov.state==1">Aceptado</td>
-                        <td ng-if="mov.state==2">Rechazado</td>
-                        <td ng-if="mov.state==3">Aceptado Parcial</td>
-                        <td ng-if="mov.type==1">Maestro => Tecnico</td>
-                        <td ng-if="mov.type==2">Tecnico => Tecnico</td>
-                        <td ng-if="mov.type==3">Tecnico => Sitio</td>
-                        <td><ul>
-                            <li ng-repeat="motitem in mov.items">
-                            ID: {{  motitem.idCustom }} Nombre : {{  motitem.name }} Cantidad : {{  motitem.cant }}
-                        </li>
-                        </ul></td>
-                        <td>{{ mov.nota }}</td>
-
-
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
 
 
 
@@ -122,4 +79,47 @@
     </div>
 </div>
 
+<div  class="x_content" style="height:  60% ;overflow: auto;visibility: hidden " id="exportable" >
 
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Origen</th>
+            <th>Destino</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Estado</th>
+            <th>Tipo</th>
+            <th>Items</th>
+            <th>Nota</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="mov in movs | filter:filtromaterial  | orderBy:propertyName:reverse">
+            <th>{{ $index +1 }}</th>
+            <td>{{ mov.origen }}</td>
+            <td>{{ mov.tecnico }}</td>
+            <td>{{ mov.inicio }}</td>
+            <td>{{ mov.fin }}</td>
+            <td ng-if="mov.state==0">Pendiente</td>
+            <td ng-if="mov.state==1">Aceptado</td>
+            <td ng-if="mov.state==2">Rechazado</td>
+            <td ng-if="mov.state==3">Aceptado Parcial</td>
+            <td ng-if="mov.type==1">Maestro => Tecnico</td>
+            <td ng-if="mov.type==2">Tecnico => Tecnico</td>
+            <td ng-if="mov.type==3">Tecnico => Sitio</td>
+            <td><ul>
+                <li ng-repeat="motitem in mov.items">
+                    ID: {{  motitem.idCustom }} Nombre : {{  motitem.name }} Cantidad : {{  motitem.cant }}
+                </li>
+            </ul></td>
+            <td>{{ mov.nota }}</td>
+
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
