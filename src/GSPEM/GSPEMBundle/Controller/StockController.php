@@ -202,6 +202,7 @@ class StockController extends Controller
                 $user_id=$data["user"];
             }
         }else {
+
             // viene desde transferencia desde maestro a tecnico
             $user_id=$this->get('security.token_storage')->getToken()->getUser()->getId();
         }
@@ -212,6 +213,19 @@ class StockController extends Controller
             $stock->setCant($item['stock']);
             $em->flush();
         }
+
+        /*if($data["user"]){
+            $repoUsers =$em->getRepository('GSPEM\GSPEMBundle\Entity\User');
+            $userOrigen=$repoUsers->findOneBy(array("id"=>$user_id));
+            $userDestino=$repoUsers->findOneBy(array("id"=>$data["tecnico"]));
+
+
+            $this->sendMailMovs($userOrigen->getLastName().' - '.$userOrigen->getFirstName(),"gabriel.adrian.felipe@gmail.com",new \DateTime(),$data["items"]);
+        }else{
+            $this->sendMailMovs("Stock Maestro","gabriel.adrian.felipe@gmail.com",new \DateTime(),$data["items"]);
+        }*/
+
+
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
@@ -295,11 +309,13 @@ class StockController extends Controller
         $stockTecMov->setState(0);
         $stockTecMov->setInicio(new \DateTime());
         $stockTecMov->setOrigen($user_id);
+        $fromMaestro=false;
         if($from_tec==true){
             // movientos entre tecnicos
             $stockTecMov->setType(2);
         }else {
             // moviemientos a tecnicos
+            $fromMaestro=true;
             $stockTecMov->setType(1);
         }
 
@@ -333,6 +349,20 @@ class StockController extends Controller
                 $materialesToAlert[$i]=$materialToAlert;
                 $i++;
             }
+        }
+
+
+
+
+
+        $repoUsers =$em->getRepository('GSPEM\GSPEMBundle\Entity\User');
+        $userOrigen=$repoUsers->findOneBy(array("id"=>$user_id));
+        $userDestino=$repoUsers->findOneBy(array("id"=>$data["tecnico"]));
+
+        if($fromMaestro){
+            $this->sendMailMovs("Stock Maestro",$userDestino->getMail(),new \DateTime(),$data["items"]);
+        }else{
+            $this->sendMailMovs("Stock  - ".$userOrigen->getLastName().' - '.$userOrigen->getFirstName(),$userDestino->getMail(),new \DateTime(),$data["items"]);
         }
 
 
@@ -429,6 +459,10 @@ class StockController extends Controller
         return $childs;
     }
 
+    /**
+     * Trae todo los movimientos - para reportes
+     * @return Response
+     */
 
     public function getAllMovimientosAction(){
         $em = $this->getDoctrine()->getEntityManager();
@@ -498,6 +532,11 @@ class StockController extends Controller
     }
 
 
+    /**
+     * Trae todo los movimientos pendientes con items
+     * @return Response
+     */
+
     public function getMovimientosPendientesItemsAction(){
         $em = $this->getDoctrine()->getEntityManager();
         $user=$this->get('security.token_storage')->getToken()->getUser();
@@ -534,6 +573,80 @@ class StockController extends Controller
         return new Response($serializer->serialize($result,"json"),200,array('Content-Type'=>'application/json'));
     }
 
+
+    public function getMovimientosRechazadosAction(){
+        $em = $this->getDoctrine()->getEntityManager();
+        $user=$this->get('security.token_storage')->getToken()->getUser();
+
+        $stmt = $em->getConnection()->createQueryBuilder()
+            ->select("st.id as idMov ,movs.type as typeMov,st.material as idMat, movs.tecnico as origen_id,movs.nota as nota, movs.inicio as inicio ,  movs.fin as fin , CONCAT (us.first_name ,'  ', us.last_name) as origen_name ,  m.referencia as referencia,st.rechazado, m.id as id , m.id_custom as idCustom , m.descript as descript , m.name as name")
+            ->from("stock_items_mov", "st")
+            ->innerJoin("st", "materiales", "m", "st.material = m.id")
+            ->innerJoin("st", "movimiento_stock_tecnico", "movs", "st.mov = movs.id")
+            ->innerJoin("movs", "users", "us", "movs.tecnico = us.id")
+            ->where("st.status =0")
+            ->andWhere("movs.origen = ".$user->getId())
+            ->execute();
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize($stmt->fetchAll(),"json"),200,array('Content-Type'=>'application/json'));
+    }
+
+    /**
+     * Acepto los rechados
+     */
+    public function  aceptRechazadosAction(\Symfony\Component\HttpFoundation\Request $request){
+        $em = $this->getDoctrine()->getEntityManager();
+        $user=$this->get('security.token_storage')->getToken()->getUser();
+
+        $repoStockTec =$em->getRepository('GSPEM\GSPEMBundle\Entity\StockTecnico');
+        $repoStockMestro =$em->getRepository('GSPEM\GSPEMBundle\Entity\StockMaestro');
+        $repoItemsMov =$em->getRepository('GSPEM\GSPEMBundle\Entity\StockItemsMov');
+        $data=json_decode($request->getContent(),true);
+
+
+        $logger = $this->get('logger');
+        $logger->error($data);
+        $logger->info('test');
+
+
+
+        $itemMov =$repoItemsMov->findOneBy(array("id"=>$request->get('item_id')));
+        $itemMov->setStatus(1);
+        $em->flush();
+
+        if ($request->get('type')==1){
+            //devuevlo al maestro los rechazados por el tecnico
+            $itemStockTec=$repoStockMestro->findOneBy(array("material"=>$request->get('id')));
+            if ($itemStockTec!=""){
+                $itemStockTec->setCant($itemStockTec->getCant()+(int) $request->get('cant'));
+            }
+            $em->flush();
+        }else{
+            //devuelvo al tecnio de origen los parcialmente rechazados
+            $itmeStockTec=$repoStockTec->findOneBy(array("material"=>$request->get('id'),"tecnico"=>$user->getId()));
+            if ($itmeStockTec!=""){
+                $itmeStockTec->setCant($itmeStockTec->getCant()+(int) $request->get('cant'));
+            }
+            $em->flush();
+        }
+
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize(array("process"=>true),"json"),200,array('Content-Type'=>'application/json'));
+    }
+
+
+
+    /**
+     * Aceptacion y rechazo de stock
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return Response
+     */
     public function aceptarMovPendientesAction(\Symfony\Component\HttpFoundation\Request $request){
         $em = $this->getDoctrine()->getEntityManager();
         $user=$this->get('security.token_storage')->getToken()->getUser();
@@ -549,17 +662,25 @@ class StockController extends Controller
 
 
         if($data['items_rejected']!="" && count($data['items_rejected']>0)){
+
+
             // seteo estodo 3 , aceptado pero con algnunos rechazos
             $movimiento->setState(3);
             $movimiento->setNota($data['nota']);
             //asigno rechazados
+
+
+
+            $itemsRejected=[];
             foreach ($data["items_rejected"] as $item){
 
                 //seteo al movimiento los rechazos
                 $itemMov=$repoItemsMov->findOneBy(array("id"=>($item['id_item'])));
                 $itemMov->setRechazado($item['cantrechazo']);
+                $itemsRejected[]=array("id"=>$itemMov->getMaterial(),"stock"=>$item['cantrechazo']);
+                $itemMov->setStatus(0);
                 $em->flush();
-                if ($movimiento->getType()==1){
+                /*if ($movimiento->getType()==1){
                     //devuevlo al maestro los rechazados por el tecnico
                     $itemStockTec=$repoStockMestro->findOneBy(array("material"=>$item['id'],));
                     if ($itemStockTec!=""){
@@ -573,12 +694,20 @@ class StockController extends Controller
                         $itmeStockTec->setCant($itmeStockTec->getCant()+(int)$item['cantrechazo']);
                     }
                     $em->flush();
-                }
+                }*/
             }
+            // envio mail con los rechazados ...............
+            $repoUsers =$em->getRepository('GSPEM\GSPEMBundle\Entity\User');
+            $userOrigen=$repoUsers->findOneBy(array("id"=>$movimiento->getOrigen()));
+            $this->sendMailMovs("Stock Rechazado de   - ".$user->getLastName().' - '.$user->getFirstName(),$userOrigen->getMail(),new \DateTime(),$itemsRejected,true,$data['nota']);
+            //----------------------------------------------
 
         }else{
             $movimiento->setState(1);
         }
+
+
+
 
         $movimiento->setFin(new \DateTime());
         $em->flush();
@@ -617,6 +746,14 @@ class StockController extends Controller
         return new Response($serializer->serialize(array("process"=>true),"json"),200,array('Content-Type'=>'application/json'));
     }
 
+
+
+
+    /**
+     * Rechazo de todos los items
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return Response
+     */
     public function rechazarMovPendientesAction(\Symfony\Component\HttpFoundation\Request $request){
         $em = $this->getDoctrine()->getEntityManager();
         $user=$this->get('security.token_storage')->getToken()->getUser();
@@ -628,6 +765,7 @@ class StockController extends Controller
 
         $movimiento = $repo->findOneBy(array("id"=>$request->get("id")));
         $movimiento->setState(2);
+        $tecOrigen=$movimiento->getOrigen();
         $movimiento->setNota($request->get("nota"));
         $movimiento->setFin(new \DateTime());
         $em->flush();
@@ -636,8 +774,15 @@ class StockController extends Controller
 
         $itmesMov=$repoItemsMov->findBy(array("mov"=>$request->get("id")));
 
+
+        $itemsRejected=[];
         foreach ($itmesMov as $movitem){
-            if ($movimiento->getType()==1){
+
+            $movitem->setStatus(0);
+            $movitem->setRechazado($movitem->getCant());
+            $em->flush();
+            $itemsRejected[]=array("id"=>$movitem->getMaterial(),"stock"=>$movitem->getCant());
+            /*if ($movimiento->getType()==1){
                 // tipo 1  , viene desde el stock maestro
                 $itemStockTec=$repoStockMestro->findOneBy(array("material"=>$movitem->getMaterial(),));
                 if ($itemStockTec!=""){
@@ -651,8 +796,14 @@ class StockController extends Controller
                     $itmeStockTec->setCant($itmeStockTec->getCant()+$movitem->getCant());
                 }
                 $em->flush();
-            }
+            }*/
         }
+
+        // envio mail con los rechazados ...............
+        $repoUsers =$em->getRepository('GSPEM\GSPEMBundle\Entity\User');
+        $userOrigen=$repoUsers->findOneBy(array("id"=>$tecOrigen));
+        $this->sendMailMovs("Stock Rechazado de   - ".$user->getLastName().' - '.$user->getFirstName(),$userOrigen->getMail(),new \DateTime(),$itemsRejected,true,$request->get("nota"));
+        //------------------------------
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
@@ -662,4 +813,55 @@ class StockController extends Controller
     }
 
 
+
+
+    private function sendMailMovs($origen, $to,$fecha , $items,$rechazo=false,$motivo=""){
+        $em = $this->getDoctrine()->getEntityManager();
+        $repoMat =$em->getRepository('GSPEM\GSPEMBundle\Entity\Material');
+
+
+        $logger = $this->get('logger');
+        $logger->error("send Mail");
+
+
+        $logger->error(print_r($items, true));
+
+        if($motivo!=""){
+            $motivo="Nota :".$motivo;
+        }
+        $materiales=[];
+        foreach ($items as $item){
+            $material=$repoMat->findOneBy(array("id"=>$item["id"]));
+            //$logger->error($material->getIdCustom());
+            $mat['id']=$material->getIdCustom();
+            $mat['name']=$material->getName();
+            $mat['descript']=$material->getDescript();
+            $mat['cant']=$item['stock'];
+            $logger->error("material id".$mat['id']);
+            $materiales[]=$mat;
+
+        }
+        //$logger->error(print_r($materiales));
+
+        if ($rechazo){
+            $mensaje="Tienes stock rechazado para aceptar";
+        }else{
+            $mensaje="Tienes nuevo envio de stock pendiente para aceptar";
+        }
+
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Sock pendiente para aceptar ')
+            ->setFrom($this->container->getParameter('mailer_user'))
+            ->setTo($to)
+            ->setBody(
+                $this->renderView(
+                    'GSPEMGSPEMBundle:Default:mail_alerts_mov.html.twig',
+                    array('message'=>$mensaje,'motivo'=>$motivo,'origen'=>$origen,'fecha'=>$fecha,'items'=>$materiales)
+                ),
+                'text/html'
+            );
+        $this->get('mailer')->send($message);
+
+    }
 }

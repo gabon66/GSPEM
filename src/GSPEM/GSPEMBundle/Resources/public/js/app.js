@@ -97,6 +97,10 @@ GSPEMApp.config(function($routeProvider,toastrConfig) {
             templateUrl : '../bundles/gspemgspem/pages/stock_pend.html',
             controller  : 'abmStockPend'
         })
+        .when('/stock_pend_rechazados', {
+            templateUrl : '../bundles/gspemgspem/pages/stock_pend_rechazado.html',
+            controller  : 'abmStockPendRechazados'
+        })
         .when('/stock_tecnico', {
             templateUrl : '../bundles/gspemgspem/pages/stock_user.html',
             controller  : 'abmStockUser'

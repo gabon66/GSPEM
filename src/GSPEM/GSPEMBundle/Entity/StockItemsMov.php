@@ -138,4 +138,33 @@ class StockItemsMov
     {
         return $this->rechazado;
     }
+    /**
+     * @var integer
+     */
+    private $status;
+
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return StockItemsMov
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 }

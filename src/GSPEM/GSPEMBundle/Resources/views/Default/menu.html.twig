@@ -152,6 +152,9 @@
                                     {% if access.opertec.stoc_pend is defined and access.opertec.stoc_pend== true %}
                                         <li><a href="#stock_pend">Aceptación de Stock</a></li>
                                     {% endif %}
+                                    {% if access.opertec.stoc_pend is defined and access.opertec.stoc_pend== true %}
+                                        <li><a href="#stock_pend_rechazados">Aceptación de Rechazos</a></li>
+                                    {% endif %}
                                     {% if access.opertec.stoc_tec is defined and access.opertec.stoc_tec== true %}
                                         <li><a href="#mi_stock_to_tec">Stock => Técnico</a></li>
                                     {% endif %}

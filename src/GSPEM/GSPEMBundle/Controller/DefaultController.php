@@ -47,8 +47,6 @@ class DefaultController extends Controller
 
 
 
-
-
     public function loadTwigAction($template)
     {
         return $this->render('GSPEMGSPEMBundle:Default:'.$template.'.html.twig');

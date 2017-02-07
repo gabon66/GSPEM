@@ -23,4 +23,3 @@ class MovStockSit
         return $this->id;
     }
 }
-

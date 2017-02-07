@@ -212,6 +212,9 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
 
 });
 
+
+
+
 GSPEMApp.controller('ModalRechazoStock', function($filter,$scope,$http, $uibModalInstance, idmov,toastr) {
     $scope.id = idmov;
     $scope.descript="";

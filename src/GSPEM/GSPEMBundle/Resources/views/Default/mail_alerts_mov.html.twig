@@ -1,0 +1,41 @@
+{% block stylesheets %}
+{% endblock %}
+{% block body %}
+    <br/>
+
+
+    <h3> {{ message }} </h3>
+    <h4> {{ motivo  }}</h4>
+    <h4>Datos  del envio:</h4>
+    <h5>Origen: {{ origen }}</h5>
+    <h5>Fecha: {{ fecha | date }}</h5>
+    <br>
+    <h3>Items :</h3>
+
+    <table class="table" style="background-color: #F7F7F7">
+        <thead>
+        <tr><th>ID</th><th>Nombre</th><th>Descripcion</th><th>Cantidad</th></tr>
+        </thead>
+        <tbody>
+        {% for material in items %}
+            <tr>
+                <td>
+                    {{ material.id }}
+                </td>
+                <td>
+                    {{ material.name }}
+                </td>
+                <td>
+                    {{ material.descript }}
+                </td>
+                <td>
+                    {{ material.cant }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3><a href="{{ path('homepage') }}">Web </a> </h3>
+    <h4>Gracias.</h4>
+{% endblock %}

@@ -187,6 +187,21 @@ get_mov_pend_items:
     options:
         expose: true
     defaults: { _controller: GSPEMGSPEMBundle:Stock:getMovimientosPendientesItems}
+
+acept_rechazados:
+    path:     /acept_rechazados
+    options:
+        expose: true
+    defaults: { _controller: GSPEMGSPEMBundle:Stock:aceptRechazados}
+
+
+
+get_mov_pend_items_rechazados:
+     path:     /get_mov_pend_items_rechazados
+     options:
+         expose: true
+     defaults: { _controller: GSPEMGSPEMBundle:Stock:getMovimientosRechazados}
+
 aceptar_mov_pend:
     path:     /aceptar_mov_pend
     options:
