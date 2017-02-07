@@ -20,7 +20,7 @@ GSPEM\GSPEMBundle\Entity\Material:
                 type: integer
                 column: type
             idCustom:
-                type: integer
+                type: string
                 column: id_custom
             img:
                 type: string

@@ -17,4 +17,6 @@ GSPEM\GSPEMBundle\Entity\StockItemsMov:
                 type: integer
             rechazado:
                 type: integer
+            status:
+                type: integer
     lifecycleCallbacks: {  }

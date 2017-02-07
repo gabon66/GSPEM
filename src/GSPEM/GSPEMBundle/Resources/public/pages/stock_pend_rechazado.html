@@ -1,0 +1,66 @@
+<div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Stock Rechazado Pendiente para aceptar <small ng-if="movs.length==0">No tiene envios de stock para ver por el momento</small></h2>
+                <div class="clearfix">
+                </div>
+            </div>
+            <div class="x_content">
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content" style="height:  250px ;overflow: auto">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th><a ng-click="sortBy('origen_name')">Rechazado Por<i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('fin')">Fecha<i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('idCustom')">ID<i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th>Material</th>
+                        <th>Descripción</th>
+                        <th>Referencia</th>
+                        <th><a ng-click="sortBy('rechazado')">Cantidad<i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th>Nota Rechazo</th>
+                        <th>Aceptar Rechazo</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="movitem in movs | orderBy:propertyName:reverse">
+                        <th>{{ $index +1 }}</th>
+                        <td>{{ movitem.origen_name }}</td>
+                        <td>{{ movitem.fin }}</td>
+
+                        <td>{{ movitem.idCustom }}</td>
+                        <td>{{ movitem.name }}</td>
+                        <td>{{ movitem.descript }}</td>
+                        <td>
+                            <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref1}"></button>
+                            <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref2}"></button>
+                        </td>
+                        <td>{{ movitem.rechazado }}</td>
+                        <td>
+                            <a ng-show="movitem.nota.length > 0" ng-click="showNota(movitem.nota)" class="btn btn-success btn-sm"><i class="fa fa-commenting-o" aria-hidden="true"></i></a></td>
+                        <td>
+                            <a  style="padding-left: 10px" class="btn btn-sm btn-success pull-right" ng-click="aceptRechazo(movitem.typeMov, movitem.idMat,  movitem.idMov,movitem.rechazado)" ><i class="fa fa-check" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
