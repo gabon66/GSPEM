@@ -56,14 +56,13 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
                 items:$scope.stock
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 getStock();
                 toastr.success('Guardado con éxito', 'Stock');
             },
             function (response) { // optional
                 // failed
             });
-
     }
 
 });

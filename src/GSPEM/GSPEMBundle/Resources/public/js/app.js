@@ -166,8 +166,26 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
     $scope.parseInt = parseInt;
     $scope.showperfiledit=false;
     $scope.cargando=true;
-
+    $scope.title_my_stock="Mi Stock";
     $scope.isadmin=false;
+
+    var getStockMaestro = function() {
+        $http.get(Routing.generate('get_stock')
+        ).success(function (stock) {
+            $scope.stockMaestro=stock;
+            //console.log($scope.stock);
+
+            for (var a = 0; a < $scope.stockMaestro.length; a++) {
+                $scope.stockMaestro[a].referencia=angular.fromJson($scope.stockMaestro[a].referencia);
+            }
+            $scope.cargando=false;
+
+        });
+    };
+
+
+
+
     var getStock = function() {
         $http.get(Routing.generate('get_stock')
         ).success(function (stock) {
@@ -178,6 +196,9 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
                 if(parseInt($scope.stock_temp[a].stock) < parseInt($scope.stock_temp[a].umbralmin)){
                     $scope.stock.push($scope.stock_temp[a]);
                 }
+            }
+            for (var a = 0; a < $scope.stock.length; a++) {
+                $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
             //console.log($scope.stock);
         });
@@ -209,8 +230,11 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
                 // valido que tenga acceso al stock maestro para ver las alertas
                 if($scope.isadmin){
                     getStock();
+                    getStockMaestro();
+                    $scope.title_my_stock="Stock Maestro";
                 }else {
                     getMyStock();
+                    $scope.title_my_stock="Mi Stock";
                 }
                 $scope.showperfiledit=true;
 
@@ -222,10 +246,6 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
         });
     };
     getPerfil();
-
-
-
-
 
 
 });
