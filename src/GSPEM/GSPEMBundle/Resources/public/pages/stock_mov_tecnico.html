@@ -26,7 +26,7 @@
                         <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                         <div class="input-group col-lg-4 pull-right">
                             <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                            <input type="text" ng-model="filtromaterial"class="form-control" id="exampleInputAmount" placeholder="Nombre">
+                            <input type="text" ng-model="filtromaterial"class="form-control" id="exampleInputAmount" placeholder="ID/ Nombre / Descripción / *">
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in stock | filter:{name:filtromaterial} | orderBy:propertyName:reverse">
+                    <tr ng-repeat="item in stock | filter:filtromaterial | orderBy:propertyName:reverse">
                         <th>{{ $index +1 }}</th>
                         <td>{{ item.idCustom }}</td>
                         <td>
@@ -109,7 +109,7 @@
                             <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                             <div class="input-group col-lg-8 pull-right">
                                 <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                                <input type="text" ng-model="filtrostockpend"class="form-control" id="exampleInputAmount" placeholder="Nombre">
+                                <input type="text" ng-model="filtrostockpend"class="form-control" id="exampleInputAmount" placeholder="ID / Nombre / Descripción / *">
                             </div>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in stockPendiente | filter:{name:filtrostockpend}">
+                    <tr ng-repeat="item in stockPendiente | filter:filtrostockpend">
                         <th>{{ $index +1 }}</th>
                         <td>{{ item.idCustom }}</td>
                         <td>
