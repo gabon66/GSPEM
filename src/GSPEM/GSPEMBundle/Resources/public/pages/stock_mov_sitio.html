@@ -25,7 +25,7 @@
                         <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                         <div class="input-group col-lg-4 pull-right">
                             <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                            <input type="text" ng-model="filtromaterial"class="form-control" id="exampleInputAmount" placeholder="Nombre">
+                            <input type="text" ng-model="filtromaterial"class="form-control" id="exampleInputAmount" placeholder="ID/ Nombre / Descripción / *">
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in stock | filter:{name:filtromaterial}">
+                    <tr ng-repeat="item in stock | filter:filtromaterial">
                         <th>{{ $index +1 }}</th>
                         <td>{{ item.idCustom }}</td>
                         <td>
@@ -84,22 +84,22 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <h2>Stock Sitio<small></small></h2>
                 </div>
-                <div class="col-lg-4" >
+                <div class="col-lg-3" >
                     <div class="form-group has-success has-feedback">
                         <select  class="form-control" name="typematerial" id="mySelect"
                                  ng-options="sitio.name for sitio in sitios track by sitio.id"
                                  ng-model="sitiosstock"></select>
                     </div>
                 </div>
-                <div class="col-lg-5" >
+                <div class="col-lg-7" >
                     <div class="form-group">
                         <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                         <div class="input-group col-lg-6 pull-right">
                             <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                            <input type="text" ng-model="filtrostockpend"class="form-control" id="exampleInputAmount" placeholder="Nombre">
+                            <input type="text" ng-model="filtrostockpend"class="form-control" id="exampleInputAmounts" placeholder="ID/ Nombre / Descripción / *">
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in stockPendiente | filter:{name:filtrostockpend}">
+                    <tr ng-repeat="item in stockPendiente | filter:filtrostockpend">
                         <th>{{ $index +1 }}</th>
                         <td>{{ item.idCustom }}</td>
                         <td>

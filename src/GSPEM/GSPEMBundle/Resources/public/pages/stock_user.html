@@ -9,7 +9,7 @@
                         <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                         <div class="input-group col-lg-4 pull-right">
                             <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                            <input type="text" ng-model="filtromaterial"class="form-control" id="exampleInputAmount" placeholder="ID / Nombre">
+                            <input type="text" ng-model="filtromaterial"class="form-control" id="exampleInputAmount" placeholder="ID/ Nombre / Descripción / *">
                         </div>
                     </div>
                 </div>
@@ -20,6 +20,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>ID</th>
                         <td>Referencia</td>
                         <th><a ng-click="sortBy('name')"> Nombre <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <th><a ng-click="sortBy('descript')"> Descripción <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
@@ -31,6 +32,7 @@
                     <tbody>
                     <tr ng-repeat="item in stock | filter:filtromaterial | orderBy:propertyName:reverse">
                         <th>{{ $index +1 }}</th>
+                        <td>{{ item.idCustom }}</td>
                         <td>
                             <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref1}"></button>
                             <button class="btn btn-sm" ng-style="{'background-color':item.referencia.ref2}"></button>
