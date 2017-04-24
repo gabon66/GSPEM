@@ -7,6 +7,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
     $scope.stockPendiente=[];
     $scope.tecnicotarea="";
     $scope.cargando=true;
+    $scope.enviando=false;
     var getUsers= function () {
         $scope.tecnicos=[];
         $http.get(Routing.generate('get_users')
@@ -138,7 +139,6 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
 
 
     $scope.setStock=function (item) {
-      console.log(item);
 
         if(item.cant=="" || item.cant==undefined){
             item.cant=1;
@@ -165,10 +165,11 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id, descript:item.descript,referencia:item.referencia, idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id, descript:item.descript,referencia:item.referencia, idCustom:item.idCustom ,name:item.name , stock:item.cant,obs:item.obs})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,descript:item.descript,referencia:item.referencia ,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,descript:item.descript,referencia:item.referencia ,
+                        idCustom:item.idCustom ,name:item.name , stock:item.cant ,obs:item.obs})
                 }
 
             }
@@ -179,18 +180,29 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
 
 
     $scope.confirmar=function () {
+        $scope.enviando=true;
         confirmar_stock_maestro();
         confirmar_mov_stoc_tec();
     }
 
 
     var confirmar_stock_maestro=function () {
+
+        $scope.stockToSend=new Array();
+        for (var s = 0; s < $scope.stock.length; s++) {
+            for (var i = 0; i < $scope.stockPendiente.length; i++) {
+                    if ($scope.stockPendiente[i].id==$scope.stock[s].id)
+                    {
+                        $scope.stockToSend.push($scope.stock[s]);
+                    }
+            }
+        }
         $http({
             url: Routing.generate('set_stock'),
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             data: {
-                items:$scope.stock
+                items:$scope.stockToSend
             }
         }).then(function (response) {
                 console.log(response);
@@ -219,7 +231,8 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                 console.log(response);
                 $scope.stockPendiente=[];
                 getStock();
-                toastr.success('Guardado con éxito', 'Stock');
+                $scope.enviando=false;
+                toastr.success('Stock enviado con exito', 'Stock');
             },
             function (response) { // optional
                 // failed
@@ -233,6 +246,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
 GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibModal,toastr ,MovPend) {
     $scope.animationsEnabled = false;
     $scope.stockPendiente=[];
+    $scope.enviando=false;
 
     var getUsers= function () {
         $http.get(Routing.generate('get_users')
@@ -394,10 +408,14 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id,descript:item.descript,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id,descript:item.descript,
+                            referencia:item.referencia,idCustom:item.idCustom ,
+                            name:item.name , stock:item.cant,obs:item.obs})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,descript:item.descript,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,descript:item.descript,
+                        referencia:item.referencia,idCustom:item.idCustom ,
+                        name:item.name , stock:item.cant,obs:item.obs})
                 }
             }
         }
@@ -405,9 +423,11 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
 
 
     $scope.confirmar=function () {
+
         if($scope.tecnicodestino.id == $scope.tecnicoorigen.id ){
             toastr.warning('Seleccione un tecnico distinto para el envio de stock', 'Error');
         } else {
+            $scope.enviando=true;
             confirmar_stock_tecnico();
             confirmar_mov_stoc_tec();
         }
@@ -450,7 +470,8 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
 
                 $scope.stockPendiente=[];
                 getStockFromUser();
-                toastr.success('Guardado con éxito', 'Stock');
+                $scope.enviando=false;
+                toastr.success('Stock enviado con exito', 'Stock');
             },
             function (response) { // optional
                 // failed
@@ -462,7 +483,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
     $scope.animationsEnabled = false;
     $scope.stockPendiente=[];
     $scope.tecnicos=[];
-
+    $scope.enviando=false;
     var getUsers= function () {
         $http.get(Routing.generate('get_users')
         ).success(function (data) {
@@ -598,10 +619,15 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
                         }
                     }
                     if(!existe){
-                        $scope.stockPendiente.push({id:item.id,descript:item.descript, referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                        $scope.stockPendiente.push({id:item.id,descript:item.descript, referencia:item.referencia,idCustom:item.idCustom ,name:item.name ,
+                            stock:item.cant,obs:item.obs})
                     }
                 }else {
-                    $scope.stockPendiente.push({id:item.id,descript:item.descript,referencia:item.referencia,idCustom:item.idCustom ,name:item.name , stock:item.cant})
+                    $scope.stockPendiente.push({id:item.id,
+                        descript:item.descript,referencia:item.referencia,
+                        idCustom:item.idCustom ,name:item.name , stock:item.cant,
+                        obs:item.obs
+                    })
                 }
 
             }
@@ -612,6 +638,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
 
 
     $scope.confirmar=function () {
+        $scope.enviando=true;
         confirmar_stock_tecnico();
         confirmar_mov_stoc_tec();
     }
@@ -653,7 +680,8 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
 
                 $scope.stockPendiente=[];
                 getStock();
-                toastr.success('Guardado con éxito', 'Stock');
+                toastr.success('Stock enviado con exito', 'Stock');
+                $scope.enviando=true;
             },
             function (response) { // optional
                 // failed

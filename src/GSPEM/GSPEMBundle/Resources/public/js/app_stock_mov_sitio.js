@@ -5,7 +5,7 @@
 GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,MovPend) {
     $scope.animationsEnabled = false;
     $scope.stockPendiente=[];
-
+    $scope.cargando=true;
 
 
     var getSitios = function() {
@@ -13,6 +13,7 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
         ).success(function (sitios) {
             $scope.sitios=sitios;
             $scope.sitiosstock=$scope.sitios[0];
+            $scope.cargando=false;
         });
     };
     getSitios();

@@ -4,12 +4,13 @@
 GSPEMApp.controller('abmSitios', function($scope,$http,$uibModal,toastr,MovPend) {
     $scope.animationsEnabled = false;
 
-
+    $scope.cargando=true;
 
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
         ).success(function (sitios) {
             $scope.sitios=sitios;
+            $scope.cargando=false;
         });
     };
     getSitios();
@@ -30,6 +31,7 @@ GSPEMApp.controller('abmSitios', function($scope,$http,$uibModal,toastr,MovPend)
         modalInstance.result.then(function (selectedItem) {
             $scope.selected = selectedItem;
         }, function () {
+            $scope.cargando=true;
             getSitios()
             //$log.info('Modal dismissed at: ' + new Date());
         });
@@ -61,7 +63,6 @@ GSPEMApp.controller('abmSitios', function($scope,$http,$uibModal,toastr,MovPend)
             });
     };
 
-
 });
 GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModalInstance, item,toastr) {
     $scope.item = item;
@@ -69,31 +70,38 @@ GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModal
     $scope.name="";
     $scope.descript="";
     $scope.direccion="";
+    $scope.emplazamiento="";
     $scope.latitud=0;
     $scope.longitud=0;
     $scope.editing=true;
     $scope.id=0;
 
-    console.log($scope.item);
+    console.log(item);
+
+
+
 
     if(item!=null){
         $scope.editing=false;
-        console.log(item.type_id);
         $scope.id=item.id;
-
         $scope.direccion_str=item.direccion;
-        $scope.descript=item.descript;
+        $scope.descript=(item.descript!=null)?item.descript:"";
+        if($scope.descript==null){
+            $scope.descript="";
+        }
+
         $scope.name=item.name;
+        $scope.emplazamiento=(item.emplazamiento!=null)?item.emplazamiento:"";
+        if($scope.emplazamiento==null){
+            $scope.emplazamiento="";
+        }
         $scope.latitud=item.latitud;
         $scope.longitud=item.longitud;
-
         $scope.typematerial=item.type_id;
-        console.log($scope.typematerial);
     }
 
+
     $scope.placeChanged=function (place) {
-        //console.log("cambioaaaaaaa");
-        //console.log(place);
     }
 
 
@@ -102,23 +110,22 @@ GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModal
     };
 
     $scope.saveSitio= function () {
-        console.log($scope.direccion)
-
         if ($scope.name.length == 0) {
             toastr.warning('Complete todos los campos requeridos (*)', 'Atención');
+            return false;
         } else {
-
-        if ($scope.direccion){
-            $scope.latitud  = $scope.direccion.geometry.location.lat()
-            $scope.longitud = $scope.direccion.geometry.location.lng()
-            $scope.direccion_ster=$scope.direccion.formatted_address;
-        }else{
-            if(scope.id){
-                toastr.warning('Complete todos los campos requeridos (*)', 'Atención');
-                return false
+            if ($scope.direccion){
+                $scope.latitud  = $scope.direccion.geometry.location.lat()
+                $scope.longitud = $scope.direccion.geometry.location.lng()
+                $scope.direccion_str=$scope.direccion.formatted_address;
+            }else{
+                if($scope.id==0){
+                    toastr.warning('Complete con una direccion valida', 'Atención');
+                    return false
             }
-
         }
+
+        console.log($scope.direccion_str);
 
         $http({
             url: Routing.generate('save_sitios'),
@@ -126,8 +133,9 @@ GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModal
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             data: {
                 descript: $scope.descript,
-                direccion: $scope.direccion_ster,
+                direccion: $scope.direccion_str,
                 name:$scope.name,
+                emplazamiento:$scope.emplazamiento,
                 lat:$scope.latitud,
                 long:$scope.longitud,
                 id:$scope.id
@@ -147,5 +155,4 @@ GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModal
             });
     };
     }
-
 });
