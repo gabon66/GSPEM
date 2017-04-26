@@ -39,7 +39,7 @@ GSPEMApp.controller('abmSitios', function($scope,$http,$uibModal,toastr,MovPend)
 
 
     $scope.deleteSitios= function (id) {
-        console.log("delete");
+        //console.log("delete");
         $http({
             url: Routing.generate('delete_sitios'),
             method: "POST",
@@ -76,7 +76,7 @@ GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModal
     $scope.editing=true;
     $scope.id=0;
 
-    console.log(item);
+    //console.log(item);
 
 
 
@@ -125,7 +125,7 @@ GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModal
             }
         }
 
-        console.log($scope.direccion_str);
+        //console.log($scope.direccion_str);
 
         $http({
             url: Routing.generate('save_sitios'),
@@ -147,7 +147,7 @@ GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModal
                 return str.join("&");
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 $uibModalInstance.dismiss('cancel');
             },
             function (response) { // optional

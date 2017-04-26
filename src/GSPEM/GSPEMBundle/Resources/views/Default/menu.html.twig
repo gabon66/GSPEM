@@ -185,7 +185,9 @@
                                     {% if access.reportes.stock_alertas is defined and access.reportes.stock_alertas== true %}
                                         <li><a href="#stock_alertas">Alertas de Stock</a></li>
                                     {% endif %}
-
+                                    {% if access.reportes.compras is defined and access.reportes.compras== true %}
+                                        <li><a href="#historial_compras">Historial de Compras</a></li>
+                                    {% endif %}
                                 </ul>
                             </li>
                             {% endif %}

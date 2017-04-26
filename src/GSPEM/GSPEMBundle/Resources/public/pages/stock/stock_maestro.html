@@ -69,7 +69,8 @@
 
             </div>
             <div class="x_content">
-                <a class="btn btn-success pull-right" ng-click="confirmar()">Confirmar</a>
+                <a ng-if="enviando" class="btn btn-success pull-right disabled" ng-click="confirmar()">Cargando...</a>
+                <a ng-if="!enviando" class="btn btn-success pull-right" ng-click="confirmar()">Confirmar</a>
             </div>
 
         </div>

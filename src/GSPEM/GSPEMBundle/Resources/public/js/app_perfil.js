@@ -16,7 +16,7 @@ GSPEMApp.controller('abmPerfil', function($filter,$scope,$http,$uibModal,toastr,
             if($scope.access.user.perfiles){
                 $scope.showperfiledit=true;
             }
-            console.log($scope.access);
+            //console.log($scope.access);
             $scope.id=$scope.userdata.id;
             $scope.nombre=$scope.userdata.name;
             $scope.apellido=$scope.userdata.lastName;
@@ -33,7 +33,7 @@ GSPEMApp.controller('abmPerfil', function($filter,$scope,$http,$uibModal,toastr,
         $http.get(Routing.generate('get_perfiles')
         ).then(function (perfiles) {
             $scope.perfiles=perfiles.data;
-            console.log($scope.perfiles);
+            //console.log($scope.perfiles);
             $scope.profileselected=$scope.perfiles[0];
             getPerfil();
         });
@@ -100,7 +100,7 @@ GSPEMApp.controller('abmPerfil', function($filter,$scope,$http,$uibModal,toastr,
                 return str.join("&");
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 toastr.success('Guardado con exito', 'Perfil');
             },
             function (response) { // optional
@@ -111,7 +111,7 @@ GSPEMApp.controller('abmPerfil', function($filter,$scope,$http,$uibModal,toastr,
 });
 
 GSPEMApp.controller('abmPerfiles', function($scope,$http,$uibModal,toastr,MovPend) {
-    console.log("dasdsa");
+    //console.log("dasdsa");
     var gerPerfiles = function() {
         $http.get(Routing.generate('get_perfiles')
         ).then(function (perfiles) {
@@ -157,7 +157,7 @@ GSPEMApp.controller('abmPerfiles', function($scope,$http,$uibModal,toastr,MovPen
                 return str.join("&");
             }
         }).then(function (response) {
-                console.log(response.data);
+                //console.log(response.data);
                 if(response.data.process==false){
                     toastr.warning('Perfil en uso', 'Error');
                 }else {
@@ -174,7 +174,7 @@ GSPEMApp.controller('abmPerfiles', function($scope,$http,$uibModal,toastr,MovPen
 
 GSPEMApp.controller('ModelNewPerfil', function($filter,$scope,$http, $uibModalInstance, item,toastr) {
     $scope.item = item;
-    console.log(item);
+    //console.log(item);
 
     $scope.id=0;
 
@@ -183,7 +183,7 @@ GSPEMApp.controller('ModelNewPerfil', function($filter,$scope,$http, $uibModalIn
     $scope.materiales={all:true,abm_tipo:true,abm:true};
     $scope.oper={all:true,stock:true,stock_to_tec:true,stock_tec_to_tec:true};
     $scope.opertec={all:true,stock:true,stoc_pend:true,stoc_tec:true,stoc_sit:true};
-    $scope.reportes={all:true,stock_maestro:true,stock_tec:true,stock_sit:true,stock_cont:true,stock_mov:true,stock_alertas:true};
+    $scope.reportes={all:true,stock_maestro:true,stock_tec:true,stock_sit:true,stock_cont:true,stock_mov:true,stock_alertas:true,compras:true};
 
     
     
@@ -204,7 +204,7 @@ GSPEMApp.controller('ModelNewPerfil', function($filter,$scope,$http, $uibModalIn
     };
 
     $scope.saveProfile= function () {
-        console.log($scope.perfil);
+        //console.log($scope.perfil);
             $http({
                 url: Routing.generate('set_perfiles'),
                 method: "POST",

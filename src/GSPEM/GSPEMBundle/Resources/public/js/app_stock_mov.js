@@ -19,18 +19,18 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                         $scope.tecnicos.push(data[e]);
                     }else if (data[e].level > $scope.mi_level &&  data[e].bosses ) {
                         // valido a mis hijos
-                        console.log(data[e].bosses);
+                        //console.log(data[e].bosses);
                         $scope.bosses_user=angular.fromJson(data[e].bosses);
 
                         if($scope.bosses_user){
                             for (var s = 0; s < $scope.bosses_user.length; s++) {
-                                console.log("aca entra");
-                                console.log($scope.bosses_user[s]);
-                                console.log($scope.mi_id);
+                                //console.log("aca entra");
+                                //console.log($scope.bosses_user[s]);
+                                //console.log($scope.mi_id);
 
                                 if($scope.bosses_user[s] == $scope.mi_id){
                                     // es uno los hijos
-                                    console.log("por hijos");
+                                    //console.log("por hijos");
                                     $scope.tecnicos.push(data[e]);
                                     break;
                                 }
@@ -41,7 +41,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                         if($scope.mi_bosses){
                             for (var b = 0; b < $scope.mi_bosses.length; b++) {
                                 if($scope.mi_bosses[b] == data[e].id){
-                                    console.log("mis jefes");
+                                    //console.log("mis jefes");
                                     $scope.tecnicos.push(data[e]);
                                 }
                             }
@@ -65,7 +65,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
 
 
     $scope.setValue=function () {
-        console.log($scope.tecnicotarea);
+        //console.log($scope.tecnicotarea);
     }
 
 
@@ -110,7 +110,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
             $scope.cargando=false;
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
         });
     };
 
@@ -205,7 +205,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                 items:$scope.stockToSend
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 //getStock();
                 //toastr.success('Guardado con éxito', 'Stock');
             },
@@ -228,7 +228,7 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
                 items:$scope.stockPendiente
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 $scope.stockPendiente=[];
                 getStock();
                 $scope.enviando=false;
@@ -277,7 +277,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
 
         $scope.tecnicosdest=[];
 
-        //console.log($scope.tecnicoorigen);
+        ////console.log($scope.tecnicoorigen);
         if($scope.tecnicoorigen.bosses.length>0){
             var bosses_tec_ori=angular.fromJson($scope.tecnicoorigen.bosses);
         }
@@ -305,7 +305,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                     if(bosses_tec_ori){
                         for (var b = 0; b < bosses_tec_ori; b++) {
                             if(bosses_tec_ori[b] == $scope.tecnicos[e].id){
-                                console.log("por jefes");
+                                //console.log("por jefes");
                                 $scope.tecnicosdest.push($scope.tecnicos[e]);
                             }
                         }
@@ -350,7 +350,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                 return str.join("&");
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
 
 
                 $scope.stock=response.data;
@@ -384,7 +384,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
 
 
     $scope.setStock=function (item) {
-        //console.log(item.cant);
+        ////console.log(item.cant);
         if(item.cant=="" || item.cant==undefined){
             item.cant=1;
         }
@@ -444,7 +444,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
                 items:$scope.stock
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 //getStock();
                 //toastr.success('Guardado con éxito', 'Stock');
             },
@@ -498,7 +498,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
                         $scope.tecnicos.push(data[e]);
                     }else if (data[e].level > $scope.mi_level &&  data[e].bosses ) {
                         // valido a mis hijos
-                        console.log("valido por hijos");
+                        //console.log("valido por hijos");
                         $scope.bosses_user=angular.fromJson(data[e].bosses);
                         if($scope.bosses_user){
                             for (var s = 0; s < $scope.bosses_user.length; s++) {
@@ -569,7 +569,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
 
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
         });
     };
     getStock();
@@ -593,7 +593,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
 
 
     $scope.setStock=function (item) {
-        //console.log(item.cant);
+        ////console.log(item.cant);
 
         if(item.cant=="" || item.cant==undefined){
             item.cant=1;

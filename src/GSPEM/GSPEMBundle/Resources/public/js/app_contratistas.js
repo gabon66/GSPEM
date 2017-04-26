@@ -24,7 +24,7 @@ GSPEMApp.controller('abmContratistas', function($scope,$http,$uibModal,toastr,Mo
                     $scope.contratistas[a].supervisor3=angular.fromJson($scope.contratistas[a].supervisor3);
 
                 }
-                console.log($scope.contratistas);
+
         });
     };
     getData();
@@ -45,7 +45,7 @@ GSPEMApp.controller('abmContratistas', function($scope,$http,$uibModal,toastr,Mo
                 return str.join("&");
             }
         }).then(function (response) {
-                console.log(response.data);
+                //console.log(response.data);
                 if (!response.data.process){
                     toastr.warning('Contratista Asignado', 'Atención');
                 }else {
@@ -90,7 +90,7 @@ GSPEMApp.controller('ModelNewContratistaCtrl', function($filter,$scope,$http, $u
     $scope.sup3={};
 
 
-    console.log($scope.item);
+    //console.log($scope.item);
 
     if(item!=null){
         $scope.editing=false;
@@ -104,8 +104,8 @@ GSPEMApp.controller('ModelNewContratistaCtrl', function($filter,$scope,$http, $u
     }
 
     $scope.placeChanged=function (place) {
-        //console.log("cambioaaaaaaa");
-        //console.log(place);
+        ////console.log("cambioaaaaaaa");
+        ////console.log(place);
     }
 
 
@@ -130,7 +130,7 @@ GSPEMApp.controller('ModelNewContratistaCtrl', function($filter,$scope,$http, $u
                     id:$scope.id
                 }
             }).then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                     $uibModalInstance.dismiss('cancel');
                 },
                 function (response) { // optional

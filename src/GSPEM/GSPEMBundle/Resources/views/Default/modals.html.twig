@@ -82,7 +82,7 @@
                                     <div class="col-lg-3"><input ng-checked="perfil.reportes.all && perfil.reportes.stock_cont" ng-model="perfil.reportes.stock_cont" type="checkbox" value=""> Stock por Contratista</div>
                                     <div class="col-lg-3"><input ng-checked="perfil.reportes.all && perfil.reportes.stock_mov" ng-model="perfil.reportes.stock_mov" type="checkbox" value=""> Movimientos de Stock</div>
                                     <div class="col-lg-3"><input ng-checked="perfil.reportes.all && perfil.reportes.stock_alertas" ng-model="perfil.reportes.stock_alertas" type="checkbox" value=""> Alertas de Stock</div>
-
+                                    <div class="col-lg-3"><input ng-checked="perfil.reportes.all && perfil.reportes.compras" ng-model="perfil.reportes.compras" type="checkbox" value=""> Historial de Compras</div>
                             </div>
                        </div>
             </div>
@@ -714,7 +714,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="alta in altas ">
-                        <td>{{ alta.date  | date:'dd-MM-yyyy' }}</td>
+                        <td>{{ alta.date  | date:'dd-MM-yyyy' | limitTo: 10 }}</td>
                         <td>{{ alta.prov }} </td>
                         <td>{{ alta.stock }}</td>
                         <td>{{ alta.obs }}</td>

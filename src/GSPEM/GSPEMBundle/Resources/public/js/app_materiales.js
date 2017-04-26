@@ -37,7 +37,7 @@ GSPEMApp.controller('abmMaterial', function($scope,$http,$uibModal,toastr,typesS
             for (var a = 0; a < $scope.materiales.length; a++) {
                 $scope.materiales[a].referencia=angular.fromJson($scope.materiales[a].referencia);
             }
-            console.log($scope.materiales);
+            //console.log($scope.materiales);
 
         });
     };
@@ -46,7 +46,7 @@ GSPEMApp.controller('abmMaterial', function($scope,$http,$uibModal,toastr,typesS
 
 
     $scope.new = function (item,template , controller) {
-        console.log(controller);
+        //console.log(controller);
         var modalInstance = $uibModal.open({
             templateUrl: template,
             controller: controller,
@@ -70,7 +70,7 @@ GSPEMApp.controller('abmMaterial', function($scope,$http,$uibModal,toastr,typesS
 
 
     $scope.deleteMaterial= function (id) {
-        console.log("delete");
+        //console.log("delete");
         $http({
             url: Routing.generate('delete_materiales'),
             method: "POST",
@@ -154,7 +154,7 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
     $scope.referencia={ref1:"",ref2:""};
 
     $scope.types=$rootScope.typesMaterial.data;
-    console.log($scope.types);
+    //console.log($scope.types);
     $scope.name="";
     $scope.descript="";
     $scope.ubicacion="";
@@ -171,7 +171,7 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
 
 
     if(item!=null){
-        console.log(item);
+        //console.log(item);
         $scope.id=item.id;
         $scope.id_custom=item.idCustom
         $scope.name=item.name;
@@ -187,21 +187,21 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
         }
         $scope.descript=item.descript;
         $scope.typematerial=$filter('filter')($scope.types,{"id":item.type_id})[0];
-        console.log($scope.typematerial);
+        //console.log($scope.typematerial);
     }else {
         $scope.typematerial=$scope.type_default;
-        console.log($scope.typematerial);
+        //console.log($scope.typematerial);
     }
 
 
     $scope.setRef=function (group, color) {
-        console.log(group);
+        //console.log(group);
         if(group==1){
             $scope.referencia.ref1=color;
         }else {
             $scope.referencia.ref2=color;
         }
-        console.log($scope.referencia);
+        //console.log($scope.referencia);
     };
 
     $scope.clearRef=function () {
@@ -214,7 +214,7 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
     };
 
     $scope.saveMaterial= function () {
-        console.log($scope.typematerial);
+        //console.log($scope.typematerial);
 
 
         if(!parseInt($scope.umbralmin))
@@ -254,7 +254,7 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
                     return str.join("&");
                 }
             }).then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                     $uibModalInstance.dismiss('cancel');
                 },
                 function (response) { // optional
@@ -292,7 +292,7 @@ GSPEMApp.controller('ModelNewTypeCtrl', function($filter,$scope,$http, $uibModal
         if($scope.name.length==0 ||  $scope.descript.length==0 ){
             toastr.warning('Complete todos los campos', 'Atención');
         } else {
-            console.log($scope.typematerial);
+            //console.log($scope.typematerial);
             $http({
                 url: Routing.generate('save_materiales_type'),
                 method: "POST",
@@ -309,7 +309,7 @@ GSPEMApp.controller('ModelNewTypeCtrl', function($filter,$scope,$http, $uibModal
                     return str.join("&");
                 }
             }).then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                     $uibModalInstance.dismiss('cancel');
                 },
                 function (response) { // optional

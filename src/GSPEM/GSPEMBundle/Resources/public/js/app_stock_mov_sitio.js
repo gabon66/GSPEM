@@ -26,7 +26,7 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
         });
     };
     getStock();
@@ -50,7 +50,7 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
 
 
     $scope.setStock=function (item) {
-      //console.log(item.cant);
+      ////console.log(item.cant);
 
         if(item.cant=="" || item.cant==undefined){
             item.cant=1;
@@ -102,7 +102,7 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
                 items:$scope.stock
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 //getStock();
                 //toastr.success('Guardado con éxito', 'Stock');
             },
@@ -122,7 +122,7 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
                 items:$scope.stockPendiente
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 $scope.stockPendiente=[];
                 getStock();
                 toastr.success('Guardado con éxito', 'Stock');

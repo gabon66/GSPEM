@@ -24,7 +24,7 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
         $http.get(Routing.generate('get_stock_user')
         ).then(function (stock) {
             $scope.stock=stock.data;
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
         });
     };
 
@@ -41,7 +41,7 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
         for (var i = 0; i < $scope.movs.length; i++) {
 
             if($scope.movs[i].id==mov_id){
-                console.log($scope.movs);
+                //console.log($scope.movs);
                 $scope.movimientoitems = $scope.movs[i].items;
                 for (var a = 0; a < $scope.movimientoitems.length; a++) {
                     if($scope.movimientoitems[a].id==item.id){
@@ -52,7 +52,7 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
                             }
                             $scope.movs[i].items[a].cant=parseInt($scope.movimientoitems[a].cant) -parseInt(item.cantrechazo);
                             $scope.movs[i].items[a].cant_new=parseInt($scope.movimientoitems[a].cant) -parseInt(item.cantrechazo);
-                            console.log($scope.movs[i]);
+                            //console.log($scope.movs[i]);
                         }
                         //$scope.movs.items[a].stock= parseInt($scope.movs.items[a].stock) -parseInt(item.cantrechazo);
                     }
@@ -65,7 +65,7 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
     $scope.cancelPend= function (mov_id,item) {
         for (var i = 0; i < $scope.movs.length; i++) {
             if($scope.movs[i].id==mov_id){
-                console.log($scope.movs);
+                //console.log($scope.movs);
                 $scope.movimientoitems = $scope.movs[i].items;
                 for (var a = 0; a < $scope.movimientoitems.length; a++) {
                     if($scope.movimientoitems[a].id==item.id){
@@ -155,12 +155,12 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
                 items_rejected:$scope.itemsrejected_post
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 toastr.success('Transferencia realizada con exito', 'Stock');
                 getStockPend();
             },
             function (response) { // optional
-                console.log(response);
+                //console.log(response);
                 // failed
             });
     }
@@ -182,7 +182,7 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
 
 
     var rechazarAllSock= function (id) {
-        console.log("delete");
+        //console.log("delete");
         $http({
             url: Routing.generate('rechazar_mov_pend'),
             method: "POST",
@@ -225,7 +225,7 @@ GSPEMApp.controller('ModalRechazoStock', function($filter,$scope,$http, $uibModa
 
 
     $scope.saveDescript= function () {
-        console.log("test");
+        //console.log("test");
         $uibModalInstance.close($scope.descript);
 
     };

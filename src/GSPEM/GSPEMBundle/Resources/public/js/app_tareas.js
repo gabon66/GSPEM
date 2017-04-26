@@ -10,7 +10,7 @@ GSPEMApp.controller('abmTareas', function($scope,$http,$uibModal,toastr,MovPend)
         $http.get(Routing.generate('get_tareas')
         ).then(function (tareas) {
                 $scope.tareas=tareas.data;
-                console.log($scope.tareas);
+                //console.log($scope.tareas);
         });
     };
     getTareas();
@@ -61,7 +61,7 @@ GSPEMApp.controller('abmTareas', function($scope,$http,$uibModal,toastr,MovPend)
 
 
     $scope.deleteTarea= function (id) {
-        console.log("delete");
+        //console.log("delete");
         $http({
             url: Routing.generate('delete_tarea'),
             method: "POST",
@@ -93,7 +93,7 @@ GSPEMApp.controller('abmTareasTecnico', function($scope,$http,$uibModal,toastr,M
         $http.get(Routing.generate('get_tareas_tecnico')
         ).then(function (tareas) {
             $scope.tareas=tareas.data;
-            console.log($scope.tareas);
+            //console.log($scope.tareas);
         });
     };
     getTareas();
@@ -144,7 +144,7 @@ GSPEMApp.controller('abmTareasTecnico', function($scope,$http,$uibModal,toastr,M
 
 
     $scope.setEstado= function (id,estado) {
-        console.log("delete");
+        //console.log("delete");
         $http({
             url: Routing.generate('set_tarea_estado'),
             method: "POST",
@@ -170,7 +170,7 @@ GSPEMApp.controller('abmTareasTecnico', function($scope,$http,$uibModal,toastr,M
 
 
     $scope.deleteTarea= function (id) {
-        console.log("delete");
+        //console.log("delete");
         $http({
             url: Routing.generate('delete_tarea'),
             method: "POST",
@@ -205,8 +205,8 @@ GSPEMApp.controller('ModelTareaCtrl', function($filter,$scope,$http, $uibModalIn
     $scope.descript="";
     $scope.editing=true;
     $scope.id=0;
-    console.log("itme");
-    console.log($scope.item);
+    //console.log("itme");
+    //console.log($scope.item);
 
     if($scope.item!=null){
         $scope.editing=false;
@@ -217,7 +217,7 @@ GSPEMApp.controller('ModelTareaCtrl', function($filter,$scope,$http, $uibModalIn
         $scope.name=$scope.item.name;
 
 
-        console.log($scope.item.tecnico_id);
+        //console.log($scope.item.tecnico_id);
         $scope.tecnicotarea=$filter('filter')($scope.tecnicos,{"id":$scope.item.tecnico_id})[0];
         $scope.sitiotarea=$filter('filter')($scope.sitios,{"id":$scope.item.sitio_id})[0];
     }else{
@@ -230,7 +230,7 @@ GSPEMApp.controller('ModelTareaCtrl', function($filter,$scope,$http, $uibModalIn
     };
 
     $scope.save= function () {
-        console.log($scope.direccion)
+        //console.log($scope.direccion)
 
         if ($scope.name.length == 0 || $scope.name.descript == 0 ) {
             toastr.warning('Complete todos los campos requeridos (*)', 'Atención');
@@ -254,7 +254,7 @@ GSPEMApp.controller('ModelTareaCtrl', function($filter,$scope,$http, $uibModalIn
                 return str.join("&");
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 $uibModalInstance.dismiss('cancel');
             },
             function (response) { // optional
@@ -265,8 +265,8 @@ GSPEMApp.controller('ModelTareaCtrl', function($filter,$scope,$http, $uibModalIn
 
 });
 GSPEMApp.controller('ModelTareaCtrlTest', function($filter,$scope,$http, $uibModalInstance, data,toastr) {
-    console.log("data");
-    console.log(data);
+    //console.log("data");
+    //console.log(data);
 
 
 });

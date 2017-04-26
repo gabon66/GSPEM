@@ -17,7 +17,7 @@ GSPEMApp.controller('abmStockUser', function($scope,$http,$uibModal,toastr,MovPe
         $http.get(Routing.generate('get_stock_user')
         ).then(function (stock) {
             $scope.stock=stock.data;
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }

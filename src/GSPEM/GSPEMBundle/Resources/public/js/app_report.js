@@ -19,7 +19,7 @@ GSPEMApp.controller('abmReports', function($scope,$http,$uibModal,toastr,MovPend
         ).then(function (stock) {
             $scope.cargando=false;
             $scope.stock=stock.data;
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
         });
     };
     getStock();
@@ -56,7 +56,7 @@ GSPEMApp.controller('abmReports', function($scope,$http,$uibModal,toastr,MovPend
 
 
     var getStockFromSite=function () {
-        console.log($scope.sitioselected.id);
+        //console.log($scope.sitioselected.id);
         $http({
             url: Routing.generate('get_stock_sitio_custom'),
             method: "POST",
@@ -71,7 +71,7 @@ GSPEMApp.controller('abmReports', function($scope,$http,$uibModal,toastr,MovPend
                 return str.join("&");
             }
         }).then(function (response) {
-                console.log(response);
+                //console.log(response);
                 $scope.stock_sit=response.data;
             },
             function (response) { // optional
@@ -119,7 +119,7 @@ GSPEMApp.controller('reportStockAllUsers', function($scope,$http,$uibModal,toast
     $scope.cargando=true;
     $scope.usersmultiselect=[];
     $scope.updateReportStockTecnico=function () {
-        console.log($scope.usersselected);
+        //console.log($scope.usersselected);
         if($scope.usersselected[0]=="0"){
             getStockFromAllUsers();
         }else {
@@ -144,7 +144,7 @@ GSPEMApp.controller('reportStockAllUsers', function($scope,$http,$uibModal,toast
         ).then(function (data) {
 
             $scope.tecnicos=data.data;
-            console.log($scope.tecnicos);
+            //console.log($scope.tecnicos);
             $scope.usersmultiselect.push({id:0 ,label:"Todos"});
             for (var a = 0; a < $scope.tecnicos.length; a++) {
                 $scope.usersmultiselect.push({id:$scope.tecnicos[a].id,label:$scope.tecnicos[a].name + ' '+ $scope.tecnicos[a].lastName});
@@ -409,7 +409,7 @@ GSPEMApp.controller('abmReportsAlertas', function($filter,$scope,$http,$uibModal
                     $scope.stock.push($scope.stock_temp[a]);
                 }
             }
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
         });
     };
     getStock();
@@ -456,7 +456,7 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
             $scope.sitios=sitios.data;
             $scope.sitioselected=$scope.sitios[0];
             $scope.cargando=false;
-            //console.log("cargo sitios");
+            ////console.log("cargo sitios");
             //getStockFromSite();
 
         });
@@ -465,7 +465,7 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
 
 
     $scope.updateReportSitios=function () {
-        //console.log("test");
+        ////console.log("test");
 
         /*if($scope.sitioselected[0]=="0"){
             getStockFromSite();
@@ -495,13 +495,13 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
             $scope.stock=stock;
             $scope.stockfilter=$scope.stock;
             $scope.cargando=false;
-            console.log("trajo la data");
+            //console.log("trajo la data");
         });
     };*/
 
 
     var getStockFromSite=function () {
-        console.log($scope.sitioselected);
+        //console.log($scope.sitioselected);
         $http({
             url: Routing.generate('get_stock_sitio_custom'),
             method: "POST",
@@ -516,12 +516,12 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
                 return str.join("&");
             }
         }).then(function (response) {
-                //console.log(response);
+                ////console.log(response);
                 //$scope.stock_sit=response.data;
                 $scope.stock=response.data;
                 $scope.stockfilter=$scope.stock;
                 $scope.cargando=false;
-                //console.log("trajo la data");
+                ////console.log("trajo la data");
 
             },
             function (response) { // optional

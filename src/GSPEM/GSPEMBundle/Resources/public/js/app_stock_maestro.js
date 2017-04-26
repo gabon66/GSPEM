@@ -6,6 +6,7 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
     $scope.animationsEnabled = false;
 
     $scope.cargando=true;
+    $scope.enviando=false;
     $scope.propertyName = 'id';
     $scope.reverse = true;
     $scope.sortBy = function(propertyName) {
@@ -19,7 +20,7 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
         $http.get(Routing.generate('get_stock')
         ).then(function (stock) {
             $scope.stock=stock.data;
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
 
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
@@ -77,6 +78,7 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
 
 
     $scope.confirmar=function () {
+        $scope.enviando=true;
         $scope.stockToSend= new Array();
 
         for (var a = 0; a < $scope.stock.length; a++) {
@@ -84,7 +86,7 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
                 $scope.stockToSend.push($scope.stock[a]);
             }
         }
-        //console.log($scope.stockToSend);
+        ////console.log($scope.stockToSend);
 
         $http({
             url: Routing.generate('set_stock'),
@@ -94,7 +96,8 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
                 items:$scope.stockToSend
             }
         }).then(function (response) {
-                //console.log(response);
+                ////console.log(response);
+                $scope.enviando=false;
                 getStock();
                 toastr.success('Guardado con éxito', 'Stock');
             },

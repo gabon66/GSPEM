@@ -26,7 +26,7 @@ GSPEMApp.controller('abmUsuarios', function($scope,$http,$uibModal,toastr,MovPen
                 $scope.contratistas[a].supervisor3=angular.fromJson($scope.contratistas[a].supervisor3);
 
             }
-            //console.log($scope.contratistas);
+            ////console.log($scope.contratistas);
         });
     };
     getContratistas();
@@ -36,7 +36,7 @@ GSPEMApp.controller('abmUsuarios', function($scope,$http,$uibModal,toastr,MovPen
         $http.get(Routing.generate('get_perfiles')
         ).then(function (perfiles) {
             $scope.perfiles=perfiles.data;
-            //console.log($scope.perfiles);
+            ////console.log($scope.perfiles);
             $scope.profileselected=$scope.perfiles[0];
         });
     };
@@ -66,7 +66,7 @@ GSPEMApp.controller('abmUsuarios', function($scope,$http,$uibModal,toastr,MovPen
                 }
             }
             $scope.usersbyroles={levels0:$scope.userslevel0,levels1:$scope.userslevel1,levels2:$scope.userslevel2};
-            //console.log($scope.users);
+            ////console.log($scope.users);
         });
     };
     getUsuarios();
@@ -157,7 +157,7 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
     $scope.contratistas=item.contratistas;
 
     $scope.usersbyroles=item.usersbyroles;
-    console.log($scope.usersbyroles);
+    //console.log($scope.usersbyroles);
     $scope.contratistaenabled=false;
     $scope.levels=[];
     $scope.levels.push({id:1,name:"Administrador"},{id:2,name:"Supervisor"},{id:3,name:"Técnico"});
@@ -206,7 +206,7 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
             if($scope.usersbyroles.levels1.length>0){
 
                 $scope.bosses = $scope.bosses.concat($scope.usersbyroles.levels1)
-                console.log($scope.usersbyroles.levels1);
+                //console.log($scope.usersbyroles.levels1);
             }
         }
 
@@ -216,15 +216,15 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
         $scope.profileselected=$filter('filter')($scope.perfiles,{"id":item.profileid})[0];
         if(item.bosses){
 
-            console.log("tienen bosess");
-            console.log(angular.fromJson(item.bosses));
+            //console.log("tienen bosess");
+            //console.log(angular.fromJson(item.bosses));
             for(var x = 0;x  < angular.fromJson(item.bosses).length; x++){
-                //console.log(angular.fromJson(item.bosses)[x]);
+                ////console.log(angular.fromJson(item.bosses)[x]);
                 $scope.bosseselected.push(angular.fromJson(item.bosses)[x]);
             }
 
             //$scope.bosseselected= angular.fromJson(item.bosses);
-            //console.log($scope.bosseselected);
+            ////console.log($scope.bosseselected);
         }
 
         if(item.level){
@@ -249,7 +249,7 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
         $scope.phone=item.phone;
         $scope.mail=item.mail;
     }else {
-        console.log("new");
+        //console.log("new");
         $scope.nombre="";
         $scope.descript="";
         $scope.id=0;
@@ -259,7 +259,7 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
     }
 
     $scope.updateCon=function () {
-        console.log($scope.contratistaselected);
+        //console.log($scope.contratistaselected);
     }
 
 
@@ -269,12 +269,12 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
     
     
     $scope.bosseschane= function () {
-        console.log($scope.bosseselected);
+        //console.log($scope.bosseselected);
     }
 
     $scope.saveUser= function () {
 
-        //console.log($scope.bosseselected);
+        ////console.log($scope.bosseselected);
         //return null;
 
         if ($scope.nombre.length == 0 || $scope.user.length == 0  || $scope.mail.length == 0 ) {
@@ -297,7 +297,7 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
             return false;
         }
 
-        //console.log($scope.contratistaselected);
+        ////console.log($scope.contratistaselected);
 
         if($scope.contratistaenabled){
 
@@ -311,7 +311,7 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
                 $scope.bossesUser=angular.toJson($scope.bosseselected);
             }
         }
-        //console.log("bossesa guardar"+$scope.levelselected.id);
+        ////console.log("bossesa guardar"+$scope.levelselected.id);
 
         $http({
             url: Routing.generate('save_users'),
@@ -337,7 +337,7 @@ GSPEMApp.controller('ModalNewUserCtrl', function($filter,$scope,$http, $uibModal
                 return str.join("&");
             }
         }).then(function (response) {
-                //console.log(response);
+                ////console.log(response);
                 $uibModalInstance.dismiss('cancel');
             },
             function (response) { // optional

@@ -11,8 +11,8 @@ GSPEMApp.service('MovPend', function($http,toastr) {
     var getMovPend = function() {
         $http.get(Routing.generate('get_mov_pend')
         ).then(function (data) {
-            //console.log("pide movs pend");
-            //console.log(data);
+            ////console.log("pide movs pend");
+            ////console.log(data);
 
             if(data.length>0){
                 if(data.length >leng){
@@ -64,99 +64,103 @@ GSPEMApp.config(function($routeProvider,$mdDateLocaleProvider,toastrConfig,$loca
             controller  : 'abmPerfil'
         })
         .when('/contratistas_abm', {
-            templateUrl : '../bundles/gspemgspem/pages/abm_contratistas.html',
+            templateUrl : '../bundles/gspemgspem/pages/abms/abm_contratistas.html',
             controller  : 'abmContratistas'
         })
         .when('/perfiles_abm', {
-            templateUrl : '../bundles/gspemgspem/pages/abm_perfiles.html',
+            templateUrl : '../bundles/gspemgspem/pages/abms/abm_perfiles.html',
             controller  : 'abmPerfiles'
         })
         .when('/materiales_abm', {
-            templateUrl : '../bundles/gspemgspem/pages/abm_materiales.html',
+            templateUrl : '../bundles/gspemgspem/pages/abms/abm_materiales.html',
             controller  : 'abmMaterial'
         })
         .when('/sitios_abm', {
-            templateUrl : '../bundles/gspemgspem/pages/abm_sitios.html',
+            templateUrl : '../bundles/gspemgspem/pages/abms/abm_sitios.html',
             controller  : 'abmSitios'
         })
         .when('/usuarios_abm', {
-            templateUrl : '../bundles/gspemgspem/pages/abm_usuarios.html',
+            templateUrl : '../bundles/gspemgspem/pages/abms/abm_usuarios.html',
             controller  : 'abmUsuarios'
         })
         .when('/materiales_reportes', {
-            templateUrl : '../bundles/gspemgspem/pages/reportes_materiales.html',
+            templateUrl : '../bundles/gspemgspem/pages/abms/reportes_materiales.html',
             controller  : 'contactController'
         })
         .when('/materiales_typo_abm', {
-            templateUrl : '../bundles/gspemgspem/pages/abm_typo_materiales.html',
+            templateUrl : '../bundles/gspemgspem/pages/abms/abm_typo_materiales.html',
             controller  : 'abmMaterial'
         })
         .when('/sitios_typo_abm', {
-            templateUrl : '../bundles/gspemgspem/pages/abm_typo_sitios.html',
+            templateUrl : '../bundles/gspemgspem/pages/abms/abm_typo_sitios.html',
             controller  : 'abmSitios'
         })
         .when('/tareas_abm', {
-            templateUrl : '../bundles/gspemgspem/pages/abm_tareas.html',
+            templateUrl : '../bundles/gspemgspem/pages/abms/abm_tareas.html',
             controller  : 'abmTareas'
         })
         .when('/stock_maestro', {
-            templateUrl : '../bundles/gspemgspem/pages/stock_maestro.html',
+            templateUrl : '../bundles/gspemgspem/pages/stock/stock_maestro.html',
             controller  : 'abmStockMaestro'
         })
         .when('/stock_to_tec', {
-            templateUrl : '../bundles/gspemgspem/pages/stock_mov_tecnico.html',
+            templateUrl : '../bundles/gspemgspem/pages/stock/stock_mov_tecnico.html',
             controller  : 'abmStockMov'
         })
         .when('/stock_tec_to_tec', {
-            templateUrl : '../bundles/gspemgspem/pages/stock_mov_tecnico_to_tecnico.html',
+            templateUrl : '../bundles/gspemgspem/pages/stock/stock_mov_tecnico_to_tecnico.html',
             controller  : 'abmStockMovTecnicoToTecnico'
         })
         .when('/mi_stock_to_tec', {
-            templateUrl : '../bundles/gspemgspem/pages/stock_mov_tecnico_to_tecnico_from_tec.html',
+            templateUrl : '../bundles/gspemgspem/pages/stock/stock_mov_tecnico_to_tecnico_from_tec.html',
             controller  : 'abmStockMovTecnicoToTecnicoFromTec'
         })
         .when('/stock_pend', {
-            templateUrl : '../bundles/gspemgspem/pages/stock_pend.html',
+            templateUrl : '../bundles/gspemgspem/pages/stock/stock_pend.html',
             controller  : 'abmStockPend'
         })
         .when('/stock_pend_rechazados', {
-            templateUrl : '../bundles/gspemgspem/pages/stock_pend_rechazado.html',
+            templateUrl : '../bundles/gspemgspem/pages/stock/stock_pend_rechazado.html',
             controller  : 'abmStockPendRechazados'
         })
         .when('/stock_tecnico', {
-            templateUrl : '../bundles/gspemgspem/pages/stock_user.html',
+            templateUrl : '../bundles/gspemgspem/pages/stock/stock_user.html',
             controller  : 'abmStockUser'
         })
         .when('/stock_to_sit', {
-            templateUrl : '../bundles/gspemgspem/pages/stock_mov_sitio.html',
+            templateUrl : '../bundles/gspemgspem/pages/stock/stock_mov_sitio.html',
             controller  : 'abmStockMovSitio'
         })
         .when('/stock_report', {
-            templateUrl : '../bundles/gspemgspem/pages/report_maestro.html',
+            templateUrl : '../bundles/gspemgspem/pages/reports/report_maestro.html',
             controller  : 'abmReports'
         })
         .when('/stock_alertas', {
-            templateUrl : '../bundles/gspemgspem/pages/report_alertas.html',
+            templateUrl : '../bundles/gspemgspem/pages/reports/report_alertas.html',
             controller  : 'abmReportsAlertas'
         })
         .when('/stock_movimientos', {
-            templateUrl : '../bundles/gspemgspem/pages/report_movimiento.html',
+            templateUrl : '../bundles/gspemgspem/pages/reports/report_movimiento.html',
             controller  : 'abmReportsMov'
         })
 
         .when('/stock_report_tec', {
-            templateUrl : '../bundles/gspemgspem/pages/report_tecnico.html',
+            templateUrl : '../bundles/gspemgspem/pages/reports/report_tecnico.html',
             controller  : 'reportStockAllUsers'
         })
         .when('/stock_report_sit', {
-            templateUrl : '../bundles/gspemgspem/pages/report_sitio.html',
+            templateUrl : '../bundles/gspemgspem/pages/reports/report_sitio.html',
             controller  : 'reportsSitios'
         })
         .when('/stock_contratista', {
-            templateUrl : '../bundles/gspemgspem/pages/report_contratista.html',
+            templateUrl : '../bundles/gspemgspem/pages/reports/report_contratista.html',
             controller  : 'abmReportsContratista'
         })
 
+        .when('/historial_compras', {
+            templateUrl : '../bundles/gspemgspem/pages/reports/report_compras.html',
+            controller  : 'reportsCompras'
+        })
 
         .when('/tareas_tecnico', {
             templateUrl : '../bundles/gspemgspem/pages/tareas_tecnico.html',
@@ -222,7 +226,7 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
         });
     };
 
@@ -232,7 +236,7 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
         ).then(function (stock) {
             $scope.stock=stock;
             $scope.cargando=false;
-            //console.log($scope.stock);
+            ////console.log($scope.stock);
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
