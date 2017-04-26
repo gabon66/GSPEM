@@ -19,4 +19,6 @@ GSPEM\GSPEMBundle\Entity\StockItemsMov:
                 type: integer
             status:
                 type: integer
+            obs:
+                type: string
     lifecycleCallbacks: {  }

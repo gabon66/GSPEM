@@ -1,0 +1,11 @@
+GSPEM\GSPEMBundle\Entity\Test:
+    type: entity
+    table: null
+    repositoryClass: GSPEM\GSPEMBundle\Repository\TestRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    lifecycleCallbacks: {  }

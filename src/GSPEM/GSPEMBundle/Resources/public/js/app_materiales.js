@@ -32,8 +32,8 @@ GSPEMApp.controller('abmMaterial', function($scope,$http,$uibModal,toastr,typesS
 
     var getMateriales = function() {
         $http.get(Routing.generate('get_materiales')
-        ).success(function (materiales) {
-            $scope.materiales=materiales;
+        ).then(function (materiales) {
+            $scope.materiales=materiales.data;
             for (var a = 0; a < $scope.materiales.length; a++) {
                 $scope.materiales[a].referencia=angular.fromJson($scope.materiales[a].referencia);
             }
@@ -138,8 +138,8 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
 
     var getContratistas = function() {
         $http.get(Routing.generate('get_contratistas')
-        ).success(function (contratistas) {
-            $scope.contratistas=contratistas;
+        ).then(function (contratistas) {
+            $scope.contratistas=contratistas.data;
             if(item!=null){
                 $scope.contratistaselected=$filter('filter')($scope.contratistas,{"id":item.contratistaid})[0];
             }else {

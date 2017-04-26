@@ -17,10 +17,8 @@ GSPEMApp.controller('abmStockPendRechazados', function($scope,$http,$uibModal,to
 
     var getStockPendRejected = function() {
         $http.get(Routing.generate('get_mov_pend_items_rechazados')
-        ).success(function (movs) {
-            console.log(movs);
-                $scope.movs=movs;
-
+        ).then(function (movs) {
+                $scope.movs=movs.data;
         });
     };
     getStockPendRejected();

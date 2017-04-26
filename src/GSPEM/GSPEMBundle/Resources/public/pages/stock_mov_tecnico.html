@@ -126,6 +126,7 @@
                         <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Stock</th>
+                        <th>Observación</th>
 
                     </tr>
                     </thead>
@@ -144,13 +145,18 @@
                             <a  class="btn btn-sm btn-success " style="visibility: hidden" ng-click="setStock(item)" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                             </a>{{ item.stock }}
                         </td>
+                        <td>
+                            <input class="input-group-sm" ng-model="item.obs" type="text"  placeholder="" />
+                        </td>
                     </tr>
                     </tbody>
                 </table>
 
             </div>
             <div class="x_content">
-                <a ng-show="stockPendiente.length > 0" class="btn btn-success pull-right" ng-click="confirmar()">Confirmar</a>
+                <a ng-show="stockPendiente.length > 0 && enviando"  class="btn btn-success pull-right disabled">Enviando ..</a>
+
+                <a ng-show="stockPendiente.length > 0 && !enviando" class="btn btn-success pull-right" ng-click="confirmar()">Confirmar</a>
             </div>
 
         </div>

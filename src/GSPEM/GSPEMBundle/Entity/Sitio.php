@@ -197,4 +197,33 @@ class Sitio
     {
         return $this->name;
     }
+    /**
+     * @var string
+     */
+    private $emplazamiento;
+
+
+    /**
+     * Set emplazamiento
+     *
+     * @param string $emplazamiento
+     *
+     * @return Sitio
+     */
+    public function setEmplazamiento($emplazamiento)
+    {
+        $this->emplazamiento = $emplazamiento;
+
+        return $this;
+    }
+
+    /**
+     * Get emplazamiento
+     *
+     * @return string
+     */
+    public function getEmplazamiento()
+    {
+        return $this->emplazamiento;
+    }
 }

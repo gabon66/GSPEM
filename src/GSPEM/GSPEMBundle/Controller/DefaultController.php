@@ -189,7 +189,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 
         $stmt = $em->getConnection()->createQueryBuilder()
-            ->select("s.id as id ,s.name as name , s.direccion,s.latitud as lat , s.longitud as longitud ,st.id as type_id,  s.descript as descript ,st.name  as type ")
+            ->select("s.id as id ,s.emplazamiento as emplazamiento,s.name as name , s.direccion,s.latitud as lat , s.longitud as longitud ,st.id as type_id,  s.descript as descript ,st.name  as type ")
             ->from("sitios", "s")
             ->leftJoin("s", "sitios_type", "st", "s.type = st.id")
             ->execute();
@@ -218,6 +218,7 @@ class DefaultController extends Controller
         $sitio->setLong($request->get("long"));
         $sitio->setDescript($request->get("descript"));
         $sitio->setDireccion($request->get("direccion"));
+        $sitio->setEmplazamiento($request->get("emplazamiento"));
 
         if(!$request->get("id")){
             $em->persist($sitio);

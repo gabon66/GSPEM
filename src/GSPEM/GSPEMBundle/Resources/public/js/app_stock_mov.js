@@ -11,8 +11,8 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
     var getUsers= function () {
         $scope.tecnicos=[];
         $http.get(Routing.generate('get_users')
-        ).success(function (data) {
-
+        ).then(function ( resp) {
+            var data= resp.data
             for (var e = 0; e < data.length; e++) {
                 if(data[e].id!=$scope.mi_id && data[e].disabled==0){
                     if(data[e].level==$scope.mi_level){
@@ -72,8 +72,8 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
 
     var getPerfil = function() {
         $http.get(Routing.generate('get_profile')
-        ).success(function (user) {
-            //console.log(user);
+        ).then(function (resp) {
+            var user=resp.data
             $scope.mi_level=user.user.level;
             $scope.mi_id=user.user.id;
             $scope.mi_bosses="";
@@ -104,8 +104,8 @@ GSPEMApp.controller('abmStockMov', function($scope,$http,$uibModal,toastr ,MovPe
 
     var getStock = function() {
         $http.get(Routing.generate('get_stock')
-        ).success(function (stock) {
-            $scope.stock=stock;
+        ).then(function (stock) {
+            $scope.stock=stock.data;
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
@@ -250,8 +250,8 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnico', function($scope,$http,$uibMod
 
     var getUsers= function () {
         $http.get(Routing.generate('get_users')
-        ).success(function (data) {
-
+        ).then(function (resp) {
+            var data =resp.data;
 
             $scope.tecnicos=data;
             for (var a = 0; a < $scope.tecnicos.length; a++) {
@@ -486,8 +486,9 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
     $scope.enviando=false;
     var getUsers= function () {
         $http.get(Routing.generate('get_users')
-        ).success(function (data) {
-            console.log(data);
+        ).then(function (resp) {
+
+            var data= resp.data;
             for (var e = 0; e < data.length; e++) {
                 if(data[e].id!=$scope.mi_id && data[e].disabled==0){
 
@@ -544,8 +545,8 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
 
     var getPerfil = function() {
         $http.get(Routing.generate('get_profile')
-        ).success(function (user) {
-
+        ).then(function (resp) {
+            var user=resp.data
             $scope.mi_level=user.user.level;
             $scope.mi_id=user.user.id;
             $scope.mi_bosses="";
@@ -562,8 +563,8 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
 
     var getStock = function() {
         $http.get(Routing.generate('get_stock_user')
-        ).success(function (stock) {
-            $scope.stock=stock;
+        ).then(function (stock) {
+            $scope.stock=stock.data;
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }

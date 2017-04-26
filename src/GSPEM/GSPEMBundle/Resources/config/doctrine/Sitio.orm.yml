@@ -25,6 +25,9 @@ GSPEM\GSPEMBundle\Entity\Sitio:
             direccion:
                 type: string
                 column: direccion
+            emplazamiento:
+                type: string
+                column: emplazamiento
             type:
                 type: integer
                 column: type

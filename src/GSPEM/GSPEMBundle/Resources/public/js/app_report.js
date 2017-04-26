@@ -16,9 +16,9 @@ GSPEMApp.controller('abmReports', function($scope,$http,$uibModal,toastr,MovPend
     $scope.parseInt = parseInt;
     var getStock = function() {
         $http.get(Routing.generate('get_stock')
-        ).success(function (stock) {
+        ).then(function (stock) {
             $scope.cargando=false;
-            $scope.stock=stock;
+            $scope.stock=stock.data;
             //console.log($scope.stock);
         });
     };
@@ -29,8 +29,8 @@ GSPEMApp.controller('abmReports', function($scope,$http,$uibModal,toastr,MovPend
 
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
-        ).success(function (sitios) {
-            $scope.sitios=sitios;
+        ).then(function (sitios) {
+            $scope.sitios=sitios.data;
             $scope.sitioselected=$scope.sitios[0];
             getStockFromSite();
         });
@@ -141,9 +141,9 @@ GSPEMApp.controller('reportStockAllUsers', function($scope,$http,$uibModal,toast
 
     var getUsers= function () {
         $http.get(Routing.generate('get_users')
-        ).success(function (data) {
+        ).then(function (data) {
 
-            $scope.tecnicos=data;
+            $scope.tecnicos=data.data;
             console.log($scope.tecnicos);
             $scope.usersmultiselect.push({id:0 ,label:"Todos"});
             for (var a = 0; a < $scope.tecnicos.length; a++) {
@@ -158,8 +158,8 @@ GSPEMApp.controller('reportStockAllUsers', function($scope,$http,$uibModal,toast
 
     var getStockFromAllUsers = function() {
         $http.get(Routing.generate('get_stock_users')
-        ).success(function (stock) {
-            $scope.stock=stock;
+        ).then(function (stock) {
+            $scope.stock=stock.data;
             $scope.stockfilter=$scope.stock;
             $scope.cargando=false;
         });
@@ -255,9 +255,9 @@ GSPEMApp.controller('abmReportsContratista', function($scope,$http,$uibModal,toa
 
     var getData = function() {
         $http.get(Routing.generate('get_contratistas')
-        ).success(function (contratistas) {
+        ).then(function (contratistas) {
 
-            $scope.contratistas=contratistas;
+            $scope.contratistas=contratistas.data;
             $scope.contratistaselected=$scope.contratistas[0];
             getStockFromAllContratistas();
         });
@@ -266,8 +266,8 @@ GSPEMApp.controller('abmReportsContratista', function($scope,$http,$uibModal,toa
 
     var getStockFromAllContratistas = function() {
         $http.get(Routing.generate('get_stock_contratistas')
-        ).success(function (stock) {
-            $scope.stock=stock;
+        ).then(function (stock) {
+            $scope.stock=stock.data;
             $scope.stockfilter=$scope.stock;
             $scope.cargando=false;
         });
@@ -314,8 +314,8 @@ GSPEMApp.controller('abmReportsMov', function($filter,$scope,$http,$uibModal,toa
 
     var getData = function() {
         $http.get(Routing.generate('get_report_movs')
-        ).success(function (movs) {
-            $scope.movs=movs;
+        ).then(function (movs) {
+            $scope.movs=movs.data;
             $scope.cargando=false;
         });
     };
@@ -400,10 +400,10 @@ GSPEMApp.controller('abmReportsAlertas', function($filter,$scope,$http,$uibModal
     $scope.cargando = true;
     var getStock = function () {
         $http.get(Routing.generate('get_stock')
-        ).success(function (stock) {
+        ).then(function (stock) {
             $scope.cargando = false;
             $scope.stock = [];
-            $scope.stock_temp = stock;
+            $scope.stock_temp = stock.data;
             for (var a = 0; a < $scope.stock_temp.length; a++) {
                 if (parseInt($scope.stock_temp[a].stock) < parseInt($scope.stock_temp[a].umbralmin)) {
                     $scope.stock.push($scope.stock_temp[a]);
@@ -451,9 +451,9 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
 
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
-        ).success(function (sitios) {
+        ).then(function (sitios) {
 
-            $scope.sitios=sitios;
+            $scope.sitios=sitios.data;
             $scope.sitioselected=$scope.sitios[0];
             $scope.cargando=false;
             //console.log("cargo sitios");

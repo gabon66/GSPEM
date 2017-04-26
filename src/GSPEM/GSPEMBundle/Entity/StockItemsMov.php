@@ -167,4 +167,33 @@ class StockItemsMov
     {
         return $this->status;
     }
+    /**
+     * @var string
+     */
+    private $obs;
+
+
+    /**
+     * Set obs
+     *
+     * @param string $obs
+     *
+     * @return StockItemsMov
+     */
+    public function setObs($obs)
+    {
+        $this->obs = $obs;
+
+        return $this;
+    }
+
+    /**
+     * Get obs
+     *
+     * @return string
+     */
+    public function getObs()
+    {
+        return $this->obs;
+    }
 }

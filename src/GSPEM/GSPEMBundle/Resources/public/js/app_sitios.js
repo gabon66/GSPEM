@@ -8,8 +8,8 @@ GSPEMApp.controller('abmSitios', function($scope,$http,$uibModal,toastr,MovPend)
 
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
-        ).success(function (sitios) {
-            $scope.sitios=sitios;
+        ).then(function (sitios) {
+            $scope.sitios=sitios.data;
             $scope.cargando=false;
         });
     };

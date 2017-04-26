@@ -1,0 +1,23 @@
+GSPEM\GSPEMBundle\Entity\AltaStock:
+    type: entity
+    table: null
+    repositoryClass: GSPEM\GSPEMBundle\Repository\AltaStockRepository
+    id:
+        id:
+            type: integer
+            id: true
+            column: id
+            generator:
+                strategy: AUTO
+    fields:
+        obs:
+            type: string
+        id_prov:
+            type: integer
+        stock:
+            type: integer
+        material:
+            type: integer
+        date:
+            type: datetime
+    lifecycleCallbacks: {  }

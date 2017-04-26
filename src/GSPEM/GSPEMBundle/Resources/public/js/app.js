@@ -1,6 +1,8 @@
-var GSPEMApp = angular.module('AppGSPEM', ["checklist-model",'ngRoute','ngAnimate','ui.bootstrap','toastr','ngAutocomplete','google.places']);
+var GSPEMApp = angular.module('AppGSPEM', ["ngMaterial","checklist-model",'ngRoute','ngAnimate','ui.bootstrap','toastr','ngAutocomplete','google.places','720kb.datepicker']);
 
 // Configuración de las rutas
+
+
 
 
 
@@ -8,7 +10,7 @@ GSPEMApp.service('MovPend', function($http,toastr) {
     var leng=0;
     var getMovPend = function() {
         $http.get(Routing.generate('get_mov_pend')
-        ).success(function (data) {
+        ).then(function (data) {
             //console.log("pide movs pend");
             //console.log(data);
 
@@ -23,15 +25,35 @@ GSPEMApp.service('MovPend', function($http,toastr) {
     };
 
     setInterval(function(){
-        getMovPend();
+        //getMovPend();
     },5000);
     getMovPend();
 
 });
 
-GSPEMApp.config(function($routeProvider,toastrConfig) {
+GSPEMApp.config(function($routeProvider,$mdDateLocaleProvider,toastrConfig,$locationProvider) {
 
+    // Example of a Spanish localization.
+    $mdDateLocaleProvider.months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    $mdDateLocaleProvider.shortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+        'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+    $mdDateLocaleProvider.days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
+    $mdDateLocaleProvider.shortDays = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'];
+    // Can change week display to start on Monday.
+    $mdDateLocaleProvider.firstDayOfWeek = 1;
+    // Optional.
+    //$mdDateLocaleProvider.dates = [1, 2, 3, 4, 5, 6, 7,8,9,10,11,12,13,14,15,16,17,18,19,
+    //                               20,21,22,23,24,25,26,27,28,29,30,31];
+    // In addition to date display, date components also need localized messages
+    // for aria-labels for screen-reader users.
+    $mdDateLocaleProvider.weekNumberFormatter = function(weekNumber) {
+        return 'Semana ' + weekNumber;
+    };
+    $mdDateLocaleProvider.msgCalendar = 'Calendario';
+    $mdDateLocaleProvider.msgOpenCalendar = 'Abrir calendario';
 
+    $locationProvider.hashPrefix('');
     $routeProvider
         .when('/', {
             templateUrl : '../bundles/gspemgspem/pages/home.html',
@@ -171,9 +193,8 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
 
     var getStockMaestro = function() {
         $http.get(Routing.generate('get_stock')
-        ).success(function (stock) {
-            $scope.stockMaestro=stock;
-            //console.log($scope.stock);
+        ).then(function (resp) {
+            $scope.stockMaestro=resp.data;
 
             for (var a = 0; a < $scope.stockMaestro.length; a++) {
                 $scope.stockMaestro[a].referencia=angular.fromJson($scope.stockMaestro[a].referencia);
@@ -188,10 +209,11 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
 
     var getStock = function() {
         $http.get(Routing.generate('get_stock')
-        ).success(function (stock) {
+        ).then(function (resp) {
+
             $scope.cargando=false;
             $scope.stock=[];
-            $scope.stock_temp=stock;
+            $scope.stock_temp=resp.data;
             for (var a = 0; a < $scope.stock_temp.length; a++) {
                 if(parseInt($scope.stock_temp[a].stock) < parseInt($scope.stock_temp[a].umbralmin)){
                     $scope.stock.push($scope.stock_temp[a]);
@@ -207,7 +229,7 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
 
     var getMyStock = function() {
         $http.get(Routing.generate('get_stock_user')
-        ).success(function (stock) {
+        ).then(function (stock) {
             $scope.stock=stock;
             $scope.cargando=false;
             //console.log($scope.stock);
@@ -220,12 +242,11 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
 
     var getPerfil = function() {
         $http.get(Routing.generate('get_profile')
-        ).success(function (user) {
-            console.log(user);
-            if(user.user.level==1){
+        ).then(function (resp) {
+            if(resp.data.user.level==1){
                 $scope.isadmin=true;
             }
-            $scope.access=angular.fromJson(user.profile.access);
+            $scope.access=angular.fromJson(resp.data.profile.access);
             if($scope.access.oper.all){
                 // valido que tenga acceso al stock maestro para ver las alertas
                 if($scope.isadmin){

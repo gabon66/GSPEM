@@ -14,9 +14,9 @@ GSPEMApp.controller('abmContratistas', function($scope,$http,$uibModal,toastr,Mo
 
     var getData = function() {
         $http.get(Routing.generate('get_contratistas')
-        ).success(function (contratistas) {
+        ).then(function (contratistas) {
 
-                $scope.contratistas=contratistas;
+                $scope.contratistas=contratistas.data;
 
                 for (var a = 0; a < $scope.contratistas.length; a++) {
                     $scope.contratistas[a].supervisor1=angular.fromJson($scope.contratistas[a].supervisor1);

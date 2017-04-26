@@ -8,8 +8,8 @@ GSPEMApp.controller('abmTareas', function($scope,$http,$uibModal,toastr,MovPend)
 
     var getTareas = function() {
         $http.get(Routing.generate('get_tareas')
-        ).success(function (tareas) {
-                $scope.tareas=tareas;
+        ).then(function (tareas) {
+                $scope.tareas=tareas.data;
                 console.log($scope.tareas);
         });
     };
@@ -17,8 +17,8 @@ GSPEMApp.controller('abmTareas', function($scope,$http,$uibModal,toastr,MovPend)
 
     var getSitios= function () {
         $http.get(Routing.generate('get_sitios')
-        ).success(function (data) {
-            $scope.sitios=data;
+        ).then(function (data) {
+            $scope.sitios=data.data;
 
         });
     }
@@ -91,8 +91,8 @@ GSPEMApp.controller('abmTareasTecnico', function($scope,$http,$uibModal,toastr,M
 
     var getTareas = function() {
         $http.get(Routing.generate('get_tareas_tecnico')
-        ).success(function (tareas) {
-            $scope.tareas=tareas;
+        ).then(function (tareas) {
+            $scope.tareas=tareas.data;
             console.log($scope.tareas);
         });
     };
@@ -100,8 +100,8 @@ GSPEMApp.controller('abmTareasTecnico', function($scope,$http,$uibModal,toastr,M
 
     var getSitios= function () {
         $http.get(Routing.generate('get_sitios')
-        ).success(function (data) {
-            $scope.sitios=data;
+        ).then(function (data) {
+            $scope.sitios=data.data;
 
         });
     }

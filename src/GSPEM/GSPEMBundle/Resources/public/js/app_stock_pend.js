@@ -8,8 +8,8 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
     $scope.descript_reject="";
     var getStockPend = function() {
         $http.get(Routing.generate('get_mov_pend_items')
-        ).success(function (movs) {
-                $scope.movs=movs;
+        ).then(function (movs) {
+                $scope.movs=movs.data;
 
             for (var i = 0; i < $scope.movs.length; i++) {
                 for (var a = 0; a < $scope.movs[i].items.length; a++) {
@@ -22,8 +22,8 @@ GSPEMApp.controller('abmStockPend', function($scope,$http,$uibModal,toastr,MovPe
 
     var getStock = function() {
         $http.get(Routing.generate('get_stock_user')
-        ).success(function (stock) {
-            $scope.stock=stock;
+        ).then(function (stock) {
+            $scope.stock=stock.data;
             //console.log($scope.stock);
         });
     };

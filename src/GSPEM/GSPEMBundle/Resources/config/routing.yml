@@ -157,7 +157,8 @@ set_stock:
     path:     /set_stock
     options:
         expose: true
-    defaults: { _controller: GSPEMGSPEMBundle:Stock:setStock}
+    defaults: { _controller: GSPEMGSPEMBundle:StockAlta:setStock}
+
 set_stock_user:
     path:     /set_stock_user
     options:
@@ -175,24 +176,24 @@ set_stock_mov_tec:
     path:     /set_stock_mov_tec
     options:
         expose: true
-    defaults: { _controller: GSPEMGSPEMBundle:Stock:setStockToTec}
+    defaults: { _controller: GSPEMGSPEMBundle:StockMov:setStockToTec}
 get_mov_pend:
     path:     /get_mov_pend
     options:
         expose: true
-    defaults: { _controller: GSPEMGSPEMBundle:Stock:getMovimientosPendientes}
+    defaults: { _controller: GSPEMGSPEMBundle:StockMov:getMovimientosPendientes}
 
 get_mov_pend_items:
     path:     /get_mov_pend_items
     options:
         expose: true
-    defaults: { _controller: GSPEMGSPEMBundle:Stock:getMovimientosPendientesItems}
+    defaults: { _controller: GSPEMGSPEMBundle:StockMov:getMovimientosPendientesItems}
 
 acept_rechazados:
     path:     /acept_rechazados
     options:
         expose: true
-    defaults: { _controller: GSPEMGSPEMBundle:Stock:aceptRechazados}
+    defaults: { _controller: GSPEMGSPEMBundle:StockMov:aceptRechazados}
 
 
 
@@ -200,18 +201,18 @@ get_mov_pend_items_rechazados:
      path:     /get_mov_pend_items_rechazados
      options:
          expose: true
-     defaults: { _controller: GSPEMGSPEMBundle:Stock:getMovimientosRechazados}
+     defaults: { _controller: GSPEMGSPEMBundle:StockMov:getMovimientosRechazados}
 
 aceptar_mov_pend:
     path:     /aceptar_mov_pend
     options:
         expose: true
-    defaults: { _controller: GSPEMGSPEMBundle:Stock:aceptarMovPendientes}
+    defaults: { _controller: GSPEMGSPEMBundle:StockMov:aceptarMovPendientes}
 rechazar_mov_pend:
     path:     /rechazar_mov_pend
     options:
         expose: true
-    defaults: { _controller: GSPEMGSPEMBundle:Stock:rechazarMovPendientes}
+    defaults: { _controller: GSPEMGSPEMBundle:StockMov:rechazarMovPendientes}
 
 
 #POST SAVE
@@ -294,6 +295,14 @@ delete_tarea:
     options:
         expose: true
     defaults: { _controller: GSPEMGSPEMBundle:Default:deleteTarea}
+
+# Alta Stock
+get_alta_by_mat:
+    path:     /get_alta/{id}
+    options:
+        expose: true
+    defaults: { _controller: GSPEMGSPEMBundle:StockAlta:getAltasStock}
+
 
 
 

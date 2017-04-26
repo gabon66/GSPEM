@@ -17,9 +17,9 @@ GSPEMApp.controller('abmUsuarios', function($scope,$http,$uibModal,toastr,MovPen
 
     var getContratistas = function() {
         $http.get(Routing.generate('get_contratistas')
-        ).success(function (contratistas) {
+        ).then(function (contratistas) {
 
-            $scope.contratistas=contratistas;
+            $scope.contratistas=contratistas.data;
             for (var a = 0; a < $scope.contratistas.length; a++) {
                 $scope.contratistas[a].supervisor1=angular.fromJson($scope.contratistas[a].supervisor1);
                 $scope.contratistas[a].supervisor2=angular.fromJson($scope.contratistas[a].supervisor2);
@@ -34,8 +34,8 @@ GSPEMApp.controller('abmUsuarios', function($scope,$http,$uibModal,toastr,MovPen
 
     var gerPerfiles = function() {
         $http.get(Routing.generate('get_perfiles')
-        ).success(function (perfiles) {
-            $scope.perfiles=perfiles;
+        ).then(function (perfiles) {
+            $scope.perfiles=perfiles.data;
             //console.log($scope.perfiles);
             $scope.profileselected=$scope.perfiles[0];
         });
@@ -44,8 +44,8 @@ GSPEMApp.controller('abmUsuarios', function($scope,$http,$uibModal,toastr,MovPen
 
     var getUsuarios = function() {
         $http.get(Routing.generate('get_users')
-        ).success(function (users) {
-            $scope.users=users;
+        ).then(function (users) {
+            $scope.users=users.data;
             $scope.userslevel0=[];
             $scope.userslevel1=[];
             $scope.userslevel2=[];

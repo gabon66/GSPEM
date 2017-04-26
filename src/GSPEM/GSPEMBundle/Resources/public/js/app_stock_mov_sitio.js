@@ -10,8 +10,8 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
 
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
-        ).success(function (sitios) {
-            $scope.sitios=sitios;
+        ).then(function (sitios) {
+            $scope.sitios=sitios.data;
             $scope.sitiosstock=$scope.sitios[0];
             $scope.cargando=false;
         });
@@ -21,8 +21,8 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
 
     var getStock = function() {
         $http.get(Routing.generate('get_stock_user')
-        ).success(function (stock) {
-            $scope.stock=stock;
+        ).then(function (stock) {
+            $scope.stock=stock.data;
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }

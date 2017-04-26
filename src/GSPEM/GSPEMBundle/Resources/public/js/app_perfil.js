@@ -10,10 +10,9 @@ GSPEMApp.controller('abmPerfil', function($filter,$scope,$http,$uibModal,toastr,
 
     var getPerfil = function() {
         $http.get(Routing.generate('get_profile')
-        ).success(function (user) {
-            console.log(user);
-            $scope.userdata=user.user;
-            $scope.access=angular.fromJson(user.profile.access);
+        ).then(function (user) {
+            $scope.userdata=user.data.user;
+            $scope.access=angular.fromJson(user.data.profile.access);
             if($scope.access.user.perfiles){
                 $scope.showperfiledit=true;
             }
@@ -32,8 +31,8 @@ GSPEMApp.controller('abmPerfil', function($filter,$scope,$http,$uibModal,toastr,
 
     var gerPerfiles = function() {
         $http.get(Routing.generate('get_perfiles')
-        ).success(function (perfiles) {
-            $scope.perfiles=perfiles;
+        ).then(function (perfiles) {
+            $scope.perfiles=perfiles.data;
             console.log($scope.perfiles);
             $scope.profileselected=$scope.perfiles[0];
             getPerfil();
@@ -115,8 +114,8 @@ GSPEMApp.controller('abmPerfiles', function($scope,$http,$uibModal,toastr,MovPen
     console.log("dasdsa");
     var gerPerfiles = function() {
         $http.get(Routing.generate('get_perfiles')
-        ).success(function (perfiles) {
-            $scope.perfiles=perfiles;
+        ).then(function (perfiles) {
+            $scope.perfiles=perfiles.data;
         });
     };
     gerPerfiles();
