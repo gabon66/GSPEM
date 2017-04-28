@@ -7,7 +7,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Mi Stock <small></small></h2>
+                <h2>Mi Stockkkk <small></small></h2>
                 <div class="clearfix">
                     <div class="form-group">
                         <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
@@ -77,9 +77,20 @@
                 </div>
                 <div class="col-lg-3" >
                     <div class="form-group has-success has-feedback">
-                        <select  class="form-control" name="typematerial" id="mySelect"
+                        <!--<select  class="form-control" name="typematerial" id="mySelect"
                                  ng-options="sitio.name for sitio in sitios track by sitio.id"
-                                 ng-model="sitiosstock"></select>
+                                 ng-model="sitiosstock"></select>-->
+
+                        <angucomplete id="ex2"
+                                      placeholder="Ingrese sitio"
+                                      pause="100"
+                                      selectedobject="sitiosstock"
+                                      localdata="sitios"
+                                      searchfields="name,emplazamiento"
+                                      titlefield="name,emplazamiento"
+                                      minlength="1"
+                                      inputclass="form-control"/>
+
                     </div>
                 </div>
                 <div class="col-lg-7" >

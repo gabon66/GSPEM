@@ -1,7 +1,7 @@
 /**
  * Created by gabo on 26/07/16.
  */
-GSPEMApp.controller('abmSitios', function($scope,$http,$uibModal,toastr,MovPend) {
+GSPEMApp.controller('abmSitios', function($rootScope,$scope,$http,$uibModal,toastr,MovPend) {
     $scope.animationsEnabled = false;
 
     $scope.cargando=true;
@@ -15,6 +15,13 @@ GSPEMApp.controller('abmSitios', function($scope,$http,$uibModal,toastr,MovPend)
     };
     getSitios();
 
+    $scope.$watch( "autocompleteSelected", function() {
+        if(angular.isObject($rootScope.autocompleteSelected)){
+            $scope.filtrositios=$rootScope.autocompleteSelected.originalObject.emplazamiento;
+        }else {
+            $scope.filtrositios=null;
+        }
+    }, true);
 
     $scope.new = function (item,template , controller) {
 

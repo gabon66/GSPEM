@@ -2,21 +2,33 @@
  * Created by gabo on 26/07/16.
  */
 
-GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,MovPend) {
+GSPEMApp.controller('abmStockMovSitio', function($rootScope,$scope,$http,$uibModal,toastr ,MovPend,$filter) {
     $scope.animationsEnabled = false;
     $scope.stockPendiente=[];
     $scope.cargando=true;
-
+    $rootScope.sitioselect;
 
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
         ).then(function (sitios) {
             $scope.sitios=sitios.data;
+
+            $scope.sitios.unshift({id:0,name:""});
             $scope.sitiosstock=$scope.sitios[0];
             $scope.cargando=false;
         });
     };
     getSitios();
+
+
+
+
+    $scope.$watch( $rootScope.autocompleteSelected, function() {
+            console.log($rootScope.autocompleteSelected);
+    }, true);
+
+
+
 
 
     var getStock = function() {
@@ -88,8 +100,12 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
 
 
     $scope.confirmar=function () {
-        confirmar_stock_user();
-        confirmar_mov_stoc_sitio();
+
+        if(angular.isObject($rootScope.autocompleteSelected)){
+            confirmar_stock_user();
+            confirmar_mov_stoc_sitio();
+        }
+
     }
 
 
@@ -111,14 +127,13 @@ GSPEMApp.controller('abmStockMovSitio', function($scope,$http,$uibModal,toastr ,
             });
     }
 
-
     var confirmar_mov_stoc_sitio=function () {
         $http({
             url: Routing.generate('set_stock_sitio'),
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             data: {
-                sitio:$scope.sitiosstock.id,
+                sitio:$rootScope.autocompleteSelected.originalObject.id,
                 items:$scope.stockPendiente
             }
         }).then(function (response) {

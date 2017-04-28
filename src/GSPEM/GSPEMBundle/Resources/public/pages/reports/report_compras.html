@@ -1,10 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>Historial de Compras<small></small> <i ng-show="cargando==true" class="fa fa-refresh fa-spin fa-1x fa-fw"></i>
+                                    <span class="sr-only">Loading...</span></h2>
 
-</body>
-</html>
+                            </div>
+
+                            <div class="col-md-6"><label>Desde</label><md-datepicker ng-model="date_desde" md-placeholder="01/01/2000"></md-datepicker></div>
+                            <div class="col-md-6"><label>Hasta</label><md-datepicker ng-model="date_hasta" md-placeholder="01/01/2000"></md-datepicker></div>
+                            <div class="col-md-6 form-inline" style="height: 40px!important;">
+                                <label>Origen :</label>
+                                <select  class="form-control" name="origenmaterial" style="width: 150px"
+                                         ng-options="contratista.name for contratista in contratistas track by contratista.id"
+                                         ng-model="contratistaselected"></select>
+                            </div>
+                            <div class="col-md-6">
+                                <angucomplete id="ex1"
+                                              placeholder="Ingrese material a buscar"
+                                              pause="100"
+                                              selectedobject="materialselected"
+                                              localdata="materiales"
+                                              searchfields="idCustom,name,descript"
+                                              titlefield="idCustom,name,descript"
+                                              minlength="1"
+                                              inputclass="form-control"/>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-success pull-right" ng-click="filtrar()">Filtrar</a>
+                        <a class="btn btn-success pull-right" ng-click="clean()">Limpiar </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="x_content" style="height:  60% ;overflow: auto" id="exportable">
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th><a ng-click="sortBy('date')">Fecha <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('idCustom')">Material <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('name')"> Nombre <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('descript')"> Descripción <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('contratista')"> Contratista <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('stock')"> Stock Entrante <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+
+                        <th><a ng-click="sortBy('obs')"> Observación <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in altas | orderBy:propertyName">
+
+                        <td>{{ item.date  | date:'dd-MM-yyyy' | limitTo: 10 }}</td>
+                        <td>{{ item.idCustom}}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.descript }}</td>
+                        <td>{{ item.prov }} </td>
+                        <td style="text-align: right">{{ item.stock }}</td>
+                        <td>{{ item.obs }} </td>
+
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="x_content">
+                <a class="btn btn-success pull-right" ng-click="exportar()">Exportar</a>
+            </div>
+
+        </div>
+    </div>
+</div>

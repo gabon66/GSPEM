@@ -86,5 +86,25 @@ class StockAltaController extends Controller
     }
 
 
+    /**
+     * Get Altas de stock by Material
+     * @param $id
+     */
+    public function reportsAltasStockAction(){
+        $em = $this->getDoctrine()->getEntityManager();
+        $stmt = $em->getConnection()->createQueryBuilder()
+            ->select(" mat.id as id , mat.id_custom as idCustom , mat.descript as descript , mat.name as name,   astock.date as date ,astock.obs as obs, pr.name as prov ,pr.id as prov_id, astock.stock as stock")
+            ->from("alta_stock", "astock")
+            ->innerJoin("astock", "contratistas", "pr", "pr.id = astock.id_prov")
+            ->innerJoin("astock", "materiales", "mat", "astock.material = mat.id")
+            ->execute();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize($stmt->fetchAll(),"json"),200,array('Content-Type'=>'application/json'));
+    }
+
+
 
 }

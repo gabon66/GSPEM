@@ -302,6 +302,14 @@ get_alta_by_mat:
     options:
         expose: true
     defaults: { _controller: GSPEMGSPEMBundle:StockAlta:getAltasStock}
+# reports altas
+reports_altas:
+    path:     /reports_alta
+    options:
+        expose: true
+    defaults: { _controller: GSPEMGSPEMBundle:StockAlta:reportsAltasStock}
+
+
 
 
 
