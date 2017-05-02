@@ -246,6 +246,14 @@ save_users:
         expose: true
     defaults: { _controller: GSPEMGSPEMBundle:Default:setUser }
 
+save_user_pass:
+    path:     /saveuserpass
+    options:
+        expose: true
+    defaults: { _controller: GSPEMGSPEMBundle:Default:setUserPass }
+
+
+
 save_users_state:
     path:     /saveusersstate
     options:

@@ -438,7 +438,7 @@ GSPEMApp.controller('abmReportsAlertas', function($filter,$scope,$http,$uibModal
     };
 });
 
-GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toastr,MovPend) {
+GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$uibModal,toastr,MovPend) {
     $scope.cargando=true;
 
     $scope.propertyName = 'name';
@@ -447,6 +447,17 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
         $scope.propertyName = propertyName;
     };
+
+
+    $scope.$watch( "autocompleteSelected", function() {
+        if(angular.isObject($rootScope.autocompleteSelected)){
+            //$scope.filtrositios=$rootScope.autocompleteSelected.originalObject.emplazamiento;
+            $scope.sitioselected=$rootScope.autocompleteSelected.originalObject;
+            updateReportSitios();
+        }else {
+            //$scope.filtrositios=null;
+        }
+    }, true);
 
 
     var getSitios = function() {
@@ -464,23 +475,7 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
 
 
 
-    $scope.updateReportSitios=function () {
-        ////console.log("test");
-
-        /*if($scope.sitioselected[0]=="0"){
-            getStockFromSite();
-        }else {
-            $scope.newstock=[];
-            for (var a = 0; a < $scope.stockfilter.length; a++) {
-                for (var i = 0; i < $scope.sitioselected.length; i++) {
-                    if( parseInt($scope.stockfilter[a].sitioid)== parseInt($scope.sitioselected[i])){
-                        $scope.newstock.push($scope.stockfilter[a]);
-                    }
-                }
-
-            }
-        }*/
-
+    var updateReportSitios=function () {
         $scope.stock=$scope.newstock;
         getStockFromSite();
     };
@@ -507,7 +502,7 @@ GSPEMApp.controller('reportsSitios', function($filter,$scope,$http,$uibModal,toa
             method: "POST",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             data: {
-                id:  $scope.sitioselected
+                id:  $scope.sitioselected.id
             },
             transformRequest: function (obj) {
                 var str = [];

@@ -468,6 +468,40 @@ class DefaultController extends Controller
         return new Response($serializer->serialize(array("process"=>true),"json"),200,array('Content-Type'=>'application/json'));
     }
 
+    public function setUserPassAction(\Symfony\Component\HttpFoundation\Request $request){
+        $em = $this->getDoctrine()->getEntityManager();
+        $factory = $this->get('security.encoder_factory');
+
+
+        if($request->get("id")>0){
+            $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\User');
+            $user = $repo->findOneBy(array("id"=>$request->get("id")));
+        }else{
+            $user = new User();
+            $user->setCreatedAt( new \DateTime());
+        }
+
+        $user->setModifiedAt(new \DateTime());
+
+        if($request->get('password')!=""){
+            $encoder = $factory->getEncoder($user);
+            $encodedPasswordToken = $encoder->encodePassword($request->get('password'), $user->getSalt());
+            $user->setPassword ($encodedPasswordToken);
+        }
+
+        if(!$request->get("id")){
+            $em->persist($user);
+        }
+        $em->flush();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize(array("process"=>true),"json"),200,array('Content-Type'=>'application/json'));
+    }
+
+
     public function setUserStateAction(\Symfony\Component\HttpFoundation\Request $request){
         $em = $this->getDoctrine()->getEntityManager();
 

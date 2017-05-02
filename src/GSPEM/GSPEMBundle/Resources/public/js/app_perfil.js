@@ -61,10 +61,7 @@ GSPEMApp.controller('abmPerfil', function($filter,$scope,$http,$uibModal,toastr,
 
 
     $scope.saveUser= function () {
-        if ($scope.nombre.length == 0 || $scope.user.length == 0 || $scope.mail.length == 0 ) {
-            toastr.warning('Complete todos los campos requeridos (*)', 'Atención');
-            return false;
-        }
+
         if(!$scope.passedite){
             if($scope.pass.length <6){
                 toastr.warning('La clave no puede ser menor a 6 digitos', 'Atención');
@@ -74,24 +71,14 @@ GSPEMApp.controller('abmPerfil', function($filter,$scope,$http,$uibModal,toastr,
             $scope.pass="";
         }
 
-        if($scope.mail.search("@")< 0 || $scope.mail.indexOf(".com")< 0){
-            toastr.warning('Mail invalido', 'Atención');
-            return false;
-        }
 
         $http({
-            url: Routing.generate('save_users'),
+            url: Routing.generate('save_user_pass'),
             method: "POST",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             data: {
-                nombre: $scope.nombre,
-                apellido: $scope.apellido,
                 id:$scope.id,
-                username:$scope.user,
                 password:$scope.pass,
-                phone:$scope.phone,
-                mail:$scope.mail,
-                view:$scope.profileselected.id
             },
             transformRequest: function (obj) {
                 var str = [];

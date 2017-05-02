@@ -23,9 +23,21 @@
                         </select>
 -->
 
-                        <select  ng-change="updateReportSitios()" class="form-control"  name="ngvalueselect" ng-model="sitioselected">
+
+                        <angucomplete id="ex2"
+                                      placeholder="Ingrese sitio a buscar"
+                                      pause="100"
+                                      selectedobject="sitiosstock"
+                                      localdata="sitios"
+                                      searchfields="name,emplazamiento,direccion"
+                                      titlefield="name,emplazamiento"
+                                      minlength="2"
+                                      inputclass="form-control"/>
+
+
+                        <!--<select  ng-change="updateReportSitios()" class="form-control"  name="ngvalueselect" ng-model="sitioselected">
                             <option ng-repeat="sitio in sitios" ng-value="sitio.id">{{sitio.name}}</option>
-                        </select>
+                        </select>-->
 
                     </div>
                 </div>
