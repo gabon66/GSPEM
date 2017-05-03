@@ -39,6 +39,9 @@ class DefaultController extends Controller
 
             $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Perfiles');
             $profile=$repo->findOneBy(array("id"=>$user->getView()));
+
+            //var_dump($profile);
+            //die();
             return $this->render('GSPEMGSPEMBundle:Default:index.html.twig',array("user"=>"user","access"=>json_decode($profile->getAccess()),"level"=>$user->getLevel()));
         }else {
             return $this->render('GSPEMGSPEMBundle:Default:index.html.twig',array("user"=>"admin"));

@@ -132,13 +132,25 @@ class StockController extends Controller
     public function getMaterialesStockBySiteCustomAction(\Symfony\Component\HttpFoundation\Request $request){
         $em = $this->getDoctrine()->getEntityManager();
         $user=$this->get('security.token_storage')->getToken()->getUser();
-        $stmt = $em->getConnection()->createQueryBuilder()
-            ->select("m.id as id ,m.referencia as referencia , m.id_custom as idCustom , m.descript as descript ,s.cant  as stock , m.name as name")
-            ->from("materiales", "m")
-            ->innerJoin("m", "stock_sitio", "s", "m.id = s.material")
-            ->where("s.sitio =".$request->get("id"))
-            ->orderBy('m.name', 'ASC')
-            ->execute();
+        if ($request->get("id")==0){
+            $stmt = $em->getConnection()->createQueryBuilder()
+                ->select("sit.name as namesit ,m.id as id ,m.referencia as referencia , m.id_custom as idCustom , m.descript as descript ,s.cant  as stock , m.name as name")
+                ->from("stock_sitio", "s")
+                ->innerJoin("s", "materiales", "m", "m.id = s.material")
+                ->innerJoin("s", "sitios", "sit", "s.sitio = sit.id")
+                ->orderBy('m.name', 'ASC')
+                ->execute();
+        }else{
+            $stmt = $em->getConnection()->createQueryBuilder()
+                ->select("sit.name as namesit ,m.id as id ,m.referencia as referencia , m.id_custom as idCustom , m.descript as descript ,s.cant  as stock , m.name as name")
+                ->from("stock_sitio", "s")
+                ->innerJoin("s", "materiales", "m", "m.id = s.material")
+                ->innerJoin("s", "sitios", "sit", "s.sitio = sit.id")
+                ->where("s.sitio =".$request->get("id"))
+                ->orderBy('m.name', 'ASC')
+                ->execute();
+        }
+
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
 
