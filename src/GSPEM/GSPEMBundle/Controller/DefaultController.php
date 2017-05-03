@@ -237,47 +237,54 @@ class DefaultController extends Controller
 
     public function saveMaterialesAction(\Symfony\Component\HttpFoundation\Request $request){
         $em = $this->getDoctrine()->getEntityManager();
-
-        if($request->get("id")>0){
-            $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Material');
-            $material = $repo->findOneBy(array("id"=>$request->get("id")));
+        $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Material');
+        $result=true;
+        $material = $repo->findOneBy(array("name"=>$request->get("name"),
+            "descript"=>$request->get("descript"),"idCustom"=>$request->get("id_custom")));
+        if(isset($material)){
+            //material repetido
+            $result=false;
         }else{
+            if($request->get("id")>0){
+                $material = $repo->findOneBy(array("id"=>$request->get("id")));
+            }else{
 
-            $material = new Material();
-            $stock = new StockMaestro();
+                $material = new Material();
+                $stock = new StockMaestro();
+            }
+
+            $material->setName($request->get("name"));
+            $material->setDescript($request->get("descript"));
+            $material->setOrigen($request->get("origen"));
+            $material->setUbicacion($request->get("ubicacion"));
+            $material->setDate(new \DateTime());
+            $material->setType($request->get("type"));
+            $material->setReferencia($request->get("referencia"));
+            $material->setIdCustom($request->get("id_custom"));
+            $material->setUmbralmin($request->get("umbralmin"));
+            //$material->setUmbralmax($request->get("umbralmax"));
+
+            if(!$request->get("id")){
+                $em->persist($material);
+            }
+
+            $em->flush();
+
+            // NEW ENTRADA DE STOCK EN 0
+            if(!$request->get("id")){
+                $stock->setCant(0);// arranca en 0;
+                $stock->setMaterial($material->getId());
+                $em->persist($stock);
+            }
+            $em->flush();
         }
 
-        $material->setName($request->get("name"));
-        $material->setDescript($request->get("descript"));
-        $material->setOrigen($request->get("origen"));
-        $material->setUbicacion($request->get("ubicacion"));
-        $material->setDate(new \DateTime());
-        $material->setType($request->get("type"));
-        $material->setReferencia($request->get("referencia"));
-        $material->setIdCustom($request->get("id_custom"));
-        $material->setUmbralmin($request->get("umbralmin"));
-        //$material->setUmbralmax($request->get("umbralmax"));
-        
-        if(!$request->get("id")){
-            $em->persist($material);
-        }
 
-
-        $em->flush();
-
-        // NEW ENTRADA DE STOCK EN 0
-        if(!$request->get("id")){
-            $stock->setCant(0);// arranca en 0;
-            $stock->setMaterial($material->getId());
-            $em->persist($stock);
-        }
-
-        $em->flush();
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
-        return new Response($serializer->serialize(array("process"=>true),"json"),200,array('Content-Type'=>'application/json'));
+        return new Response($serializer->serialize(array("process"=>$result),"json"),200,array('Content-Type'=>'application/json'));
     }
 
     public function deleteMaterialAction(\Symfony\Component\HttpFoundation\Request $request){
