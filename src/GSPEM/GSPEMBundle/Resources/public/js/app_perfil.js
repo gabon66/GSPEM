@@ -178,6 +178,7 @@ GSPEMApp.controller('ModelNewPerfil', function($filter,$scope,$http, $uibModalIn
     $scope.perfil={user:$scope.user,sitios:$scope.sitios,
         materiales:$scope.materiales,oper:$scope.oper,opertec:$scope.opertec,reportes:$scope.reportes};
 
+
     if(item!=null){
         $scope.editing=false;
         $scope.id=item.id;
@@ -191,7 +192,7 @@ GSPEMApp.controller('ModelNewPerfil', function($filter,$scope,$http, $uibModalIn
     };
 
     $scope.saveProfile= function () {
-        //console.log($scope.perfil);
+        console.log($scope.perfil);
             $http({
                 url: Routing.generate('set_perfiles'),
                 method: "POST",

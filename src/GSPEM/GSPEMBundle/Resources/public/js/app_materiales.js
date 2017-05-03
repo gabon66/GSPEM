@@ -136,7 +136,7 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
     $scope.item = item;
 
 
-    var getContratistas = function() {
+    /*var getContratistas = function() {
         $http.get(Routing.generate('get_contratistas')
         ).then(function (contratistas) {
             $scope.contratistas=contratistas.data;
@@ -148,7 +148,7 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
         });
     };
     getContratistas();
-
+*/
 
 
     $scope.referencia={ref1:"",ref2:""};
@@ -242,7 +242,6 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
                     umbralmin:parseInt($scope.umbralmin),
                     umbralmax:$scope.umbralmax,
                     referencia:angular.toJson($scope.referencia, 2),
-                    origen:$scope.contratistaselected.id,
                     ubicacion:$scope.ubicacion,
                     id_custom: $scope.id_custom,
                     type: $scope.typeidmat,

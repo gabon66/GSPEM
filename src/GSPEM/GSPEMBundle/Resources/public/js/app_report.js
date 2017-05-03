@@ -442,6 +442,8 @@ GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$u
     $scope.cargando=true;
 
     $scope.propertyName = 'name';
+    //$scope.sitioselected={id:0};
+
     $scope.reverse = true;
     $scope.sortBy = function(propertyName) {
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
@@ -477,7 +479,7 @@ GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$u
 
     var updateReportSitios=function () {
         $scope.stock=$scope.newstock;
-        getStockFromSite();
+        getStockFromSite($scope.sitioselected.id);
     };
 
     getSitios();
@@ -495,14 +497,15 @@ GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$u
     };*/
 
 
-    var getStockFromSite=function () {
+    var getStockFromSite=function (idSit) {
+
         //console.log($scope.sitioselected);
         $http({
             url: Routing.generate('get_stock_sitio_custom'),
             method: "POST",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             data: {
-                id:  $scope.sitioselected.id
+                id:  idSit
             },
             transformRequest: function (obj) {
                 var str = [];
@@ -513,8 +516,8 @@ GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$u
         }).then(function (response) {
                 ////console.log(response);
                 //$scope.stock_sit=response.data;
-                $scope.stock=response.data;
-                $scope.stockfilter=$scope.stock;
+                $scope.stockSit=response.data;
+                $scope.stockfilter=$scope.stockSit;
                 $scope.cargando=false;
                 ////console.log("trajo la data");
 
@@ -523,7 +526,7 @@ GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$u
                 // failed
             });
     }
-
+    getStockFromSite(0);
     //getStockFromSite();
 
     $scope.exportar=function () {
