@@ -223,7 +223,6 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
         }
 
 
-
         if($scope.typematerial != undefined){
             $scope.typeidmat=$scope.typematerial.id;
         }
@@ -253,8 +252,13 @@ GSPEMApp.controller('ModelNewMaterialCtrl', function($filter,$scope,$http, $uibM
                     return str.join("&");
                 }
             }).then(function (response) {
-                    //console.log(response);
-                    $uibModalInstance.dismiss('cancel');
+                    if(response.data.process==true){
+                        $uibModalInstance.dismiss('cancel');
+                    }else {
+                        toastr.warning('Material repetido por ID - NOMBRE - DESCRIPCION', 'Atención');
+                    }
+
+                    //
                 },
                 function (response) { // optional
                     // failed
