@@ -45,7 +45,7 @@
                          <div id="menu1" class="tab-pane fade">
                            <h3><input ng-model="perfil.sitios.all" type="checkbox" value=""> Sitios</h3>
                            <div class="row">
-                            <div class="col-lg-6"><input ng-checked="perfil.sitios.all" ng-model="perfil.sitios.abm"type="checkbox" value=""> ABM Sitios</div>
+                            <div class="col-lg-6"><input ng-checked="perfil.sitios.all && perfil.sitios.abm" ng-model="perfil.sitios.abm"type="checkbox" value=""> ABM Sitios</div>
                            </div>
                          </div>
                          <div id="menu2" class="tab-pane fade">
@@ -240,7 +240,7 @@
             <div class="row">
             <div class="col-lg-6">
 
-                        <div class="form-group has-success has-feedback">
+<!--                <div class="form-group has-success has-feedback">
                 <label>Origen :</label>
 
                 <select  class="form-control" name="origenmaterial" id="mySelect"
@@ -248,7 +248,21 @@
 
                  ng-model="contratistaselected"></select>
 
-            </div>
+                    </div>-->
+
+                                 <label>Control de Stock</label>
+
+             <form class="form-inline">
+             <label>Umbral  Minimo:</label>
+              <!--- <div class="form-group">
+                 <input type="number" style="text-align: right; width: 100px" class="form-control" ng-model="umbralmax" id="exampleInputEmail4" placeholder="0">
+               </div>
+               <label>Minimo: </label>-->
+               <div class="form-group">
+                 <input type="number" style="text-align: right;  width: 100px" class="form-control" ng-model="umbralmin" id="exampleInputEmail25" placeholder="0">
+               </div>
+             </form>
+
 </div>
 
             <div class="col-lg-6">
@@ -267,19 +281,16 @@
 
 
 
-            <hr>
-             <label>Control de Stock</label>
+
+             <!--<label>Control de Stock</label>
 
              <form class="form-inline">
              <label>Umbral  Minimo:</label>
-              <!--- <div class="form-group">
-                 <input type="number" style="text-align: right; width: 100px" class="form-control" ng-model="umbralmax" id="exampleInputEmail4" placeholder="0">
-               </div>
-               <label>Minimo: </label>-->
+
                <div class="form-group">
                  <input type="number" style="text-align: right;  width: 100px" class="form-control" ng-model="umbralmin" id="exampleInputEmail25" placeholder="0">
                </div>
-             </form>
+             </form>-->
 
         </fieldset>
 
