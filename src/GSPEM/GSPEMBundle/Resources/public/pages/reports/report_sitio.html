@@ -10,8 +10,12 @@
     <div ng-show="cargando==false" class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Stock por Sitio<small></small></h2>
-                <div class="clearfix">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Stock por Sitio<small></small></h2>
+                        </div>
+                    </div>
+                        <div class="clearfix">
                     <div class="form-group has-success has-feedback">
                         <!--<select  class="form-control" name="typematerial" id="mySelect"
                                  ng-options="sitio.name for sitio in sitios track by sitio.id"
@@ -22,17 +26,32 @@
                             <option ng-repeat="sitio in sitios" ng-value="sitio.id">{{sitio.name}}</option>
                         </select>
 -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <angucomplete id="ex2"
+                                              placeholder="Ingrese sitio a buscar"
+                                              pause="100"
+                                              selectedobject="sitiosstock"
+                                              localdata="sitios"
+                                              searchfields="name,emplazamiento,direccion"
+                                              titlefield="name,emplazamiento"
+                                              minlength="2"
+                                              inputclass="form-control"/>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                                    <div class="input-group col-lg-8 pull-right">
+                                        <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                                        <input type="text" ng-model="filtromaterial"class="form-control" id="exampleInputAmount" placeholder=" Material">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
 
 
-                        <angucomplete id="ex2"
-                                      placeholder="Ingrese sitio a buscar"
-                                      pause="100"
-                                      selectedobject="sitiosstock"
-                                      localdata="sitios"
-                                      searchfields="name,emplazamiento,direccion"
-                                      titlefield="name,emplazamiento"
-                                      minlength="2"
-                                      inputclass="form-control"/>
+
 
 
                         <!--<select  ng-change="updateReportSitios()" class="form-control"  name="ngvalueselect" ng-model="sitioselected">
@@ -48,9 +67,9 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th><a ng-click="sortBy('idCustom')">ID <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <th><a ng-click="sortBy('namesit')">  Sitio<i class="fa fa-sort" aria-hidden="true"></i> </a> </th>
 
+                        <th><a ng-click="sortBy('idCustom')">ID <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <th><a ng-click="sortBy('name')"> Nombre <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <th><a ng-click="sortBy('descript')"> Descripción <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
 
@@ -58,7 +77,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in stockSit | filter:{name:filtromaterial} | orderBy:propertyName:reverse">
+                    <tr ng-repeat="item in stockSit | filter:filtromaterial | orderBy:propertyName:reverse">
                         <th>{{ $index +1 }}</th>
 
 
