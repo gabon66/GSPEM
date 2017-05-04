@@ -25,7 +25,7 @@ GSPEMApp.service('MovPend', function($http,toastr) {
     };
 
     setInterval(function(){
-        //getMovPend();
+        getMovPend();
     },5000);
     getMovPend();
 
@@ -52,7 +52,9 @@ GSPEMApp.config(function($routeProvider,$mdDateLocaleProvider,toastrConfig,$loca
     };
     $mdDateLocaleProvider.msgCalendar = 'Calendario';
     $mdDateLocaleProvider.msgOpenCalendar = 'Abrir calendario';
-
+    $mdDateLocaleProvider.formatDate = function(date) {
+        return moment(date).format('DD/MM/YYYY');
+    };
     $locationProvider.hashPrefix('');
     $routeProvider
         .when('/', {

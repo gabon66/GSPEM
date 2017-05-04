@@ -454,6 +454,7 @@ GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$u
     $scope.$watch( "autocompleteSelected", function() {
         if(angular.isObject($rootScope.autocompleteSelected)){
             //$scope.filtrositios=$rootScope.autocompleteSelected.originalObject.emplazamiento;
+
             $scope.sitioselected=$rootScope.autocompleteSelected.originalObject;
             updateReportSitios();
         }else {
@@ -461,6 +462,17 @@ GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$u
         }
     }, true);
 
+
+    /*var getMateriales = function() {
+        $http.get(Routing.generate('get_materiales')
+        ).then(function (materiales) {
+            $scope.materiales=materiales.data;
+            //$scope.materiales.unshift({id:0,idCustom:"Todos",name:""});
+            $scope.materialselected=$scope.materiales[0];
+        });
+    };
+
+    getMateriales();*/
 
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
@@ -471,9 +483,9 @@ GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$u
             $scope.cargando=false;
             ////console.log("cargo sitios");
             //getStockFromSite();
-
         });
     };
+
 
 
 

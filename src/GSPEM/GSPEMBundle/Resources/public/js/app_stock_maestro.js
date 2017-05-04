@@ -36,7 +36,7 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
         var modalInstance = $uibModal.open({
             templateUrl: "moda_alta_stock.html",
             controller: "ModalAltaStock",
-            size:"md",
+            size:"lg",
             resolve: {
                 item: function () {
                     return item;
@@ -108,12 +108,37 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
 
 });
 
-GSPEMApp.controller('ModalAltaStock', function($filter,$scope,$http, $uibModalInstance, item,toastr) {
+GSPEMApp.controller('ModalAltaStock', function($filter,$uibModal,$scope,$http, $uibModalInstance, item,toastr) {
     $scope.item = item;
     $scope.stock=0;
-    $scope.date="";
+    $scope.date=new Date();
     $scope.historial=false;
     $scope.obs="";
+
+
+    $scope.save=function (alta) {
+        $scope.altaToPost= alta;
+        $scope.altaToPost.new_prov_id=alta.provselected.id;
+        // edit alta
+        console.log($scope.altaToPost);
+        //debugger;
+        $http({
+            url: Routing.generate('save_alta'),
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            data:{
+                id:$scope.altaToPost.id,
+                obs:$scope.altaToPost.obs,
+                date:$scope.altaToPost.date_obj,
+                new_prov_id:$scope.altaToPost.new_prov_id,
+            }
+        }).then(function (response) {
+                toastr.success('Editada correctamente', 'Alta de Stock');
+            },
+            function (response) { // optional
+                // failed
+            });
+    }
 
     $scope.showHistorial= function (val) {
         $scope.historial=val;
@@ -127,6 +152,7 @@ GSPEMApp.controller('ModalAltaStock', function($filter,$scope,$http, $uibModalIn
             }else {
                 $scope.contratistaselected=$scope.contratistas[0];
             }
+            getAltas();
         });
     };
     getContratistas();
@@ -135,9 +161,28 @@ GSPEMApp.controller('ModalAltaStock', function($filter,$scope,$http, $uibModalIn
         $http.get(Routing.generate('get_alta_by_mat')+"/"+item.id
         ).then(function (reps) {
             $scope.altas=reps.data;
+            //debugger;
+            console.log($scope.altas);
+            // parse date
+            // contrasita selected
+            for (var a = 0; a < $scope.altas.length; a++) {
+                $scope.altas[a].date_obj=new Date($scope.altas[a].date);
+
+                for (var i = 0; i < $scope.contratistas.length; i++) {
+                    if ($scope.contratistas[i].id == $scope.altas[a].prov_id) {
+
+                        $scope.altas[a].provselected=$scope.contratistas[i];
+                    }
+                }
+            }
+
+
+            //var mydate = new Date('2014-04-03');
+            //console.log(mydate.toDateString()
+            //console.log($scope.altas);
         });
     };
-    getAltas();
+
 
     $scope.asignar=function () {
 
@@ -162,3 +207,4 @@ GSPEMApp.controller('ModalAltaStock', function($filter,$scope,$http, $uibModalIn
     };
 
 });
+

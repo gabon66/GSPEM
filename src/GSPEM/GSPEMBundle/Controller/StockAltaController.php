@@ -66,13 +66,41 @@ class StockAltaController extends Controller
     }
 
     /**
+     * Edit Alta Stock
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return Response
+     */
+    public function setAltaAction(\Symfony\Component\HttpFoundation\Request $request){
+        $em = $this->getDoctrine()->getEntityManager();
+
+
+        $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\AltaStock');
+
+        $data=json_decode($request->getContent(),true);
+        $alta = $repo->findOneBy(array("id"=>$data["id"]));
+
+        $alta->setObs($data["obs"]);
+        $alta->setDate(new \DateTime($data["date"]));
+        $alta->setIdProv($data["new_prov_id"]);
+        $em->flush();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize(array("response"=>true),"json"),200,array('Content-Type'=>'application/json'));
+    }
+
+
+
+    /**
      * Get Altas de stock by Material
      * @param $id
      */
     public function getAltasStockAction($id){
         $em = $this->getDoctrine()->getEntityManager();
         $stmt = $em->getConnection()->createQueryBuilder()
-            ->select("astock.date as date ,astock.obs as obs, pr.name as prov , astock.stock as stock")
+            ->select("astock.id as id ,   astock.date as date ,astock.obs as obs, pr.id as prov_id, pr.name as prov , astock.stock as stock")
             ->from("alta_stock", "astock")
             ->innerJoin("astock", "contratistas", "pr", "pr.id = astock.id_prov")
             ->where("astock.material=".$id)

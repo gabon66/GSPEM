@@ -1,0 +1,41 @@
+{% verbatim %}
+<!-- EDIT ALTA  STOCK -->
+
+<script type="text/ng-template" id="alta_edit.html">
+    <div class="modal-header">
+        <h3>Edicion de Alta de Stock</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+               <div class="col-lg-4">
+                    <div class="form-group has-success has-feedback">
+                        <label>Origen :</label>
+                        <select  class="form-control" name="origenmaterial" id="mySelect"
+                            ng-options="contratista.name for contratista in contratistas track by contratista.id"
+                         ng-model="contratistaselected"></select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group has-success has-feedback">
+                            <label>Fecha Compra :</label>
+                            <md-datepicker ng-model="date" md-placeholder="01/01/2000"></md-datepicker>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+
+                                <label>Observación:</label>
+                            <textarea class="form-control" ng-model="obs" rows="2"></textarea>
+                </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-success" ng-click="save()">Guardar</a>
+    </div>
+</script>
+
+
+
+
+{% endverbatim %}
