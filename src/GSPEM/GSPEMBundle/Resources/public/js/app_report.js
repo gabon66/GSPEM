@@ -573,6 +573,8 @@ GSPEMApp.controller('reportsCompras', function($filter,$scope,$http,$uibModal,to
     $scope.altas;
     $scope.propertyName = 'date';
     $scope.reverse = true;
+    $scope.date_desde= new Date();
+    $scope.date_hasta= new Date();
 
     $scope.addtime=false;
 
@@ -627,8 +629,8 @@ GSPEMApp.controller('reportsCompras', function($filter,$scope,$http,$uibModal,to
             for (var a = 0; a < $scope.arraytofilter.length; a++) {
                 var dateAltaStock = new Date($scope.arraytofilter[a].date);
 
-                //console.log(date.getTime());
-
+                console.log($scope.date_desde.getTime());
+                console.log(dateAltaStock.getTime());
                 if(dateAltaStock.getTime() >= $scope.date_desde.getTime()){
                     $scope.resultFilterStartDate.push($scope.arraytofilter[a]);
                 }
@@ -641,7 +643,8 @@ GSPEMApp.controller('reportsCompras', function($filter,$scope,$http,$uibModal,to
         if(angular.isDefined($scope.date_hasta)){
             var _date_hasta=null;
 
-            $scope._arrayTofilter=$scope.altas;
+            $scope._arrayTofilter=$scope.resultFilter;
+
             _date_hasta=$scope.date_hasta;
             if ($scope.addtime==false){
                 _date_hasta.addHours(23);// para tomar ese mismo dia
@@ -666,7 +669,7 @@ GSPEMApp.controller('reportsCompras', function($filter,$scope,$http,$uibModal,to
             console.log($scope.sitiosstock);
             if (angular.isObject($scope.materialselected.originalObject)){
 
-                $scope._arrayTofilter=$scope.altas;
+                $scope._arrayTofilter=$scope.resultFilter;
                 for (var a = 0; a <  $scope._arrayTofilter.length; a++) {
 
                     if($scope.materialselected.originalObject.id == $scope._arrayTofilter[a].id){
@@ -680,7 +683,7 @@ GSPEMApp.controller('reportsCompras', function($filter,$scope,$http,$uibModal,to
 
 
         if($scope.contratistaselected.id>0){
-                $scope._arrayTofilter=$scope.altas;
+                $scope._arrayTofilter=$scope.resultFilter;
                 for (var a = 0; a <  $scope._arrayTofilter.length; a++) {
 
                     if($scope.contratistaselected.id == $scope._arrayTofilter[a].prov_id){
