@@ -626,11 +626,20 @@ GSPEMApp.controller('reportsCompras', function($filter,$scope,$http,$uibModal,to
         if(angular.isDefined($scope.date_desde)){
             //console.log($scope.date_desde);
             $scope.arrayTofilter=$scope.altas;
-            for (var a = 0; a < $scope.arraytofilter.length; a++) {
-                var dateAltaStock = new Date($scope.arraytofilter[a].date);
 
-                console.log($scope.date_desde.getTime());
-                console.log(dateAltaStock.getTime());
+
+            for (var a = 0; a < $scope.arraytofilter.length; a++) {
+
+
+                var year=$scope.arraytofilter[a].date.substring(0,4);
+                var month=$scope.arraytofilter[a].date.substring(5,7);
+                var day=$scope.arraytofilter[a].date.substring(8,10);
+                var dateAltaStock = new Date(year,month,day,00,00,00);
+
+                //var dateAltaStock = new Date($scope.arraytofilter[a].date);
+
+
+
                 if(dateAltaStock.getTime() >= $scope.date_desde.getTime()){
                     $scope.resultFilterStartDate.push($scope.arraytofilter[a]);
                 }
@@ -653,7 +662,13 @@ GSPEMApp.controller('reportsCompras', function($filter,$scope,$http,$uibModal,to
 
 
             for (var a = 0; a <  $scope._arrayTofilter.length; a++) {
-                var dateAltaStock = new Date( $scope._arrayTofilter[a].date);
+
+
+                var year=$scope._arrayTofilter[a].date.substring(0,4);
+                var month=$scope._arrayTofilter[a].date.substring(5,7);
+                var day=$scope._arrayTofilter[a].date.substring(8,10);
+                var dateAltaStock = new Date(year,month,day,00,00,00);
+
 
                 if(dateAltaStock.getTime() <= _date_hasta.getTime()){
                     //console.log("date end filter");

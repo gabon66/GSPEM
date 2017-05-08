@@ -13,13 +13,13 @@
 
                 <div class="row">
                     <div class="col-lg-2"><h2>Sitios <small></small></h2></div>
-                    <div class="col-lg-9">
+                    <div class="col-lg-6">
                         <div class="form-group ">
                             <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                             <div class="input-group col-lg-8 pull-right">
 
-                               <!-- <input type="text" ng-model="filtrositios"class="form-control" id="exampleInputAmount" placeholder=" Nombre / Dirección / *">-->
-                                <angucomplete id="ex2"
+                               <input type="text" ng-model="fil"class="form-control" id="exampleInputAmount" placeholder=" Nombre / Dirección / *">
+                               <!-- <angucomplete id="ex2"
                                               placeholder="Ingrese sitio a buscar"
                                               pause="100"
                                               selectedobject="sitiosstock"
@@ -27,12 +27,17 @@
                                               searchfields="name,emplazamiento,direccion"
                                               titlefield="name,emplazamiento"
                                               minlength="2"
-                                              inputclass="form-control"/>
-                                <a  class="btn btn-sm btn-success" ng-click="filtrositios=null" ><i class="fa fa-plus"></i> </a>
+                                              inputclass="form-control"/>-->
+                                <!--<a  class="btn btn-sm btn-success" ng-click="filtrositios=null" ><i class="fa fa-searchs"></i> </a>
+-->
 
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-2">
+                        <a  class="btn btn-sm btn-success" ng-click="filtrositios=fil" >Filtrar </a>
+                    </div>
+
                     <div class="col-lg-1">    <div class="clearfix"><a  ng-click="new(null,'sitio_form.html','ModelNewSiteCtrl')" class="btn btn-primary pull-right"><i class="fa fa-plus"></i></a></div>
                     </div>
                 </div>
