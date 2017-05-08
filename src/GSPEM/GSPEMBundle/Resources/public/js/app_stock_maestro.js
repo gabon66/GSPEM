@@ -166,8 +166,12 @@ GSPEMApp.controller('ModalAltaStock', function($filter,$uibModal,$scope,$http, $
             // parse date
             // contrasita selected
             for (var a = 0; a < $scope.altas.length; a++) {
-                $scope.altas[a].date_obj=new Date($scope.altas[a].date);
 
+                var year=$scope.altas[a].date.substring(0,4);
+                var month=$scope.altas[a].date.substring(5,7);
+                var day=$scope.altas[a].date.substring(8,10);
+                    //$scope.altas[a].date_obj=new Date($scope.altas[a].date);
+                $scope.altas[a].date_obj=new Date(year,month-1,day,00,00,00);
                 for (var i = 0; i < $scope.contratistas.length; i++) {
                     if ($scope.contratistas[i].id == $scope.altas[a].prov_id) {
 
