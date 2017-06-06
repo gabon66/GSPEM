@@ -16,7 +16,7 @@
                     <thead>
                     <tr>
 
-                        <th><a ng-click="sortBy('name')"> Nombre / Apellido <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy(['lastName','name'])">  Apellido / Nombre <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <!--<th><a ng-click="sortBy('username')"> Username <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         -->
                         <th><a ng-click="sortBy('mail')"> Mail <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
@@ -32,7 +32,7 @@
                     </thead>
                     <tbody >
                     <tr  ng-repeat="user in users | orderBy:propertyName:reverse">
-                        <td>{{ user.name}} - {{ user.lastName}}</td>
+                        <td>{{ user.lastName}} -  {{ user.name}} - </td>
                         <!--<td>{{ user.username}}</td>-->
 
                         <td>{{ user.mail}}</td>

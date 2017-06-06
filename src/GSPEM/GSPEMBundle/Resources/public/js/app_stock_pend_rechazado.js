@@ -19,6 +19,22 @@ GSPEMApp.controller('abmStockPendRechazados', function($scope,$http,$uibModal,to
         $http.get(Routing.generate('get_mov_pend_items_rechazados')
         ).then(function (movs) {
                 $scope.movs=movs.data;
+                for (var a = 0; a <    $scope.movs.length; a++) {
+                    if($scope.movs[a].fin!=null){
+
+                        var year=$scope.movs[a].fin.substring(0,4);
+                        var month=$scope.movs[a].fin.substring(5,7);
+                        var day=$scope.movs[a].fin.substring(8,10);
+                        var hor= $scope.movs[a].fin.substring(11,13);
+                        var min= $scope.movs[a].fin.substring(14,16);
+
+                        var dateObj = new Date(year,month-1,day,hor,min,00);
+
+                        $scope.movs[a].fin_obj=dateObj;
+                        console.log($scope.movs);
+                    }
+                }
+
         });
     };
     getStockPendRejected();

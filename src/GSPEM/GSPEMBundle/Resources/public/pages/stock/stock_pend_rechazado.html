@@ -37,7 +37,7 @@
                     <tr ng-repeat="movitem in movs | orderBy:propertyName:reverse">
                         <th>{{ $index +1 }}</th>
                         <td>{{ movitem.origen_name }}</td>
-                        <td>{{ movitem.fin }}</td>
+                        <td>{{ movitem.fin_obj | date:'dd-MM-yyyy hh:mm' }}</td>
 
                         <td>{{ movitem.idCustom }}</td>
                         <td>{{ movitem.name }}</td>

@@ -42,8 +42,8 @@
                         <th>{{ $index +1 }}</th>
                         <td>{{ mov.origen }}</td>
                         <td>{{ mov.tecnico }}</td>
-                        <td>{{ mov.inicio }}</td>
-                        <td>{{ mov.fin }}</td>
+                        <td>{{ mov.inicio_obj | date:'dd-MM-yyyy hh:mm'}}</td>
+                        <td>{{ mov.fin_obj | date:'dd-MM-yyyy hh:mm'  }}</td>
                         <td ng-if="mov.state==0">Pendiente</td>
                         <td ng-if="mov.state==1">Aceptado</td>
                         <td ng-if="mov.state==2">Rechazado</td>
@@ -101,8 +101,8 @@
             <th>{{ $index +1 }}</th>
             <td>{{ mov.origen }}</td>
             <td>{{ mov.tecnico }}</td>
-            <td>{{ mov.inicio }}</td>
-            <td>{{ mov.fin }}</td>
+            <td>{{ mov.inicio_obj | date:'dd-MM-yyyy hh:mm'}}</td>
+            <td>{{ mov.fin_obj | date:'dd-MM-yyyy hh:mm'  }}</td>
             <td ng-if="mov.state==0">Pendiente</td>
             <td ng-if="mov.state==1">Aceptado</td>
             <td ng-if="mov.state==2">Rechazado</td>

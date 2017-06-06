@@ -5,12 +5,22 @@ GSPEMApp.controller('abmUsuarios', function($scope,$http,$uibModal,toastr,MovPen
 
 
 
-    $scope.propertyName = 'name';
-    $scope.reverse = true;
+    $scope.propertyName = ['lastName','name'];
+    $scope.reverse = false;
+    $scope.reverse_combined = false;
 
 
     $scope.sortBy = function(propertyName) {
-        $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+        if (angular.isArray(propertyName) && angular.isArray(propertyName)){
+            $scope.reverse = ($scope.propertyName[0] === propertyName[0]) ? !$scope.reverse : false;
+            $scope.reverse_combined =($scope.reverse_combined)? false:true;
+            console.log($scope.reverse_combined);
+            $scope.reverse =($scope.reverse_combined)? false:true;
+            console.log($scope.reverse);
+
+        }else {
+            $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+        }
         $scope.propertyName = propertyName;
     };
 

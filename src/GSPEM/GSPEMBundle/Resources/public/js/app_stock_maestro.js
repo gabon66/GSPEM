@@ -108,20 +108,18 @@ GSPEMApp.controller('abmStockMaestro', function($scope,$http,$uibModal,toastr,Mo
 
 });
 
-GSPEMApp.controller('ModalAltaStock', function($filter,$uibModal,$scope,$http, $uibModalInstance, item,toastr) {
+GSPEMApp.controller('ModalAltaStock', function($filter,dateUtils,$uibModal,$scope,$http, $uibModalInstance, item,toastr) {
     $scope.item = item;
     $scope.stock=0;
-    $scope.date=new Date();
+    $scope.date=$filter('date')(new Date(), "dd-MM-yyyy");
     $scope.historial=false;
     $scope.obs="";
-
 
     $scope.save=function (alta) {
         $scope.altaToPost= alta;
         $scope.altaToPost.new_prov_id=alta.provselected.id;
         // edit alta
-        console.log($scope.altaToPost);
-        //debugger;
+        //debugger;x
         $http({
             url: Routing.generate('save_alta'),
             method: "POST",
@@ -129,7 +127,7 @@ GSPEMApp.controller('ModalAltaStock', function($filter,$uibModal,$scope,$http, $
             data:{
                 id:$scope.altaToPost.id,
                 obs:$scope.altaToPost.obs,
-                date:$scope.altaToPost.date_obj,
+                date:dateUtils.parseDate($scope.altaToPost.date_obj),
                 new_prov_id:$scope.altaToPost.new_prov_id,
             }
         }).then(function (response) {
@@ -166,16 +164,11 @@ GSPEMApp.controller('ModalAltaStock', function($filter,$uibModal,$scope,$http, $
             // parse date
             // contrasita selected
             for (var a = 0; a < $scope.altas.length; a++) {
-
-                var year=$scope.altas[a].date.substring(0,4);
-                var month=$scope.altas[a].date.substring(5,7);
-                var day=$scope.altas[a].date.substring(8,10);
-                    //$scope.altas[a].date_obj=new Date($scope.altas[a].date);
-                $scope.altas[a].date_obj=new Date(year,month-1,day,00,00,00);
+                $scope.altas[a].date_obj=$filter('date')(dateUtils.parseDate2($scope.altas[a].date) , "dd-MM-yyyy");
                 for (var i = 0; i < $scope.contratistas.length; i++) {
                     if ($scope.contratistas[i].id == $scope.altas[a].prov_id) {
-
                         $scope.altas[a].provselected=$scope.contratistas[i];
+                        $scope.altas[a].date_edit=null;
                     }
                 }
             }

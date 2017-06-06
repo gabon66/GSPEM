@@ -240,15 +240,16 @@ class DefaultController extends Controller
         $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Material');
         $result=true;
         $material = $repo->findOneBy(array("name"=>$request->get("name"),
-            "descript"=>$request->get("descript"),"idCustom"=>$request->get("id_custom")));
-        if(isset($material)){
-            //material repetido
-            $result=false;
+                                          "descript"=>$request->get("descript"),
+                                          "idCustom"=>$request->get("id_custom")));
+        if(isset($material) && $request->get("id")<1){
+            //material repetido y es new
+                $result = false;
         }else{
+
             if($request->get("id")>0){
                 $material = $repo->findOneBy(array("id"=>$request->get("id")));
             }else{
-
                 $material = new Material();
                 $stock = new StockMaestro();
             }
@@ -553,7 +554,8 @@ class DefaultController extends Controller
             ->from("users", "u")
             ->leftJoin("u", "perfiles", "p", "u.view_type = p.id")
             ->leftJoin("u", "contratistas", "c", "u.contratista = c.id")
-            ->orderBy("u.username")
+            ->addOrderBy("u.last_name")
+            ->addOrderBy("u.first_name")
             ->execute();
 
         $encoders = array(new XmlEncoder(), new JsonEncoder());

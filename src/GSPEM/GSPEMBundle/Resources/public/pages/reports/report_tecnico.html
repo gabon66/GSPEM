@@ -24,9 +24,8 @@
                         <th>#</th>
                         <th><a ng-click="sortBy('idCustom')">ID <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <th><a ng-click="sortBy('name')"> Nombre <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
-                        <th><a ng-click="sortBy('tecnico')"> Tecnico <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
-
                         <th><a ng-click="sortBy('descript')"> Descripción <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+                        <th><a ng-click="sortBy('tecnico')"> Tecnico <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                         <th><a ng-click="sortBy('stock')"> Stock Actual <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
                     </tr>
                     </thead>
@@ -35,9 +34,9 @@
                         <th>{{ $index +1 }}</th>
                         <td>{{ item.idCustom }}</td>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.tecnico}}</td>
-                        <td>{{ item.descript }}</td>
 
+                        <td>{{ item.descript }}</td>
+                        <td>{{ item.tecnico}}</td>
                         <td style="text-align: right">{{ item.stock }}</td>
 
 

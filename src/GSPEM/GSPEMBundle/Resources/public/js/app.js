@@ -1,9 +1,65 @@
-var GSPEMApp = angular.module('AppGSPEM', ["angucomplete","ngMaterial","checklist-model",'ngRoute','ngAnimate','ui.bootstrap','toastr','ngAutocomplete','google.places','720kb.datepicker']);
+var GSPEMApp = angular.module('AppGSPEM', ["720kb.datepicker","angucomplete","ngMaterial","checklist-model",'ngRoute','ngAnimate','ui.bootstrap','toastr','ngAutocomplete','google.places','720kb.datepicker']);
 
 // Configuración de las rutas
 
 
+/**
+ * Date Utils
+ */
+GSPEMApp.service("dateUtils",function(){
+    return {
+        parseDate: function(stringDate) {
+            var year=stringDate.substring(6,10);
+            var month=stringDate.substring(3,5);
+            var day=stringDate.substring(0,2);
+            var date = new Date(year,month-1,day,00,00,00);
+            return date;
+        },
+        parseDate2: function(stringDate) {
+            //2017-05-20 03:00:00
+            var year=stringDate.substring(0,4);
+            var month=stringDate.substring(5,7);
+            var day=stringDate.substring(8,10);
+            var hr=stringDate.substring(11,13);
+            var min=stringDate.substring(14,16);
+            var date = new Date(year,month-1,day,hr,min,00);
+            return date;
+        },
+        addHours: function (hs) {
+            Date.prototype.addHours= function(hs){
+            this.setHours(this.getHours()+hs);
+            this.setMinutes(59);
+            return this;
+        }
+    }
 
+
+    };
+
+})
+
+
+GSPEMApp.directive('jqdatepicker', function () {
+    return {
+        require: '?ngModel',
+        link: function (scope, element, attrs, ngModelCtrl) {
+
+            var model = attrs['ngModel'];
+
+            // update the scope if model is defined
+            console.log(model);
+            element.datepicker({
+                dateFormat: 'dd/mm/yy',
+                onSelect: function (date) {
+                    if (model) {
+                        debugger
+                        scope[model] = date;
+                    }
+                },
+            });
+        }
+    };
+});
 
 
 GSPEMApp.service('MovPend', function($http,toastr) {
@@ -55,6 +111,9 @@ GSPEMApp.config(function($routeProvider,$mdDateLocaleProvider,toastrConfig,$loca
     $mdDateLocaleProvider.formatDate = function(date) {
         return moment(date).format('DD/MM/YYYY');
     };
+
+
+
     $locationProvider.hashPrefix('');
     $routeProvider
         .when('/', {
@@ -158,34 +217,30 @@ GSPEMApp.config(function($routeProvider,$mdDateLocaleProvider,toastrConfig,$loca
             templateUrl : '../bundles/gspemgspem/pages/reports/report_contratista.html',
             controller  : 'abmReportsContratista'
         })
-
         .when('/historial_compras', {
             templateUrl : '../bundles/gspemgspem/pages/reports/report_compras.html',
             controller  : 'reportsCompras'
         })
-
         .when('/tareas_tecnico', {
             templateUrl : '../bundles/gspemgspem/pages/tareas_tecnico.html',
             controller  : 'abmTareasTecnico'
         })
-
-
         
         .otherwise({
             redirectTo: '/'
         });
 
-    angular.extend(toastrConfig, {
-        autoDismiss: false,
-        containerId: 'toast-container',
-        maxOpened: 0,
-        timeOut: 3000,
-        newestOnTop: true,
-        positionClass: 'toast-top-center',
-        preventDuplicates: false,
-        preventOpenDuplicates: false,
-        target: 'body'
-    });
+        angular.extend(toastrConfig, {
+            autoDismiss: false,
+            containerId: 'toast-container',
+            maxOpened: 0,
+            timeOut: 3000,
+            newestOnTop: true,
+            positionClass: 'toast-top-center',
+            preventDuplicates: false,
+            preventOpenDuplicates: false,
+            target: 'body'
+        });
 
 });
 
@@ -228,7 +283,7 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
-            ////console.log($scope.stock);
+            console.log($scope.stock);
         });
     };
 
@@ -236,9 +291,8 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
     var getMyStock = function() {
         $http.get(Routing.generate('get_stock_user')
         ).then(function (stock) {
-            $scope.stock=stock;
+            $scope.stock=stock.data;
             $scope.cargando=false;
-            ////console.log($scope.stock);
             for (var a = 0; a < $scope.stock.length; a++) {
                 $scope.stock[a].referencia=angular.fromJson($scope.stock[a].referencia);
             }
@@ -249,11 +303,12 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
     var getPerfil = function() {
         $http.get(Routing.generate('get_profile')
         ).then(function (resp) {
+
             if(resp.data.user.level==1){
                 $scope.isadmin=true;
             }
             $scope.access=angular.fromJson(resp.data.profile.access);
-            if($scope.access.oper.all){
+            //if($scope.access.oper.all){
                 // valido que tenga acceso al stock maestro para ver las alertas
                 if($scope.isadmin){
                     getStock();
@@ -265,9 +320,9 @@ GSPEMApp.controller('mainController', function($scope,MovPend,$http) {
                 }
                 $scope.showperfiledit=true;
 
-            }else {
-                $scope.cargando=false;
-            }
+            //}else {
+            //    $scope.cargando=false;
+            //}
 
 
         });

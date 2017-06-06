@@ -697,7 +697,10 @@
                 <div class="col-lg-4">
                     <div class="form-group has-success has-feedback">
                             <label>Fecha Compra :</label><br>
-                            <md-datepicker ng-model="date" md-placeholder="01/01/2000"></md-datepicker>
+                            <datepicker date-format="dd-MM-yyyy" >
+                                <input class="form-control" ng-model="date" type="text"/>
+                            </datepicker>
+
                     </div>
                 </div>
                 <div class="col-lg-1"></div>
@@ -725,7 +728,10 @@
                     <tbody>
                     <tr ng-repeat="alta in altas ">
                         <td>
-                          <md-datepicker ng-model="alta.date_obj"></md-datepicker>
+                          <!--<md-datepicker ng-model="alta.date_obj"></md-datepicker>-->
+                            <datepicker date-format="dd-MM-yyyy" >
+                                <input class="form-control" ng-model="alta.date_obj" type="text"/>
+                            </datepicker>
                         </td>
                         <td>
                             <select  class="form-control" name="origenmaterial" id="mySelect"
