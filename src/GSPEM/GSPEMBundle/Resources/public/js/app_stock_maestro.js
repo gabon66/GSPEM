@@ -195,7 +195,12 @@ GSPEMApp.controller('ModalAltaStock', function($filter,dateUtils,$uibModal,$scop
             toastr.error('Ingrese Fecha de compra valida', 'Error');
             return false;
         }
-
+        //console.log()
+        var now=new Date();
+        if (now.addHours(11)< dateUtils.parseDate($scope.date) ){
+            toastr.error('Ingrese Fecha de compra valida', 'Error');
+            return false;
+        }
         $uibModalInstance.close($scope.alta);
     }
 
@@ -203,5 +208,10 @@ GSPEMApp.controller('ModalAltaStock', function($filter,dateUtils,$uibModal,$scop
         $uibModalInstance.dismiss('cancel');
     };
 
+    Date.prototype.addHours= function(h){
+        this.setHours(this.getHours()+h);
+        this.setMinutes(59);
+        return this;
+    }
 });
 

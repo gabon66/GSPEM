@@ -324,6 +324,14 @@ reports_altas:
         expose: true
     defaults: { _controller: GSPEMGSPEMBundle:StockAlta:reportsAltasStock}
 
+# reports movs by mat
+reports_mov_by_mat:
+    path:     /movs_by_mat/{id}
+    options:
+        expose: true
+    defaults: { _controller: GSPEMGSPEMBundle:Stock:getAllMovimientosByMat}
+
+
 
 
 

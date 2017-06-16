@@ -205,6 +205,11 @@ GSPEMApp.config(function($routeProvider,$mdDateLocaleProvider,toastrConfig,$loca
             controller  : 'abmReportsMov'
         })
 
+        .when('/stock_movimientos_by_mat', {
+            templateUrl : '../bundles/gspemgspem/pages/reports/report_movimiento_by_mat.html',
+            controller  : 'abmReportsMovByMat'
+        })
+
         .when('/stock_report_tec', {
             templateUrl : '../bundles/gspemgspem/pages/reports/report_tecnico.html',
             controller  : 'reportStockAllUsers'

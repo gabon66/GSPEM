@@ -398,9 +398,30 @@ class StockController extends Controller
     }
 
 
+    /**
+     * Trae todo los movimientos x material- para reportes
+     * @return Response
+     */
 
+    public function getAllMovimientosByMatAction($id){
+        $em = $this->getDoctrine()->getEntityManager();
 
+        $stmt = $em->getConnection()->createQueryBuilder()
+            ->select("mst.nota as nota , concat(us1.last_name,' ',us1.first_name) as origen,concat(us.last_name,' ',us.first_name) as tecnico ,mst.inicio , mst.fin ,mst.state ,mst.type 
+                ,item.cant as cantidad ,item.rechazado,item.obs")
+            ->from("movimiento_stock_tecnico", "mst")
+            ->innerJoin("mst", "stock_items_mov", "item", "item.mov = mst.id")
+            ->innerJoin("mst", "users", "us", "us.id = mst.tecnico")
+            ->innerJoin("mst", "users", "us1", "us1.id = mst.origen")
+            ->andWhere('item.material='.$id)
+            ->execute();
 
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize($stmt->fetchAll(),"json"),200,array('Content-Type'=>'application/json'));
+    }
 
 
 
