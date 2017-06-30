@@ -25,6 +25,32 @@ use Symfony\Component\HttpFoundation\Session;
 
 class DefaultController extends Controller
 {
+
+    public function mailTestAction(){
+        $result=true;
+        try{
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Mail TEST ')
+                ->setFrom($this->container->getParameter('mailer_user'))
+                ->setTo("gabriel.felipe@frixtel.com")
+                ->setBody("mail de prueba",
+                    'text/html'
+                );
+            $result=$this->get('mailer')->send($message);
+            //$result=true;
+        }
+        catch(\Exception $e){
+            error_log($e->getMessage());
+            $result=$e->getMessage();
+        }
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize(array("mail"=>$result),"json"),200,array('Content-Type'=>'application/json'));
+    }
+
     public function indexAction()
     {
         $user=$this->get('security.token_storage')->getToken()->getUser();

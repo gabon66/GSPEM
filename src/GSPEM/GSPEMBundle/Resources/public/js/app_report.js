@@ -94,7 +94,7 @@ GSPEMApp.controller('abmReports', function($scope,$http,$uibModal,toastr,MovPend
             mm='0'+mm
         }
 
-        today = mm+'/'+dd+'/'+yyyy;
+        today = dd+'/'+mm+'/'+yyyy;
 
         var blob = new Blob([document.getElementById('exportable').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -187,11 +187,11 @@ GSPEMApp.controller('reportStockAllUsers', function($scope,$http,$uibModal,toast
             mm='0'+mm
         }
 
-        today = mm+'/'+dd+'/'+yyyy;
+        today = dd+'/'+mm+'/'+yyyy;
         var blob = new Blob([document.getElementById('exportable').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });
-        saveAs(blob, "Reporte_Stock_Tecnicos"+today+".xls");
+        saveAs(blob, "Reporte_Stock_Tecnicos_"+today+".xls");
     };
 
 });
@@ -246,7 +246,7 @@ GSPEMApp.controller('abmReportsContratista', function($scope,$http,$uibModal,toa
             mm='0'+mm
         }
 
-        today = mm+'/'+dd+'/'+yyyy;
+        today = dd+'/'+mm+'/'+yyyy;
         var blob = new Blob([document.getElementById('exportable').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });
@@ -297,7 +297,7 @@ GSPEMApp.controller('abmReportsMov', function($filter,$scope,$http,$uibModal,toa
             mm='0'+mm
         }
 
-        today = mm+'/'+dd+'/'+yyyy;
+        today = dd+'/'+mm+'/'+yyyy;
         var blob = new Blob([document.getElementById('exportable').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });
@@ -460,7 +460,7 @@ GSPEMApp.controller('abmReportsMovByMat', function($rootScope,dateUtils,$filter,
         var blob = new Blob([document.getElementById('exportable').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });
-        saveAs(blob, "Reporte_Movimientos_Por_Material"+today+".xls");
+        saveAs(blob, "Reporte_Movimientos_Por_Material_"+today+".xls");
     };
 
     $scope.propertyName = 'id';
@@ -563,7 +563,7 @@ GSPEMApp.controller('abmReportsAlertas', function($filter,$scope,$http,$uibModal
             mm='0'+mm
         }
 
-        today = mm+'/'+dd+'/'+yyyy;
+        today = dd+'/'+mm+'/'+yyyy;
         var blob = new Blob([document.getElementById('exportable').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });
@@ -689,7 +689,7 @@ GSPEMApp.controller('reportsSitios', function($rootScope,$filter,$scope,$http,$u
             mm='0'+mm
         }
 
-        today = mm+'/'+dd+'/'+yyyy;
+        today = dd+'/'+mm+'/'+yyyy;
         var blob = new Blob([document.getElementById('exportable').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });
@@ -907,7 +907,7 @@ GSPEMApp.controller('reportsCompras', function( $rootScope,  dateUtils,$filter,$
             mm='0'+mm
         }
 
-        today = mm+'/'+dd+'/'+yyyy;
+        today = dd+'/'+mm+'/'+yyyy;
         var blob = new Blob([document.getElementById('exportable').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });

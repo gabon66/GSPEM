@@ -3,19 +3,25 @@
     <div  class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Movimientos de Stock por Material </h2>
-                <div class="clearfix">
-                    <angucomplete id="ex1"
-                                  placeholder="Ingrese material a buscar"
-                                  pause="100"
-                                  ng-mode="materialselected_input"
-                                  selectedobject="$rootScope.materialselected"
-                                  localdata="materiales"
-                                  searchfields="idCustom,name,descript"
-                                  titlefield="idCustom,name,descript"
-                                  minlength="1"
-                                  inputclass="form-control"/>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2>Movimientos de Stock por Material  </h2><br>
+                    </div>
+                    <div class="col-md-8">
+                        <angucomplete id="ex1"
+                                      placeholder="Ingrese material aqui para comenzar busqueda"
+                                      pause="100"
+                                      ng-mode="materialselected_input"
+                                      selectedobject="$rootScope.materialselected"
+                                      localdata="materiales"
+                                      searchfields="idCustom,name,descript"
+                                      titlefield="idCustom,name,descript"
+                                      minlength="1"
+                                      inputclass="form-control"/>
+                    </div>
                 </div>
+
+
 
             </div>
             <div class="x_content" style="height:  60% ;overflow: auto">
@@ -66,52 +72,46 @@
             </div>
 
 
-
-
-
-
-
         </div>
     </div>
 </div>
-
-<div  class="x_content" style="height:  60% ;overflow: auto;visibility: hidden " id="exportable" >
+<div class="x_content" style="height:  60% ;visibility: hidden;overflow: auto" id="exportable">
 
     <table class="table table-bordered">
         <thead>
         <tr>
             <th>#</th>
-            <th>Origen</th>
-            <th>Destino</th>
-            <th>Inicio</th>
-            <th>Fin</th>
-            <th>Estado</th>
-            <th>Tipo</th>
-            <th>Items</th>
+            <th><a ng-click="sortBy('origen')"> Origen <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+            <th><a ng-click="sortBy('tecnico')"> Destino <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+            <th><a ng-click="sortBy('cantidad')"> Stock <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+
+            <th><a ng-click="sortBy('inicio')"> Inicio <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+            <th><a ng-click="sortBy('fin')"> Fin <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+            <th><a ng-click="sortBy('state')"> Estado <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
+            <th><a ng-click="sortBy('type')"> Tipo <i class="fa fa-sort" aria-hidden="true"></i> </a></th>
             <th>Nota</th>
         </tr>
         </thead>
         <tbody>
-
         <tr ng-repeat="mov in movs | filter:filtromaterial  | orderBy:propertyName:reverse">
             <th>{{ $index +1 }}</th>
             <td>{{ mov.origen }}</td>
             <td>{{ mov.tecnico }}</td>
+            <td>{{mov.cantidad}}</td>
             <td>{{ mov.inicio_obj | date:'dd-MM-yyyy hh:mm'}}</td>
             <td>{{ mov.fin_obj | date:'dd-MM-yyyy hh:mm'  }}</td>
             <td ng-if="mov.state==0">Pendiente</td>
             <td ng-if="mov.state==1">Aceptado</td>
             <td ng-if="mov.state==2">Rechazado</td>
             <td ng-if="mov.state==3">Aceptado Parcial</td>
-            <td ng-if="mov.type==1">Maestro => Tecnico</td>
-            <td ng-if="mov.type==2">Tecnico => Tecnico</td>
-            <td ng-if="mov.type==3">Tecnico => Sitio</td>
-            <td><ul>
-                <li ng-repeat="motitem in mov.items">
-                    ID: {{  motitem.idCustom }} Nombre : {{  motitem.name }} Cantidad : {{  motitem.cant }}
-                </li>
-            </ul></td>
-            <td>{{ mov.nota }}</td>
+            <td ng-if="mov.type==1">Maestro => Técnico</td>
+            <td ng-if="mov.type==2">Técnico => Técnico</td>
+            <td ng-if="mov.type==3">Técnico => Sitio</td>
+
+            <td>
+                {{ mov.nota }}
+            </td>
+
         </tr>
         </tbody>
     </table>

@@ -331,6 +331,13 @@ reports_mov_by_mat:
         expose: true
     defaults: { _controller: GSPEMGSPEMBundle:Stock:getAllMovimientosByMat}
 
+mail_test:
+    path:     /mail_test
+    options:
+        expose: false
+    defaults: { _controller: GSPEMGSPEMBundle:Default:mailTest}
+
+
 
 
 
