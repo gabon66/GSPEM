@@ -1,21 +1,81 @@
 /**
  * Created by gabo on 26/07/16.
  */
-GSPEMApp.controller('abmSitios', function($rootScope,$scope,$http,$uibModal,toastr,MovPend) {
+GSPEMApp.controller('abmSitios', function($rootScope,$filter,$scope,$http,$uibModal,toastr,MovPend) {
     $scope.animationsEnabled = false;
 
     $scope.cargando=true;
-
+    $scope.filterTitle="Filtrar por :"
+    $scope.filterValue="";
+    $scope.filterColumns=[{'id':0,'val':'name','name':'Nombre'},
+                            {'id':1,'val':'emplazamiento','name':'Emplazamiento'},
+                            {'id':2,'val':'direccion','name':'Dirección'}];
+    $scope.filterColumnsSelected=$scope.filterColumns[0];
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
         ).then(function (sitios) {
             $scope.sitios=sitios.data;
+            $scope.sitios_ori=sitios.data;
             $scope.cargando=false;
         });
     };
     getSitios();
 
-    $scope.$watch( "autocompleteSelected", function() {
+    $scope.filterSitios=  function(){
+        $scope.filterTitle="Buscando ..";
+        $scope.sitios=$scope.sitios_ori;
+        var column=$scope.filterColumnsSelected.val;
+        var value=$scope.filterValue.toLowerCase();
+        $scope.cargando=true;
+        $scope.sitesResult=[];
+        if ($scope.filterValue!=""){
+
+            for (var a = 0; a < $scope.sitios.length; a++) {
+                // filter by contains:
+                if (column=='name'){
+                    if (angular.isDefined($scope.sitios[a].name) && $scope.sitios[a].name!=null){
+                        if ($scope.sitios[a].name.toLowerCase().indexOf(value)>=0){
+                            $scope.sitesResult.push($scope.sitios[a]);
+                        }
+                    }
+                }
+                if (column=='emplazamiento'){
+                    if (angular.isDefined($scope.sitios[a].emplazamiento) && $scope.sitios[a].emplazamiento!=null){
+                        if ($scope.sitios[a].emplazamiento.toLowerCase().indexOf(value)>=0){
+                            $scope.sitesResult.push($scope.sitios[a]);
+                        }
+                    }
+                }
+                if (column=='direccion'){
+                    if (angular.isDefined($scope.sitios[a].direccion) && $scope.sitios[a].direccion!=null){
+                        if ($scope.sitios[a].direccion.toLowerCase().indexOf(value)>=0){
+                            $scope.sitesResult.push($scope.sitios[a]);
+                        }
+                    }
+                }
+            }
+
+            /*if (column=='name') $scope.sitios= $filter('filter')($scope.sitios, {  name : value });
+            if (column=='emplazamiento') $scope.sitios= $filter('filter')($scope.sitios, {  emplazamiento : value });
+            if (column=='direccion'){
+                $scope.sitios= $filter('filter')($scope.sitios, {  direccion : value });
+            }*/
+            $scope.sitios=$scope.sitesResult;
+        }else {
+            $scope.sitios=$scope.sitios_ori;
+        }
+        $scope.cargando=false;
+        $scope.filterTitle="Filtrar por :"
+    }
+
+    $scope.clean=  function() {
+        $scope.cargando=true;
+        $scope.filterValue="";
+        $scope.sitios=$scope.sitios_ori;
+        $scope.cargando=false;
+    }
+
+        $scope.$watch( "autocompleteSelected", function() {
         if(angular.isObject($rootScope.autocompleteSelected)){
             $scope.filtrositios=$rootScope.autocompleteSelected.originalObject.emplazamiento;
         }else {
@@ -154,8 +214,13 @@ GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModal
                 return str.join("&");
             }
         }).then(function (response) {
-                //console.log(response);
-                $uibModalInstance.dismiss('cancel');
+                if (response.data.process==false){
+                    toastr.warning('Emplazamiento ya utilizado en otro sitio', 'Atención');
+                }else {
+                    toastr.success('Guardado con éxito', 'Sitio');
+                    $uibModalInstance.dismiss('cancel');
+                }
+
             },
             function (response) { // optional
                 // failed

@@ -2,43 +2,41 @@
 
 
 
-    <div  ng-if="cargando" class="col-md-12 col-sm-12 col-xs-12">
-     <h3>Cargando Sitios   <i ng-show="cargando==true" class="fa fa-refresh fa-spin fa-1x fa-fw"></i></h3>
+    <div ng-show="cargando"  class="col-md-12 col-sm-12 col-xs-12" style="text-align: center">
+     <h3>Cargando Sitios   </h3>
+         <i ng-show="cargando==true" class="fa fa-cog fa-spin fa-5x fa-fw"></i>
     </div>
 
 
-    <div ng-if="!cargando" class="col-md-12 col-sm-12 col-xs-12">
+    <div ng-show="!cargando" class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
 
                 <div class="row">
                     <div class="col-lg-1"><h2>Sitios <small></small></h2></div>
-                    <div class="col-lg-7">
+                    <div class="col-lg-5">
                         <div class="form-group ">
                             <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                             <div class="input-group col-lg-8 ">
 
-                               <input type="text" ng-model="fil"class="form-control" id="exampleInputAmount" placeholder=" Nombre / Dirección / *">
-                               <!-- <angucomplete id="ex2"
-                                              placeholder="Ingrese sitio a buscar"
-                                              pause="100"
-                                              selectedobject="sitiosstock"
-                                              localdata="sitios"
-                                              searchfields="name,emplazamiento,direccion"
-                                              titlefield="name,emplazamiento"
-                                              minlength="2"
-                                              inputclass="form-control"/>-->
-                                <!--<a  class="btn btn-sm btn-success" ng-click="filtrositios=null" ><i class="fa fa-searchs"></i> </a>
--->
+                               <input type="text" ng-model="filterValue"class="form-control" id="exampleInputAmount" placeholder=" Nombre / Dirección / *">
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2">
-                        <a  class="btn btn-sm btn-success" ng-click="filtrositios=fil" >Filtrar </a>
+                    <div class="col-lg-1">
+                        <a  class="btn btn-sm btn-success" ng-click="filterSitios()" >{{ filterTitle }} </a>
                     </div>
-
-                    <div class="col-lg-1">    <div class="clearfix"><a  ng-click="new(null,'sitio_form.html','ModelNewSiteCtrl')" class="btn btn-primary pull-right"><i class="fa fa-plus"></i></a></div>
+                    <div class="col-lg-3">
+                    <select  class="form-control" name="origenmaterial" id="mySelect"
+                             ng-options="column.name for column in filterColumns track by column.id"
+                             ng-model="filterColumnsSelected"></select>
+                    </div>
+                    <div class="col-lg-1">
+                        <a  class="btn btn-sm btn-success" ng-click="clean()" > Limpiar</a>
+                    </div>
+                    <div class="col-lg-1" style="text-align: right">
+                        <div class="clearfix"><a  ng-click="new(null,'sitio_form.html','ModelNewSiteCtrl')" class="btn btn-primary pull-right"><i class="fa fa-plus"></i></a></div>
                     </div>
                 </div>
             </div>
@@ -62,7 +60,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="sitio in sitios | filter:filtrositios">
+                    <tr ng-repeat="sitio in sitios">
                         <td class="col-md-1">{{ $index +1 }}</td>
 
                         <td class="col-md-2">{{ sitio.name }} </td>

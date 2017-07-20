@@ -170,7 +170,7 @@ GSPEMApp.controller('ModelNewPerfil', function($filter,$scope,$http, $uibModalIn
     $scope.materiales={all:true,abm_tipo:true,abm:true};
     $scope.oper={all:true,stock:true,stock_to_tec:true,stock_tec_to_tec:true};
     $scope.opertec={all:true,stock:true,stoc_pend:true,stoc_tec:true,stoc_sit:true};
-    $scope.reportes={all:true,stock_maestro:true,stock_tec:true,stock_sit:true,stock_cont:true,stock_mov:true,stock_alertas:true,compras:true};
+    $scope.reportes={all:true,stock_maestro:true,stock_tec:true,stock_sit:true,stock_cont:true,stock_mov:true,stock_mov_by_mat:true,stock_alertas:true,compras:true};
 
     
     

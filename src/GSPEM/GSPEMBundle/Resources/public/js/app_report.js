@@ -304,6 +304,30 @@ GSPEMApp.controller('abmReportsMov', function($filter,$scope,$http,$uibModal,toa
         saveAs(blob, "Reporte_Movimientos_"+today+".xls");
     };
 
+
+    $scope.exportarItems=function () {
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        }
+
+        if(mm<10) {
+            mm='0'+mm
+        }
+
+        today = dd+'/'+mm+'/'+yyyy;
+        var blob = new Blob([document.getElementById('exportableItems').innerHTML], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        saveAs(blob, "Reporte_Movimientos_Items_"+today+".xls");
+    };
+
+
     $scope.propertyName = 'id';
     $scope.reverse = true;
     $scope.sortBy = function(propertyName) {
@@ -729,7 +753,6 @@ GSPEMApp.controller('reportsCompras', function( $rootScope,  dateUtils,$filter,$
 
 
     $scope.$watch( "date_desde", function() {
-        console.log($scope.date_desde);
     });
 
     $scope.sortBy = function(propertyName) {
@@ -777,9 +800,14 @@ GSPEMApp.controller('reportsCompras', function( $rootScope,  dateUtils,$filter,$
         $scope.filterByMat=false;
 
         $scope.arraytofilter= $scope.altas_ori;
+
         if(angular.isDefined($scope.date_desde)){
             $scope.arrayTofilter=$scope.altas;
             for (var a = 0; a < $scope.arraytofilter.length; a++) {
+                console.log("date item"+$scope.arraytofilter[a].date_obj.getTime());
+                console.log("date "+dateUtils.parseDate($scope.date_desde).getTime());
+
+
                 if($scope.arraytofilter[a].date_obj.getTime() >=  dateUtils.parseDate($scope.date_desde).getTime()  ){
                     $scope.resultFilterStartDate.push($scope.arraytofilter[a]);
                 }
@@ -815,7 +843,7 @@ GSPEMApp.controller('reportsCompras', function( $rootScope,  dateUtils,$filter,$
 
         if($scope.materialselected!=null){
             if (angular.isObject($scope.materialselected.originalObject)){
-
+                debugger
                 $scope._arrayTofilter=$scope.resultFilter;
                 console.log($scope.resultFilter);
 

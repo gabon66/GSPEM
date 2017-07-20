@@ -13,7 +13,7 @@ GSPEMApp.factory('typesService', function($http) {
 
 GSPEMApp.controller('abmMaterial', function($scope,$http,$uibModal,toastr,typesService, $rootScope,MovPend) {
     $scope.animationsEnabled = false;
-
+    $scope.cargando=true;
     var getTypes=function () {
         typesService.async().then(function(data) {
             $scope.types=data.data;
@@ -34,6 +34,7 @@ GSPEMApp.controller('abmMaterial', function($scope,$http,$uibModal,toastr,typesS
         $http.get(Routing.generate('get_materiales')
         ).then(function (materiales) {
             $scope.materiales=materiales.data;
+            $scope.cargando=false;
             for (var a = 0; a < $scope.materiales.length; a++) {
                 $scope.materiales[a].referencia=angular.fromJson($scope.materiales[a].referencia);
             }

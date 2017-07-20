@@ -234,10 +234,23 @@ class DefaultController extends Controller
     public function saveSitiosAction(\Symfony\Component\HttpFoundation\Request $request){
         $em = $this->getDoctrine()->getEntityManager();
 
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+
+        $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Sitio');
         if($request->get("id")>0){
-            $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Sitio');
+
             $sitio = $repo->findOneBy(array("id"=>$request->get("id")));
         }else{
+            // VALIDO EL EMPLAZAMIENTO
+            $sitio = $repo->findOneBy(array("emplazamiento"=>$request->get("emplazamiento")));
+            if (isset($sitio) && $sitio instanceof \GSPEM\GSPEMBundle\Entity\Sitio )
+            {
+                // ya existe
+                return new Response($serializer->serialize(array("process"=>false),"json"),200,array('Content-Type'=>'application/json'));
+            }
             $sitio = new Sitio();
         }
 
@@ -253,9 +266,6 @@ class DefaultController extends Controller
             $em->persist($sitio);
         }
         $em->flush();
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
         return new Response($serializer->serialize(array("process"=>true),"json"),200,array('Content-Type'=>'application/json'));
     }
 

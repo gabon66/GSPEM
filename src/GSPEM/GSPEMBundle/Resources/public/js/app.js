@@ -1,4 +1,4 @@
-var GSPEMApp = angular.module('AppGSPEM', ["720kb.datepicker","angucomplete","ngMaterial","checklist-model",'ngRoute','ngAnimate','ui.bootstrap','toastr','ngAutocomplete','google.places','720kb.datepicker']);
+var GSPEMApp = angular.module('AppGSPEM', ["720kb.datepicker","angucomplete","ngMaterial","checklist-model",'ngRoute','ngAnimate','ui.bootstrap','toastr','ngAutocomplete','google.places']);
 
 // Configuración de las rutas
 

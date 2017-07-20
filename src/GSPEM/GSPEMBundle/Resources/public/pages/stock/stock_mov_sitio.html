@@ -1,9 +1,14 @@
 
-<div ng-if="cargando==true" class="row">
-    <h3>Cargando Sitios   <i ng-show="cargando==true" class="fa fa-refresh fa-spin fa-1x fa-fw"></i></h3>
+
+
+<div ng-show="cargando"  class="col-md-12 col-sm-12 col-xs-12" style="text-align: center">
+    <h3>Cargando Sitios   </h3>
+
+    <i ng-show="cargando==true" class="fa fa-cog fa-spin fa-5x fa-fw"></i>
 </div>
 
-<div ng-if="!cargando" class="row">
+
+<div ng-show="!cargando" class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">

@@ -43,7 +43,7 @@ class StockController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $user=$this->get('security.token_storage')->getToken()->getUser();
         $stmt = $em->getConnection()->createQueryBuilder()
-            ->select("m.id as id ,m.referencia as referencia , m.id_custom as idCustom , m.descript as descript ,s.cant  as stock , m.name as name")
+            ->select("m.id as id ,m.ubicacion as ubicacion ,m.referencia as referencia , m.id_custom as idCustom , m.descript as descript ,s.cant  as stock , m.name as name")
             ->from("materiales", "m")
             ->innerJoin("m", "stock_tecnico", "s", "m.id = s.material")
             ->where("s.tecnico =".$user->getId())

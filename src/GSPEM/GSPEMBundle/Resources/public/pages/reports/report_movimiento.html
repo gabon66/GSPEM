@@ -1,10 +1,10 @@
 <div class="row">
 
-    <div ng-show="cargando==true" class="col-md-12 col-sm-12 col-xs-12">
-        <h3>Espere por favor.. cargando reporte<i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
-        </h3>
-    </div>
+    <div ng-show="cargando"  class="col-md-12 col-sm-12 col-xs-12" style="text-align: center">
+        <h3>Espere por favor.. cargando reporte  </h3>
 
+        <i ng-show="cargando==true" class="fa fa-cog fa-spin fa-5x fa-fw"></i>
+    </div>
 
     <div  ng-show="cargando==false" class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -66,6 +66,7 @@
 
             </div>
             <div class="x_content">
+                <a class="btn btn-success pull-right" ng-click="exportarItems()">Exportar con Items</a>
                 <a class="btn btn-success pull-right" ng-click="exportar()">Exportar</a>
             </div>
 
@@ -84,21 +85,20 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>#</th>
+
             <th>Origen</th>
             <th>Destino</th>
             <th>Inicio</th>
             <th>Fin</th>
             <th>Estado</th>
             <th>Tipo</th>
-            <th>Items</th>
             <th>Nota</th>
         </tr>
         </thead>
         <tbody>
 
         <tr ng-repeat="mov in movs | filter:filtromaterial  | orderBy:propertyName:reverse">
-            <th>{{ $index +1 }}</th>
+
             <td>{{ mov.origen }}</td>
             <td>{{ mov.tecnico }}</td>
             <td>{{ mov.inicio_obj | date:'dd-MM-yyyy hh:mm'}}</td>
@@ -110,14 +110,60 @@
             <td ng-if="mov.type==1">Maestro => Tecnico</td>
             <td ng-if="mov.type==2">Tecnico => Tecnico</td>
             <td ng-if="mov.type==3">Tecnico => Sitio</td>
-            <td><ul>
-                <li ng-repeat="motitem in mov.items">
-                    ID: {{  motitem.idCustom }} Nombre : {{  motitem.name }} Cantidad : {{  motitem.cant }}
-                </li>
-            </ul></td>
             <td>{{ mov.nota }}</td>
         </tr>
         </tbody>
     </table>
+
+</div>
+
+
+<div  class="x_content" style="height:  60% ;overflow: auto;visibility: hidden " id="exportableItems" >
+
+    <span ng-repeat="mov in movs | filter:filtromaterial  | orderBy:propertyName:reverse">
+            <table class="table table-bordered">
+        <thead ng-if="$index<1">
+        <tr>
+
+            <th>Origen</th>
+            <th>Destino</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Estado</th>
+            <th>Tipo</th>
+            <th>Material ID</th>
+            <th>Material Nombre</th>
+            <th>Material Descripción</th>
+
+            <th>Cantidad</th>
+            <th>Nota</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="motitem in mov.items">
+
+            <td ><span ng-if="$index<1">{{ mov.origen }}</span></td>
+            <td><span ng-if="$index<1">{{ mov.tecnico }}</span> </td>
+            <td><span ng-if="$index<1">{{ mov.inicio_obj | date:'dd-MM-yyyy hh:mm'}}</span> </td>
+            <td><span ng-if="$index<1">{{ mov.fin_obj | date:'dd-MM-yyyy hh:mm'  }}</span> </td>
+            <td ng-if="mov.state==0"><span ng-if="$index<1">Pendiente</span></td>
+            <td ng-if="mov.state==1"><span ng-if="$index<1">Aceptado</span></td>
+            <td ng-if="mov.state==2"><span ng-if="$index<1">Rechazado</span></td>
+            <td ng-if="mov.state==3"><span ng-if="$index<1">Aceptado Parcial</span></td>
+            <td ng-if="mov.type==1"><span ng-if="$index<1">Maestro => Tecnico</span></td>
+            <td ng-if="mov.type==2"><span ng-if="$index<1">Tecnico => Tecnico</span></td>
+            <td ng-if="mov.type==3"><span ng-if="$index<1">Tecnico => Sitio</span></td>
+            <td> {{  motitem.idCustom }}</td>
+            <td> {{  motitem.name }}</td>
+            <td> {{ motitem.descript }} </td>
+            <td> {{  motitem.cant }}</td>
+            <td><span ng-if="$index<1">{{ mov.nota }}</span></td>
+        </tr>
+        </tbody>
+    </table>
+    </span>
+
+
 
 </div>
