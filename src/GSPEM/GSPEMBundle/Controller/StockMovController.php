@@ -112,7 +112,7 @@ class StockMovController extends Controller
         try {
 
             if (count($materialesToAlert) == 1) {
-                $message = \Swift_Message::newInstance()
+                $message = \Swift_Message::newInstance($this->container->getParameter('mailer_user'))
                     ->setSubject('Alerta de Stock - ' . $material->getName())
                     ->setFrom($this->container->getParameter('mailer_user'))
                     ->setTo($this->container->getParameter('mail_alert'))
@@ -126,7 +126,7 @@ class StockMovController extends Controller
                     );
                 $this->get('mailer')->send($message);
             } elseif (count($materialesToAlert) > 1) {
-                $message = \Swift_Message::newInstance()
+                $message = \Swift_Message::newInstance($this->container->getParameter('mailer_user'))
                     ->setSubject('Alerta de Stock')
                     ->setFrom($this->container->getParameter('mailer_user'))
                     ->setTo($this->container->getParameter('mail_alert'))
@@ -498,7 +498,7 @@ class StockMovController extends Controller
 
 
         try{
-            $message = \Swift_Message::newInstance()
+            $message = \Swift_Message::newInstance($this->container->getParameter('mailer_user'))
                 ->setSubject('Sock pendiente para aceptar ')
                 ->setFrom($this->container->getParameter('mailer_user'))
                 ->setTo($to)
