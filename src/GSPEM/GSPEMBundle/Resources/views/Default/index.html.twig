@@ -104,6 +104,8 @@
 
 {% include 'GSPEMGSPEMBundle:Default:modals.html.twig' %}
 {% include 'GSPEMGSPEMBundle:Default:modals_edit.html.twig' %}
+{% include 'GSPEMGSPEMBundle:Default:modals_import.html.twig' %}
+
 
 
 {% block javascripts %}
@@ -171,6 +173,10 @@
 
     <script src="{{ asset('bower_components/angular-toastr/dist/angular-toastr.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bower_components/angular-toastr/dist/angular-toastr.tpls.js') }}" type="text/javascript"></script>
+
+
+    <script src="{{ asset('bower_components/angular-upload/angular-upload.min.js') }}" type="text/javascript"></script>
+
 
 
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&key=AIzaSyCp_sQlhdJJUuaNg7Z4_Iocyip0KU0EAy4"></script>

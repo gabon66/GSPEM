@@ -1,0 +1,30 @@
+{% verbatim %}
+<!-- EDIT ALTA  STOCK -->
+
+<script type="text/ng-template" id="import_sites.html">
+    <div class="modal-header">
+        <h3>Importar Sitios</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+               <input name="file" file-model ="file" title="Seleccione Documento" type="file" />
+        </div>
+        <hr>
+        <div class="row">
+            <a href="">Ejemplo de formato de excel para nuevo sitios</a>
+        </div>
+        <div class="row">
+            <a href="">Ejemplo de formato de excel para edicion de sitios</a>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-success pull-right" ng-click="save()" >Salir</a>
+
+        <a class="btn btn-success pull-left" ng-click="uploadExcel()">Comenzar</a>
+    </div>
+</script>
+
+
+
+
+{% endverbatim %}

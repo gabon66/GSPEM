@@ -1,7 +1,41 @@
-var GSPEMApp = angular.module('AppGSPEM', ["720kb.datepicker","angucomplete","ngMaterial","checklist-model",'ngRoute','ngAnimate','ui.bootstrap','toastr','ngAutocomplete','google.places']);
+var GSPEMApp = angular.module('AppGSPEM', ["720kb.datepicker","lr.upload","angucomplete","ngMaterial","checklist-model",'ngRoute','ngAnimate','ui.bootstrap','toastr','ngAutocomplete','google.places']);
 
 // Configuración de las rutas
 
+
+GSPEMApp.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
+GSPEMApp.service('fileUpload', ['$https', function ($https) {
+    this.uploadFileToUrl = function(file, uploadUrl){
+        var fd = new FormData();
+        fd.append('file', file);
+
+        $https.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+
+            .success(function(){
+            })
+
+            .error(function(){
+            });
+    }
+}]);
 
 /**
  * Date Utils
@@ -82,7 +116,7 @@ GSPEMApp.service('MovPend', function($http,toastr) {
 
     setInterval(function(){
         getMovPend();
-    },5000);
+    },15000);
     getMovPend();
 
 });

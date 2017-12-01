@@ -19,6 +19,8 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new GSPEM\GSPEMBundle\GSPEMGSPEMBundle(),
             new GSPEM\SecurityBundle\GSPEMSecurityBundle(),
+            new Arodiss\XlsBundle\ArodissXlsBundle(),
+            new Liuggio\ExcelBundle\LiuggioExcelBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -228,6 +228,18 @@ save_sitios:
         expose: true
     defaults: { _controller: GSPEMGSPEMBundle:Default:saveSitios }
 
+upload_sitios:
+    path:     /uploadsitios
+    options:
+        expose: true
+    defaults: { _controller: GSPEMGSPEMBundle:Default:uploadSiteExcel }
+
+upload_sitios_test:
+    path:     /uploadsitiostest
+    options:
+        expose: true
+    defaults: { _controller: GSPEMGSPEMBundle:Default:uploadSiteExcelTest }
+
 save_materiales_type:
     path:     /savematerialestype
     options:

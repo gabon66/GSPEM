@@ -83,6 +83,21 @@ GSPEMApp.controller('abmSitios', function($rootScope,$filter,$scope,$http,$uibMo
         }
     }, true);
 
+    $scope.import=function () {
+        var modalInstance = $uibModal.open({
+            templateUrl: 'import_sites.html',
+            controller: 'ImportSitesCtrl'
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $scope.cargando=true;
+            getSitios()
+            //$log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
     $scope.new = function (item,template , controller) {
 
         var modalInstance = $uibModal.open({
@@ -131,6 +146,38 @@ GSPEMApp.controller('abmSitios', function($rootScope,$filter,$scope,$http,$uibMo
     };
 
 });
+
+GSPEMApp.controller('ImportSitesCtrl', function($filter,$scope,$http, $uibModalInstance,toastr,upload) {
+
+
+    //upload_sitios
+    $scope.uploadExcel= function () {
+        upload({
+            url: Routing.generate('upload_sitios'),
+            method: 'POST',
+            data: {
+                file: $scope.file, // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
+            }
+        }).then(
+            function (response) {
+                toastr.success('Se agregaron '+response.data.agregados +' nuevos sitios', 'Sitios');
+                $uibModalInstance.dismiss('cancel');
+                console.log(response.data); // will output whatever you choose to return from the server on a successful upload
+            },
+            function (response) {
+                console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
+            }
+        );
+    }
+
+    $scope.cerrar=function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+
+
+});
+
 GSPEMApp.controller('ModelNewSiteCtrl', function($filter,$scope,$http, $uibModalInstance, item,toastr) {
     $scope.item = item;
 

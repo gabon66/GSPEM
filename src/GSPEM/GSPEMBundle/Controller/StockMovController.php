@@ -88,7 +88,6 @@ class StockMovController extends Controller
 
             if($material->getUmbralmin()>= $stockMaestro->getCant() ){
 
-
                 $materialToAlert=array("id"=>$material->getIdCustom(),'name'=>$material->getName(),"descript"=>$material->getDescript(),"stock"=>$stockMaestro->getCant());
                 $materialesToAlert[$i]=$materialToAlert;
                 $i++;

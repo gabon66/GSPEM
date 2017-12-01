@@ -13,6 +13,11 @@
                         <select  class="form-control" name="origenmaterial" id="mySelect"
                             ng-options="contratista.name for contratista in contratistas track by contratista.id"
                          ng-model="contratistaselected"></select>
+
+                         <select class="form-control" ng-model="$root.sectorSelected">
+                            <option ng-repeat="sector in sectors" value={{sector.id}}>{{ sector.description }}</option>
+                        </select>
+
                     </div>
                 </div>
                 <div class="col-lg-4">

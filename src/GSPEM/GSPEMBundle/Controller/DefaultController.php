@@ -741,4 +741,68 @@ class DefaultController extends Controller
     }
 
 
+    public function uploadSiteExcelAction(\Symfony\Component\HttpFoundation\Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $file  =$request->files->get('file');
+        $name=$file->getClientOriginalName();
+
+        $file->move($this->getParameter("file_folder_path"), $name);
+
+
+        $reader = $this->get("arodiss.xls.reader");
+        $content = $reader->readAll($this->getParameter("file_folder_path").$name);
+
+        $cantAdded=0;
+        foreach ($content as $site){
+            if ($site[0]!=""){
+                $cantAdded++;
+                // agrego como sitio nuevo
+                $sitio = new Sitio();
+                $sitio->setName($site[0]);
+                $sitio->setDescript($site[3]);
+                $sitio->setDireccion($site[2]);
+                $sitio->setEmplazamiento($site[1]);
+                $em->persist($sitio);
+                $em->flush();
+            }
+        }
+
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize(array("agregados"=>$cantAdded),"json"),200,array('Content-Type'=>'application/json'));
+    }
+
+
+    public function uploadSiteExcelTestAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $reader = $this->get("arodiss.xls.reader");
+
+        $content = $reader->readAll($this->getParameter("file_folder_path")."Mi Sitios de Mercedes.xls");
+
+        $cantAdded=0;
+        foreach ($content as $site){
+            if ($site[0]!=""){
+
+                $cantAdded++;
+                // agrego como sitio nuevo
+                $sitio = new Sitio();
+                $sitio->setName($site[0]);
+                $sitio->setDescript($site[3]);
+                $sitio->setDireccion($site[2]);
+                $sitio->setEmplazamiento($site[1]);
+                $em->persist($sitio);
+                $em->flush();
+            }
+        }
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize(array("agregados"=>$cantAdded),"json"),200,array('Content-Type'=>'application/json'));
+    }
+
 }

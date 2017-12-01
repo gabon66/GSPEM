@@ -49,7 +49,7 @@ class StockAltaController extends Controller
                 $alta->setObs($item['altaData']['obs']);
                 $alta->setDate(new \DateTime($item['altaData']['date']));
                 $alta->setStock($item['altaData']['new_stock']);
-                $alta->setIdProv($item['altaData']['prov']);
+                $alta->setIdProv((int)$item['altaData']['prov']);
                 $em->persist($alta);
             }
 

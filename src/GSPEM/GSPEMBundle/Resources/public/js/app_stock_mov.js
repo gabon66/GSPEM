@@ -682,7 +682,7 @@ GSPEMApp.controller('abmStockMovTecnicoToTecnicoFromTec', function($scope,$http,
                 $scope.stockPendiente=[];
                 getStock();
                 toastr.success('Stock enviado con exito', 'Stock');
-                $scope.enviando=true;
+                $scope.enviando=false;
             },
             function (response) { // optional
                 // failed
