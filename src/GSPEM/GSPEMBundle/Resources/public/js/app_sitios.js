@@ -14,12 +14,41 @@ GSPEMApp.controller('abmSitios', function($rootScope,$filter,$scope,$http,$uibMo
     var getSitios = function() {
         $http.get(Routing.generate('get_sitios')
         ).then(function (sitios) {
+            console.log(sitios.data);
             $scope.sitios=sitios.data;
             $scope.sitios_ori=sitios.data;
             $scope.cargando=false;
+            loadExcelList();
         });
     };
     getSitios();
+
+
+    var loadExcelList=function () {
+
+        var sitios_header=['id','nombre','emplazamiento','direccion','descripcion','Latitud','Longitud'];
+
+        $scope.sitios_excel=[];
+        $scope.sitios_excel.push(sitios_header);
+        for (var a = 0; a < $scope.sitios.length; a++) {
+            var row=[$scope.sitios[a].id,
+                $scope.sitios[a].name,
+                $scope.sitios[a].emplazamiento,
+                $scope.sitios[a].direccion,
+                $scope.sitios[a].descript,
+                $scope.sitios[a].lat,
+                $scope.sitios[a].longitud
+            ]
+            $scope.sitios_excel.push(row);
+        }
+        $scope.sitiosExcel = [{
+            name: 'Sitios',
+            data: $scope.sitios_excel
+        }];
+    }
+
+
+
 
     $scope.filterSitios=  function(){
         $scope.filterTitle="Buscando ..";
@@ -55,11 +84,6 @@ GSPEMApp.controller('abmSitios', function($rootScope,$filter,$scope,$http,$uibMo
                 }
             }
 
-            /*if (column=='name') $scope.sitios= $filter('filter')($scope.sitios, {  name : value });
-            if (column=='emplazamiento') $scope.sitios= $filter('filter')($scope.sitios, {  emplazamiento : value });
-            if (column=='direccion'){
-                $scope.sitios= $filter('filter')($scope.sitios, {  direccion : value });
-            }*/
             $scope.sitios=$scope.sitesResult;
         }else {
             $scope.sitios=$scope.sitios_ori;

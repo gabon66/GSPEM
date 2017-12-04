@@ -755,17 +755,44 @@ class DefaultController extends Controller
         $content = $reader->readAll($this->getParameter("file_folder_path").$name);
 
         $cantAdded=0;
+
+        $update=true;
+        $header=false;
         foreach ($content as $site){
             if ($site[0]!=""){
-                $cantAdded++;
-                // agrego como sitio nuevo
-                $sitio = new Sitio();
-                $sitio->setName($site[0]);
-                $sitio->setDescript($site[3]);
-                $sitio->setDireccion($site[2]);
-                $sitio->setEmplazamiento($site[1]);
-                $em->persist($sitio);
-                $em->flush();
+
+                if(strtolower($site[0])=="id"){
+                    $update=true;
+                    $header=true;
+                }elseif (strtolower($site[0])=="nombre"){
+                    $update=false;
+                    $header=true;
+                }else {
+                    $cantAdded++;
+                    // agrego como sitio nuevo
+                    if($update){
+                        $repo =$em->getRepository('GSPEM\GSPEMBundle\Entity\Sitio');
+                        $sitio = $repo->findOneBy(array("id"=>$site[0]));
+                        $sitio->setName($site[1]);
+                        $sitio->setEmplazamiento($site[2]);
+                        $sitio->setDireccion($site[3]);
+
+                        $sitio->setDescript($site[4]);
+                        $sitio->setLat($site[5]);
+                        $sitio->setLong($site[6]);
+                        $em->flush();
+                    }else{
+                        $sitio = new Sitio();
+                        $sitio->setName($site[0]);
+                        $sitio->setEmplazamiento($site[1]);
+                        $sitio->setDireccion($site[2]);
+                        $sitio->setDescript($site[3]);
+                        $sitio->setLat($site[4]);
+                        $sitio->setLong($site[5]);
+                        $em->persist($sitio);
+                        $em->flush();
+                    }
+                }
             }
         }
 
@@ -782,7 +809,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $reader = $this->get("arodiss.xls.reader");
 
-        $content = $reader->readAll($this->getParameter("file_folder_path")."Mi Sitios de Mercedes.xls");
+        $content = $reader->readAll($this->getParameter("file_folder_path")."test (12).xls");
 
         $cantAdded=0;
         foreach ($content as $site){

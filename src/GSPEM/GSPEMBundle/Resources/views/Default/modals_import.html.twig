@@ -11,14 +11,17 @@
         </div>
         <hr>
         <div class="row">
-            <a href="">Ejemplo de formato de excel para nuevo sitios</a>
+            <a target="_self" download="{{file}}" href="../examples/NewSites.xls"> Ejemplo de formato de excel para nuevo sitios</a>
         </div>
         <div class="row">
-            <a href="">Ejemplo de formato de excel para edicion de sitios</a>
+            <a target="_self" download="{{file}}" href="../examples/OldSites.xls"> Ejemplo de formato de excel para edicion de sitios</a>
+        </div>
+        <div class="row">
+        * Si va a importar el mimso excel que genero del boton Exportar , se recomienda abrir el documento y volver a guardar en formato xls.
         </div>
     </div>
     <div class="modal-footer">
-        <a class="btn btn-success pull-right" ng-click="save()" >Salir</a>
+        <a class="btn btn-success pull-right" ng-click="cerrar()" >Salir</a>
 
         <a class="btn btn-success pull-left" ng-click="uploadExcel()">Comenzar</a>
     </div>
